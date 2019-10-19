@@ -2,12 +2,15 @@
   "name": "task-activity-planner-back-end",
   "version": "1.0.0",
   "description": "The Back End of Task Activity Planner build with Node.js Express framework",
-  "main": "index.js",
-  "scripts": {
-    "start": "node src/server.js",
-    "server": "nodemon src/server.js"
-  },
   "author": "Mantas Astrauskas",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "yarn --cwd client",
+    "start": "node src/server.js",
+    "server": "nodemon src/server.js",
+    "client": "yarn --cwd client start",
+    "dev": "concurrently -r \"yarn run server\" \"yarn run client\""
+  },
   "license": "UNLICENSED",
   "dependencies": {
     "body-parser": "^1.19.0",
