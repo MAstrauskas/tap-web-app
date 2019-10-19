@@ -1,1 +1,0 @@
-# Task Activity Planner Client Side
