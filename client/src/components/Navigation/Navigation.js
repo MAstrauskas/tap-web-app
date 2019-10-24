@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Theme from "../Theme/Theme";
+import Theme from "../shared/Theme/Theme";
 
 const Nav = styled.nav`
   display: flex;
+  justify-content: space-between;
   padding: 1rem;
   border-bottom: 2px solid ${Theme.colors.primary};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -14,7 +15,7 @@ const Nav = styled.nav`
 `;
 
 const NavLogo = styled.a`
-  padding: 0 2rem 0 2rem;
+  padding: 0 2rem 0 3rem;
   color: ${Theme.colors.black};
   font-size: ${Theme.fontSize.navLink};
   font-weight: bold;
@@ -23,7 +24,7 @@ const NavLogo = styled.a`
 const Links = styled.div``;
 
 const NavLink = styled.a`
-  padding: 0 1rem 0 1rem;
+  padding: 0 3rem 0 1rem;
   color: ${Theme.colors.primary};
   font-size: ${Theme.fontSize.navLink};
 `;
@@ -31,9 +32,9 @@ const NavLink = styled.a`
 const Navigation = () => {
   return (
     <>
-      <Nav>
+      <Nav data-testid="navigation">
         <NavLogo href="/">TAP</NavLogo>
-        <Links>
+        <Links data-testid="navigation-links">
           <NavLink href="/">Login</NavLink>
           <NavLink href="/">Register</NavLink>
         </Links>

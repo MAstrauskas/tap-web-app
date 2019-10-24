@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "emotion-theming";
 
-import Theme from "../Theme/Theme";
+import Theme from "../shared/Theme/Theme";
 import Navigation from "../Navigation/Navigation";
 
 const Layout = props => {
