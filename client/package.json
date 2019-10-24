@@ -4,6 +4,10 @@
   "private": true,
   "author": "Mantas Astrauskas",
   "dependencies": {
+    "@emotion/core": "^10.0.22",
+    "@emotion/styled": "^10.0.22",
+    "emotion": "^10.0.17",
+    "emotion-theming": "^10.0.19",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0"
@@ -14,7 +18,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:9000",
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:9000"
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
