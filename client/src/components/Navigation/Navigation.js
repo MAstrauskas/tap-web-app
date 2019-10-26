@@ -12,6 +12,16 @@ const Nav = styled.nav`
   a {
     text-decoration: none;
   }
+
+  @media screen and (max-width: 500px) {
+    a {
+      padding: 0rem;
+    }
+
+    div a {
+      padding-left: 1rem;
+    }
+  }
 `;
 
 const NavLogo = styled.a`
