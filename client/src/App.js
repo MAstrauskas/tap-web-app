@@ -1,6 +1,7 @@
 import React from "react";
 
 import Layout from "./components/Layout/Layout";
+import Cover from "./components/Cover/Cover";
 import "./App.css";
 
 class App extends React.Component {
@@ -18,10 +19,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Layout>
-          <h1>Test Items fetched from Back End and MongoDB</h1>
-          {testItems.map(item => {
-            return <div key={item.id}>{item.name}</div>;
-          })}
+          <Cover />
         </Layout>
       </div>
     );

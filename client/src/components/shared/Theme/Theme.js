@@ -4,7 +4,14 @@ const Theme = {
     black: "#000000"
   },
   fontSize: {
-    navLink: "20px"
+    navLink: "20px",
+    xxlarge: "70px",
+    xlarge: "48px",
+    large: "30px",
+    medium: "24px",
+    small: "20px",
+    xsmall: "16px",
+    xxsmall: "12px"
   }
 };
 
