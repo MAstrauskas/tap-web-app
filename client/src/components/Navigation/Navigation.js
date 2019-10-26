@@ -37,6 +37,10 @@ const NavLink = styled.a`
   padding: 0 3rem 0 1rem;
   color: ${Theme.colors.primary};
   font-size: ${Theme.fontSize.navLink};
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 const Navigation = () => {
