@@ -1,7 +1,8 @@
 const Theme = {
   colors: {
     primary: "#19A2CD",
-    black: "#000000"
+    black: "#000000",
+    white: "#ffffff"
   },
   fontSize: {
     navLink: "20px",

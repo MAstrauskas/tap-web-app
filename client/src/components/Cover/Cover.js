@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
+
 import Theme from "../shared/Theme/Theme";
+import Button from "../shared/Button";
 
 const Content = styled.div`
   display: flex;
@@ -15,6 +18,7 @@ const Content = styled.div`
 
     span {
       margin: auto 20%;
+      margin-bottom: 30px;
     }
   }
 
@@ -27,6 +31,7 @@ const Content = styled.div`
     span {
       font-size: ${Theme.fontSize.small};
       margin: auto 10%;
+      margin-bottom: 30px;
     }
   }
 
@@ -55,6 +60,7 @@ const Title = styled.h1`
 
 const SubTitle = styled.span`
   margin: auto 30%;
+  margin-bottom: 30px;
   text-align: center;
   font-size: ${Theme.fontSize.medium};
 `;
@@ -66,6 +72,9 @@ const Cover = () => {
       <SubTitle data-testid="cover-subtitle">
         A new way of task management - based on your emotions
       </SubTitle>
+      <Link to="/home">
+        <Button title="Enter" />
+      </Link>
     </Content>
   );
 };
