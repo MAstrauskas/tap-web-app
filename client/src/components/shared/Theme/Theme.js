@@ -5,7 +5,8 @@ const Theme = {
     white: "#ffffff"
   },
   fontSize: {
-    navLink: "20px",
+    navLogo: "20px",
+    navLink: "16px",
     xxlarge: "70px",
     xlarge: "48px",
     large: "30px",

@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Layout from "./components/Layout/Layout";
+import UserLayout from "./components/User/Layout/Layout";
 import Cover from "./components/Cover/Cover";
 import Home from "./components/User/Home/Home";
 import "./App.css";
@@ -21,19 +22,19 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Layout>
-            <Cover />
-          </Layout>
+          <Switch>
+            <Route path="/home">
+              <UserLayout>
+                <Home />
+              </UserLayout>
+            </Route>
+            <Route path="/">
+              <Layout>
+                <Cover />
+              </Layout>
+            </Route>
+          </Switch>
         </div>
-
-        <Switch>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/">
-            <Cover />
-          </Route>
-        </Switch>
       </Router>
     );
   }

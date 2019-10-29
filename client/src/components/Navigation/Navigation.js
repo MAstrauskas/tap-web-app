@@ -27,11 +27,13 @@ const Nav = styled.nav`
 const NavLogo = styled.a`
   padding: 0 2rem 0 3rem;
   color: ${Theme.colors.black};
-  font-size: ${Theme.fontSize.navLink};
+  font-size: ${Theme.fontSize.navLogo};
   font-weight: bold;
 `;
 
-const Links = styled.div``;
+const Links = styled.div`
+  padding-top: 0.2rem;
+`;
 
 const NavLink = styled.a`
   padding: 0 3rem 0 1rem;
@@ -49,8 +51,8 @@ const Navigation = () => {
       <Nav data-testid="navigation">
         <NavLogo href="/">TAP</NavLogo>
         <Links data-testid="navigation-links">
-          <NavLink href="/">Login</NavLink>
-          <NavLink href="/">Register</NavLink>
+          <NavLink href="/">LOGIN</NavLink>
+          <NavLink href="/">REGISTER</NavLink>
         </Links>
       </Nav>
     </>
