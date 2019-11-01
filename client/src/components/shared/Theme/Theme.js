@@ -2,7 +2,8 @@ const Theme = {
   colors: {
     primary: "#19A2CD",
     black: "#000000",
-    white: "#ffffff"
+    white: "#ffffff",
+    activeLink: "tomato"
   },
   fontSize: {
     navLogo: "20px",

@@ -65,7 +65,7 @@ const MenuToggle = styled.div`
   display: block;
   position: relative;
   top: 15px;
-  right: 45px;
+  right: 35px;
   z-index: 1;
   user-select: none;
   -webkit-user-select: none;
@@ -80,6 +80,10 @@ const MenuToggle = styled.div`
     opacity: 0;
     z-index: 2;
     -webkit-touch-callout: none;
+
+    &:hover {
+      cursor: pointer;
+    }
 
     &:checked ~ span {
       opacity: 1;
@@ -97,6 +101,7 @@ const MenuToggle = styled.div`
     }
 
     &:not(:checked) ~ ul {
+      display: none;
       visibility: hidden;
     }
 
@@ -135,9 +140,9 @@ const Menu = styled.ul`
   width: 300px;
   margin: 11px 0 0 -322px;
   padding: 50px;
-  padding-top: 125px;
-
-  background: ${Theme.colors.black};
+  border-radius: 1%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: ${Theme.colors.primary};
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   transform-origin: 0% 0%;
@@ -145,9 +150,15 @@ const Menu = styled.ul`
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
   li {
-    padding: 10px 0;
-    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    font-size: ${Theme.fontSize.navLink};
     color: ${Theme.colors.white};
+    transition: color 0.3s ease;
+    &:hover {
+      color: ${Theme.colors.activeLink};
+    }
   }
 `;
 
@@ -155,7 +166,7 @@ const MenuLink = styled.a`
   transition: color 0.3s ease;
   cursor: pointer;
   &:hover {
-    color: tomato;
+    color: ${Theme.colors.activeLink};
   }
 `;
 
