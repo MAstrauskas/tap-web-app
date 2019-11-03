@@ -11,7 +11,8 @@ const app = express();
 app.use(bodyParser.json());
 
 // DB Config
-const db = require("./config/options").dbUrl;
+// !!! Change to dbUrl for production
+const db = require("./config/options").dbTestUrl;
 
 // Connect to MongoDB
 mongoose
