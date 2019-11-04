@@ -26,23 +26,12 @@ exports.taskDetail = (req, res, next) => {
       res
         .status(500)
         .send(
-          "Error occured trying to find a task. Please check if the infromation is correct."
+          "Error occured trying to find a task. Please check if the information is correct."
         );
     }
   })
     .then(task => res.json(task))
     .catch(next);
-};
-
-/**
- * GET /api/tasks/add
- *
- * @export
- * @param {any} req
- * @param {any} res
- **/
-exports.addTask_get = (req, res, next) => {
-  // TODO GET logic for adding a task
 };
 
 /**
@@ -66,60 +55,64 @@ exports.addTask_post = (req, res, next) => {
     isTaskSuggested: req.body.isTaskSuggested
   });
 
-  newTask
-    .save(err => {
-      if (err) {
-        res
-          .status(500)
-          .send(
-            "Error occured while trying to add a task. Please check if the information is correct"
-          );
-      }
-    })
-    .then(task => res.json(task))
-    .catch(next);
+  newTask.save((err, task) => {
+    if (err) {
+      res
+        .status(500)
+        .send(
+          "Error occured while trying to add a task. Please check if the information is correct"
+        );
+    }
+
+    res.send("Task has been added - " + `"${task.taskName}"`);
+  });
 };
 
 /**
- * GET /api/tasks/id/edit
- *
- * @export
- * @param {any} req
- * @param {any} res
- **/
-exports.editTask_get = (req, res, next) => {
-  // TODO GET logic for updating a task
-};
-
-/**
- * POST /api/tasks/id/edit
+ * PUT /api/tasks/edit
  *
  * @export
  * @param {any} req
  * @param {any} res
  **/
 exports.editTask_post = (req, res, next) => {
-  // TODO POST logic for updating a task
+  let taskId = req.body.taskId;
+
+  const data = {
+    taskName: req.body.taskName,
+    taskDescription: req.body.taskDescription,
+    taskUpdateDate: req.body.taskUpdateDate,
+    taskDueDate: req.body.taskDueDate,
+    taskPriority: req.body.taskPriority,
+    taskDifficulty: req.body.taskDifficulty,
+    isTaskComplete: req.body.isTaskComplete,
+    isTaskSuggested: req.body.isTaskSuggested
+  };
+
+  Task.findByIdAndUpdate(taskId, data, (err, task) => {
+    if (err) {
+      res
+        .status(500)
+        .send(
+          "Error occured while trying to edit a task. Please check if the information is correct"
+        );
+    }
+
+    res.send("Task has been updated.");
+  }).catch(next);
 };
 
 /**
- * GET /api/tasks/id/delete
+ * POST /api/tasks/delete
  *
  * @export
  * @param {any} req
  * @param {any} res
  **/
-exports.deleteTask_get = (req, res, next) => {
-  // TODO GET logic for deleting a task
-};
+exports.deleteTask_post = async (req, res, next) => {
+  const resultMessage = await Task.findByIdAndDelete(req.body.taskId)
+    .then(() => "Task has been deleted.")
+    .catch(next);
 
-/**
- * POST /api/tasks/id/delete
- *
- * @export
- * @param {any} req
- * @param {any} res
- **/
-exports.deleteTask_post = (req, res, next) => {
-  // TODO POST logic for deleting a task
+  res.json({ resultMessage });
 };

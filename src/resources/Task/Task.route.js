@@ -18,45 +18,24 @@ router.get("/", TaskController.taskList);
 router.get("/:id", TaskController.taskDetail);
 
 /**
- * @route GET api/tasks/add
- * @desc GET request for creating and adding a Task
+ * @route POST api/tasks/add
+ * @desc POST request for creating and adding a Task
  * @access Public
  **/
-// router.get("/add", TaskController.addTask_get);
-
-// /**
-//  * @route POST api/tasks/add
-//  * @desc POST request for creating and adding a Task
-//  * @access Public
-//  **/
 router.post("/add", TaskController.addTask_post);
 
-// /**
-//  * @route GET api/tasks/id/edit
-//  * @desc GET request for editing a Task
-//  * @access Public
-//  **/
-// router.get("/:id/edit", TaskController.editTask_get);
+/**
+ * @route PUT api/tasks/id/edit
+ * @desc PUT request for editing a Task
+ * @access Pusblic
+ **/
+router.put("/edit", TaskController.editTask_post);
 
-// /**
-//  * @route POST api/tasks/id/edit
-//  * @desc POST request for editing a Task
-//  * @access Public
-//  **/
-// router.post("/:id/edit", TaskController.editTask_post);
-
-// /**
-//  * @route GET api/tasks/id/delete
-//  * @desc GET request for deleting a Task
-//  * @access Public
-//  **/
-// router.get("/:id/delete", TaskController.deleteTask_get);
-
-// /**
-//  * @route POST api/tasks/id/delete
-//  * @desc POST request for deleting a Task
-//  * @access Public
-//  **/
-// router.post("/:id/delete", TaskController.deleteTask_post);
+/**
+ * @route POST api/tasks/id/delete
+ * @desc POST request for deleting a Task
+ * @access Public
+ **/
+router.delete("/delete", TaskController.deleteTask_post);
 
 module.exports = router;

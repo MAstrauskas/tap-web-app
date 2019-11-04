@@ -13,11 +13,11 @@ router.get("/", (req, res) => {
 });
 
 /**
- * @route POST api/user
+ * @route POST api/user/add
  * @desc POST An Item To The DB
  * @access Public
  **/
-router.post("/", (req, res) => {
+router.post("/add", (req, res) => {
   const fullName = req.body.fullName.split(" ");
 
   const newUser = new User({
