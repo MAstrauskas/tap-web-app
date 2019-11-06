@@ -5,20 +5,12 @@ import Layout from "./components/Layout/Layout";
 import UserLayout from "./components/User/Layout/Layout";
 import Cover from "./components/Cover/Cover";
 import Home from "./components/User/Home/Home";
+import AddTask from "./components/User/Tasks/AddTask";
+
 import "./App.css";
 
 class App extends React.Component {
-  state = { testItems: [] };
-
-  componentDidMount() {
-    fetch("/api/testItem")
-      .then(res => res.json())
-      .then(testItems => this.setState({ testItems }));
-  }
-
   render() {
-    const { testItems } = this.state;
-
     return (
       <Router>
         <div className="App">
@@ -26,6 +18,11 @@ class App extends React.Component {
             <Route path="/home">
               <UserLayout>
                 <Home />
+              </UserLayout>
+            </Route>
+            <Route path="/tasks/add">
+              <UserLayout>
+                <AddTask />
               </UserLayout>
             </Route>
             <Route path="/">

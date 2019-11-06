@@ -41,8 +41,8 @@ const TaskSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: false // TODO Make it true once User system is implemented
   }
 });
 
-module.exports = Task = mongoose.model("Task", TaskSchema);
+module.exports = mongoose.model("Task", TaskSchema);

@@ -187,7 +187,7 @@ const Navigation = () => {
         </LogoContainer>
 
         <Links data-testid="navigation-links">
-          <NavLink href="/">
+          <NavLink href="/tasks/add">
             <Icon>
               <AddIcon />
             </Icon>
