@@ -17,6 +17,11 @@ const Navigation = styled.div`
   max-width: 15%;
   height: calc(100vh - 56px);
   max-height: calc(100vh - 56px);
+
+  @media screen and (max-width: 1050px) {
+    visibility: hidden;
+    display: none;
+  }
 `;
 
 const Nav = styled.nav`
@@ -44,7 +49,7 @@ const Icon = styled.i`
 const SideNavigation = () => {
   return (
     <>
-      <Navigation>
+      <Navigation data-testid="side-navigation">
         <Nav>
           <NavLink>
             <Icon>

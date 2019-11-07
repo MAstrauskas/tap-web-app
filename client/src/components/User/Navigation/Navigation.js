@@ -13,7 +13,9 @@ const Nav = styled.nav`
     text-decoration: none;
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 550px) {
+    width: 100%;
+    max-width: 100%;
     a {
       padding: 0rem;
     }

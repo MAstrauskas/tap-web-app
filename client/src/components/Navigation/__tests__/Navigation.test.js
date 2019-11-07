@@ -7,19 +7,19 @@ describe("Navigation", () => {
     const { getByText } = render(<Navigation />);
 
     getByText("TAP");
-    getByText("Login");
-    getByText("Register");
+    getByText("LOGIN");
+    getByText("REGISTER");
   });
 
   it("has login link", () => {
     const { getByText } = render(<Navigation />);
 
-    getByText("Login");
+    getByText("LOGIN");
   });
 
   it("has register link", () => {
     const { getByText } = render(<Navigation />);
 
-    getByText("Register");
+    getByText("REGISTER");
   });
 });

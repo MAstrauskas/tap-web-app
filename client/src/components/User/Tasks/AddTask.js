@@ -15,10 +15,18 @@ const CustomForm = styled.div`
   form {
     padding: 0rem 8rem;
   }
+
+  @media screen and (min-width: 550px) and (max-width: 1050px) {
+    margin-top: 10rem;
+  }
 `;
 
 const Title = styled.h1`
   font-size: ${Theme.fontSize.xlarge};
+
+  @media screen and (max-width: 550px) {
+    font-size: ${Theme.fontSize.large};
+  }
 `;
 
 const Form = styled.div`
