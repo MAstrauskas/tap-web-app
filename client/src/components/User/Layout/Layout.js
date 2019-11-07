@@ -4,11 +4,20 @@ import styled from "@emotion/styled";
 
 import Theme from "../../shared/Theme/Theme";
 import Navigation from "../Navigation/Navigation";
+import SideNavigation from "../SideNavigation/SideNavigation";
 
 const Content = styled.main`
   display: flex;
-  justify-content: center;
-  margin: auto 4rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: auto auto;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
 `;
 
 const Layout = props => {
@@ -16,7 +25,10 @@ const Layout = props => {
     <>
       <ThemeProvider theme={Theme}>
         <Navigation />
-        <Content>{props.children}</Content>
+        <Row>
+          <SideNavigation />
+          <Content>{props.children}</Content>
+        </Row>
       </ThemeProvider>
     </>
   );

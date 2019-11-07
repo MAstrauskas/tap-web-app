@@ -1,6 +1,7 @@
 const Theme = {
   colors: {
     primary: "#19A2CD",
+    secondary: "rgba(25, 162, 205, 0.2)",
     black: "#000000",
     white: "#ffffff",
     activeLink: "tomato"
