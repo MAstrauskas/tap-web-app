@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Formik, Field } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import { Redirect } from "react-router";
 import styled from "@emotion/styled";
 import { jsx } from "@emotion/core";
@@ -55,6 +55,11 @@ const FormGroup = styled.div`
     box-sizing: border-box;
     border-radius: 9px;
     padding-left: 0.5rem;
+
+    ${({ error }) =>
+      error && {
+        boxShadow: `0 0 0 3px ${Theme.color.error}`
+      }};
   }
 `;
 
@@ -81,9 +86,25 @@ const FormDescription = styled.div`
   }
 `;
 
+const Error = styled.span`
+  width: 94%;
+  margin-left: 0.2rem;
+  padding: 0.5rem;
+
+  color: ${Theme.colors.error};
+  box-shadow: 0 0 0 3px ${Theme.colors.error};
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+
+  background-color: ${Theme.colors.white};
+  text-align: center;
+  z-index: 500;
+`;
+
 const Button = styled.button`
-  width: 157px;
+  width: 55%;
   height: 37px;
+  margin-right: 5%;
   background: ${Theme.colors.primary};
   border: 1px solid ${Theme.colors.primary};
   border-radius: 9px;
@@ -91,13 +112,59 @@ const Button = styled.button`
   line-height: 18px;
   color: ${Theme.colors.white};
   cursor: pointer;
+  transition: all 0.2s ease;
 
   &:hover {
     opacity: 0.5;
   }
+
+  &:disabled {
+    background: ${Theme.colors.disabled};
+    border-color: ${Theme.colors.disabled};
+    &:hover {
+      opacity: 1;
+      cursor: not-allowed;
+    }
+  }
+
+  &:active {
+    font-size: ${Theme.fontSize.small};
+    transform: translateY(1px);
+  }
+
+  &.active {
+    font-size: 0;
+    border-radius: 25px;
+    width: 50px;
+    background: transparent;
+  }
+
+  &.loader {
+    border-right: 2px solid ${Theme.colors.white};
+    animation: loader 0.4s linear infinite;
+  }
+
+  &.success {
+    background: ${Theme.colors.success};
+    border-color: ${Theme.colors.success};
+    font-size: ${Theme.fontSize.small};
+  }
+
+  @keyframes loader {
+    0% {
+      transform: rotateZ(0);
+    }
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
 `;
 
 export class AddTask extends Component {
+  state = {
+    addSuccessful: false
+  };
+
   handleSubmit = async (values, { setSubmitting }) => {
     try {
       const { taskDueDate } = values;
@@ -126,29 +193,44 @@ export class AddTask extends Component {
       );
 
       setSubmitting(false);
+      this.setState(prevState => ({
+        ...prevState,
+        addSuccessful: true
+      }));
     } catch (e) {
       console.log(e);
       setSubmitting(false);
+      this.setState(prevState => ({
+        ...prevState,
+        addSuccessful: false
+      }));
     }
   };
 
   render() {
+    const { addSuccessful } = this.state;
+
+    if (addSuccessful) {
+      return <Redirect to={`/tasks`} />;
+    }
+
     // Set Date to yesterday for validation
     let currentDate = new Date();
     currentDate.setDate(currentDate.getDate() - 1);
 
     const taskSchema = Yup.object().shape({
       taskName: Yup.string()
+        .typeError("You must enter a text.")
         .min(2, "Task Name is too short.")
         .max(30, "Task Name is too long.")
         .required("Task Name is required."),
       taskDescription: Yup.string()
-        .min(1, "Task Description is too short.")
+        .typeError("You must enter a text.")
+        .min(2, "Task Description is too short.")
         .max(150, "Task Description is too long."),
-      taskDueDate: Yup.date().min(
-        moment(currentDate),
-        "Task Due Date cannot be in the past."
-      ),
+      taskDueDate: Yup.date()
+        .typeError("You must enter a date.")
+        .min(moment(currentDate), "Task Due Date cannot be in the past."),
       taskPriority: Yup.string(),
       taskDifficulty: Yup.string(),
       isTaskComplete: Yup.boolean(),
@@ -193,7 +275,9 @@ export class AddTask extends Component {
                       value={values.taskName}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      error={"Wrong"}
                     />
+                    <ErrorMessage name="taskName" component={Error} />
                   </FormGroup>
                   <FormDescription>
                     <label htmlFor="taskDescription">Description</label>
@@ -206,6 +290,7 @@ export class AddTask extends Component {
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
+                    <ErrorMessage name="taskDescription" component={Error} />
                   </FormDescription>
                   <FormGroup>
                     <label htmlFor="taskDueDate">Due Date</label>
@@ -215,6 +300,7 @@ export class AddTask extends Component {
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
+                    <ErrorMessage name="taskDueDate" component={Error} />
                   </FormGroup>
                   <FormGroup>
                     <label htmlFor="taskPriority">Priority</label>
@@ -230,6 +316,7 @@ export class AddTask extends Component {
                       <option value="Medium">Medium</option>
                       <option value="High">High</option>
                     </Field>
+                    <ErrorMessage name="taskPriority" component={Error} />
                   </FormGroup>
                   <FormGroup>
                     <label htmlFor="taskDifficulty">Difficulty</label>
@@ -245,27 +332,12 @@ export class AddTask extends Component {
                       <option value="Medium">Medium</option>
                       <option value="Hard">Hard</option>
                     </Field>
+                    <ErrorMessage name="taskDifficulty" component={Error} />
                   </FormGroup>
 
-                  <button
-                    type="submit"
-                    disabled={!isValid}
-                    style={{
-                      marginTop: "1.5rem",
-                      width: "55%",
-                      marginRight: "5%",
-                      height: "37px",
-                      background: `${Theme.colors.primary}`,
-                      border: `1px solid ${Theme.colors.primary}`,
-                      borderRadius: "9px",
-                      fontSize: "16px",
-                      lineHeight: "18px",
-                      color: `${Theme.colors.white}`,
-                      cursor: "pointer"
-                    }}
-                  >
+                  <Button type="submit" disabled={!isValid}>
                     Add Task
-                  </button>
+                  </Button>
                   <button
                     style={{
                       marginTop: "1.5rem",
@@ -280,7 +352,7 @@ export class AddTask extends Component {
                     }}
                   >
                     <a
-                      href="/home/"
+                      href="/tasks"
                       style={{
                         textDecoration: "none",
                         color: `${Theme.colors.primary}`

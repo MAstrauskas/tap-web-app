@@ -1,11 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import Layout from "./components/Layout/Layout";
 import UserLayout from "./components/User/Layout/Layout";
 import Cover from "./components/Cover/Cover";
 import Home from "./components/User/Home/Home";
-import AddTask from "./components/User/Tasks/AddTask";
+import AddTask from "./components/User/Tasks/AddTaskForm";
 
 import "./App.css";
 

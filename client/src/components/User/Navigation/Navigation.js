@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { NavLink } from "react-router-dom";
 import { MdAddCircle as AddIcon } from "react-icons/md";
 import Theme from "../../shared/Theme/Theme";
 
@@ -41,17 +42,21 @@ const Links = styled.div`
   display: flex;
   flex-direction: row;
   padding-top: 0.2rem;
-`;
 
-const NavLink = styled.a`
-  padding-top: 1rem;
-  padding-left: 1rem;
-  color: ${Theme.colors.primary};
-  font-size: ${Theme.fontSize.navLink};
-  transition: color 0.3s ease;
+  a {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    color: ${Theme.colors.primary};
+    font-size: ${Theme.fontSize.navLink};
+    transition: color 0.3s ease;
 
-  &:hover {
-    color: tomato;
+    &:hover {
+      color: ${Theme.colors.activeLink};
+    }
+
+    &.active {
+      color: ${Theme.colors.activeLink};
+    }
   }
 `;
 
@@ -172,14 +177,6 @@ const MenuLink = styled.a`
   }
 `;
 
-const lastLink = {
-  paddingRight: "3.5rem"
-};
-
-const activeLink = {
-  color: `${Theme.colors.black}`
-};
-
 const Navigation = () => {
   return (
     <>
@@ -189,15 +186,16 @@ const Navigation = () => {
         </LogoContainer>
 
         <Links data-testid="navigation-links">
-          <NavLink href="/tasks/add">
+          <NavLink to="/tasks/add" activeClassName="active">
             <Icon>
               <AddIcon />
             </Icon>
           </NavLink>
-          <NavLink href="/home" style={activeLink}>
-            HOME
-          </NavLink>
-          <NavLink href="/home" style={lastLink}>
+          <NavLink
+            to="/home"
+            activeClassName="active"
+            style={{ paddingRight: "3.5rem" }}
+          >
             MY TASKS
           </NavLink>
 

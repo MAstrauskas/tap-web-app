@@ -4,7 +4,10 @@ const Theme = {
     secondary: "rgba(25, 162, 205, 0.2)",
     black: "#000000",
     white: "#ffffff",
-    activeLink: "tomato"
+    error: "red",
+    disabled: "#D3D3D3",
+    activeLink: "tomato",
+    success: "green"
   },
   fontSize: {
     navLogo: "20px",

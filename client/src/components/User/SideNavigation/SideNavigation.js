@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { NavLink } from "react-router-dom";
 import {
   FaCalendarDay as TodayIcon,
   FaTasks as AllTaskIcon,
@@ -9,7 +10,10 @@ import {
   MdPieChart as SummaryIcon,
   MdAddCircle as AddIcon
 } from "react-icons/md";
+
 import Theme from "../../shared/Theme/Theme";
+import UserLayout from "../Layout/Layout";
+import AddTask from "../Tasks/AddTaskForm";
 
 const Navigation = styled.div`
   border-right: 1px solid ${Theme.colors.primary};
@@ -29,16 +33,21 @@ const Nav = styled.nav`
   flex-direction: column;
   justify-content: space-around;
   padding: 10rem 1rem 10rem 3rem;
-`;
 
-const NavLink = styled.a`
-  padding: 1rem 1rem;
-  color: ${Theme.colors.primary};
-  font-size: ${Theme.fontSize.navLink};
-  transition: color 0.3s ease;
-  cursor: pointer;
-  &:hover {
-    color: tomato;
+  a {
+    padding: 1rem 1rem;
+    color: ${Theme.colors.primary};
+    font-size: ${Theme.fontSize.navLink};
+    transition: color 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      color: tomato;
+    }
+
+    &.active {
+      color: ${Theme.colors.activeLink};
+    }
   }
 `;
 
@@ -51,31 +60,32 @@ const SideNavigation = () => {
     <>
       <Navigation data-testid="side-navigation">
         <Nav>
-          <NavLink>
+          <NavLink to="/home" activeClassName="active">
             <Icon>
               <TodayIcon />
             </Icon>
             Today
           </NavLink>
-          <NavLink>
+          <NavLink to="/tasks/all" activeClassName="active">
             <Icon>
               <AllTaskIcon />
             </Icon>
             All Tasks
           </NavLink>
-          <NavLink>
+          <NavLink to="/tasks/summary" activeClassName="active">
             <Icon>
               <SummaryIcon />
             </Icon>
             Summary
           </NavLink>
-          <NavLink>
+          <NavLink to="/tasks/add" activeClassName="active">
             <Icon>
               <AddIcon />
             </Icon>
             Add a Task
           </NavLink>
-          <NavLink>
+
+          <NavLink to="/tasks/moodist" activeClassName="active">
             <Icon>
               <MoodistIcon />
             </Icon>
