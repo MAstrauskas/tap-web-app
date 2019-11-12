@@ -211,7 +211,7 @@ export class AddTask extends Component {
     const { addSuccessful } = this.state;
 
     if (addSuccessful) {
-      return <Redirect to={`/tasks`} />;
+      return <Redirect to={`/tasks/all`} />;
     }
 
     // Set Date to yesterday for validation
