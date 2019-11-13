@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Formik, Field, ErrorMessage } from "formik";
 import { Redirect } from "react-router";
+import DatePicker from "react-datepicker";
 import styled from "@emotion/styled";
 import { jsx } from "@emotion/core";
 
 import Theme from "../../shared/Theme/Theme";
 import moment from "moment";
 import * as Yup from "yup";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const CustomForm = styled.div`
   border: 1px solid ${Theme.colors.primary};
@@ -101,6 +104,21 @@ const Error = styled.span`
   z-index: 500;
 `;
 
+const ErrorDate = styled.span`
+  width: 33%;
+  margin-left: 0.2rem;
+  padding: 0.5rem;
+
+  color: ${Theme.colors.error};
+  box-shadow: 0 0 0 3px ${Theme.colors.error};
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+
+  background-color: ${Theme.colors.white};
+  text-align: center;
+  z-index: 0;
+`;
+
 const Button = styled.button`
   width: 55%;
   height: 37px;
@@ -167,14 +185,12 @@ export class AddTask extends Component {
 
   handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const { taskDueDate } = values;
-      const taskDueDateTimestamp = Date.parse(taskDueDate);
       const taskCreateDate = Date.now();
       const body = {
         taskName: values.taskName,
         taskDescription: values.taskDescription,
         taskCreateDate,
-        taskDueDate: taskDueDateTimestamp,
+        taskDueDate: values.taskDueDate,
         taskPriority: values.taskPriority,
         taskDifficulty: values.taskDifficulty,
         isTaskComplete: values.isTaskComplete,
@@ -214,9 +230,11 @@ export class AddTask extends Component {
       return <Redirect to={`/tasks/all`} />;
     }
 
-    // Set Date to yesterday for validation
+    // Initialize dates for validation
     let currentDate = new Date();
+    let tomorrowDate = new Date();
     currentDate.setDate(currentDate.getDate() - 1);
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
 
     const taskSchema = Yup.object().shape({
       taskName: Yup.string()
@@ -228,9 +246,10 @@ export class AddTask extends Component {
         .typeError("You must enter a text.")
         .min(2, "Task Description is too short.")
         .max(150, "Task Description is too long."),
-      taskDueDate: Yup.date()
-        .typeError("You must enter a date.")
-        .min(moment(currentDate), "Task Due Date cannot be in the past."),
+      taskDueDate: Yup.number().min(
+        moment(currentDate),
+        "Task Due Date cannot be in the past."
+      ),
       taskPriority: Yup.string(),
       taskDifficulty: Yup.string(),
       isTaskComplete: Yup.boolean(),
@@ -243,7 +262,7 @@ export class AddTask extends Component {
             taskName: "",
             taskDescription: "",
             taskCreateDate: Date.now(),
-            taskDueDate: null,
+            taskDueDate: Date.parse(tomorrowDate),
             taskPriority: "",
             taskDifficulty: "",
             isTaskComplete: false,
@@ -255,6 +274,7 @@ export class AddTask extends Component {
           {props => {
             const {
               values,
+              setFieldValue,
               handleChange,
               handleBlur,
               handleSubmit,
@@ -295,12 +315,16 @@ export class AddTask extends Component {
                   <FormGroup>
                     <label htmlFor="taskDueDate">Due Date</label>
                     <Field
-                      type="date"
+                      as={DatePicker}
                       name="taskDueDate"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      selected={values.taskDueDate}
+                      onChange={date =>
+                        setFieldValue("taskDueDate", Date.parse(date))
+                      }
+                      dateFormat="dd/MM/yyyy"
+                      showTimeSelect
                     />
-                    <ErrorMessage name="taskDueDate" component={Error} />
+                    <ErrorMessage name="taskDueDate" component={ErrorDate} />
                   </FormGroup>
                   <FormGroup>
                     <label htmlFor="taskPriority">Priority</label>

@@ -25,11 +25,11 @@ router.get("/:id", TaskController.taskDetail);
 router.post("/add", TaskController.addTask_post);
 
 /**
- * @route PUT api/tasks/id/edit
+ * @route PUT api/tasks/edit/id
  * @desc PUT request for editing a Task
  * @access Pusblic
  **/
-router.put("/edit", TaskController.editTask_post);
+router.put("/edit/:id", TaskController.editTask_post);
 
 /**
  * @route POST api/tasks/delete/id

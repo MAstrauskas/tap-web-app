@@ -6,6 +6,7 @@ import Cover from "./components/Cover/Cover";
 import Home from "./components/User/Home/Home";
 import AddTask from "./components/User/Tasks/AddTaskForm";
 import AllTasks from "./components/User/Tasks/AllTasks";
+import EditTask from "./components/User/Tasks/EditTask";
 
 import "./App.css";
 
@@ -25,6 +26,7 @@ class App extends React.Component {
                 <AddTask />
               </UserLayout>
             </Route>
+            <Route path="/tasks/edit" component={EditTask}></Route>
             <Route path="/tasks/all">
               <UserLayout>
                 <AllTasks />

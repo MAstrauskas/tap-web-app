@@ -69,14 +69,14 @@ exports.addTask_post = (req, res, next) => {
 };
 
 /**
- * PUT /api/tasks/edit
+ * PUT /api/tasks/edit/id
  *
  * @export
  * @param {any} req
  * @param {any} res
  **/
 exports.editTask_post = (req, res, next) => {
-  let taskId = req.body.taskId;
+  let taskId = req.params.id;
 
   const data = {
     taskName: req.body.taskName,

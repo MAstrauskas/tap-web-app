@@ -192,7 +192,7 @@ const Navigation = () => {
             </Icon>
           </NavLink>
           <NavLink
-            to="/home"
+            to="/tasks/all"
             activeClassName="active"
             style={{ paddingRight: "3.5rem" }}
           >

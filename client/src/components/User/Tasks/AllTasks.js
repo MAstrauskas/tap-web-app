@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import {
   MdEdit as EditIcon,
@@ -93,8 +94,6 @@ export default class AllTasks extends Component {
   };
 
   handleDelete = async taskId => {
-    console.log(taskId);
-
     await axios.delete(`http://localhost:9000/api/tasks/delete/${taskId}`).then(
       response => {
         console.log(response);
@@ -117,7 +116,7 @@ export default class AllTasks extends Component {
 
   render() {
     const { tasks } = this.state;
-    console.log(this.state.tasks);
+
     return (
       <>
         <h1>Your tasks</h1>
@@ -137,7 +136,7 @@ export default class AllTasks extends Component {
                 <TableHeader>Delete</TableHeader>
               </tr>
               {tasks.map(task => {
-                const dueDate = moment(task.taskDueDate).format("DD/MM/YYYY");
+                const dueDate = moment(task.taskDueDate).format("LL hh:mm A");
 
                 return (
                   <tr>
@@ -147,9 +146,18 @@ export default class AllTasks extends Component {
                     <TableContent>{task.taskPriority}</TableContent>
                     <TableContent>{task.taskDifficulty}</TableContent>
                     <TableContent>
-                      <TableButton>
-                        <EditIcon />
-                      </TableButton>
+                      <Link
+                        to={{
+                          pathname: "/tasks/edit",
+                          state: {
+                            task: task
+                          }
+                        }}
+                      >
+                        <TableButton>
+                          <EditIcon />
+                        </TableButton>
+                      </Link>
                     </TableContent>
                     <TableContent>
                       <TableButton onClick={() => this.handleDelete(task._id)}>
