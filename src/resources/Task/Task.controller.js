@@ -103,15 +103,15 @@ exports.editTask_post = (req, res, next) => {
 };
 
 /**
- * POST /api/tasks/delete
+ * POST /api/tasks/delete/id
  *
  * @export
  * @param {any} req
  * @param {any} res
  **/
 exports.deleteTask_post = async (req, res, next) => {
-  const resultMessage = await Task.findByIdAndDelete(req.body.taskId)
-    .then(() => "Task has been deleted.")
+  const resultMessage = await Task.findByIdAndDelete(req.params.id)
+    .then(() => console.log(req))
     .catch(next);
 
   res.json({ resultMessage });

@@ -92,6 +92,25 @@ export default class AllTasks extends Component {
     this.setState({ ...this.state, isFetching: false });
   };
 
+  handleDelete = async taskId => {
+    console.log(taskId);
+
+    await axios.delete(`http://localhost:9000/api/tasks/delete/${taskId}`).then(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    this.setState({ tasks: [] });
+
+    await axios.get("http://localhost:9000/api/tasks").then(res => {
+      this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
+    });
+  };
+
   componentDidMount() {
     this.handleTasks();
   }
@@ -133,7 +152,7 @@ export default class AllTasks extends Component {
                       </TableButton>
                     </TableContent>
                     <TableContent>
-                      <TableButton>
+                      <TableButton onClick={() => this.handleDelete(task._id)}>
                         <DeleteIcon />
                       </TableButton>
                     </TableContent>

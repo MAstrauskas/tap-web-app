@@ -32,10 +32,10 @@ router.post("/add", TaskController.addTask_post);
 router.put("/edit", TaskController.editTask_post);
 
 /**
- * @route POST api/tasks/id/delete
+ * @route POST api/tasks/delete/id
  * @desc POST request for deleting a Task
  * @access Public
  **/
-router.delete("/delete", TaskController.deleteTask_post);
+router.delete("/delete/:id", TaskController.deleteTask_post);
 
 module.exports = router;
