@@ -232,9 +232,9 @@ export class AddTask extends Component {
 
     // Initialize dates for validation
     let currentDate = new Date();
-    let tomorrowDate = new Date();
+    let todaysDate = new Date();
     currentDate.setDate(currentDate.getDate() - 1);
-    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    todaysDate.setDate(todaysDate.getDate());
 
     const taskSchema = Yup.object().shape({
       taskName: Yup.string()
@@ -262,7 +262,7 @@ export class AddTask extends Component {
             taskName: "",
             taskDescription: "",
             taskCreateDate: Date.now(),
-            taskDueDate: Date.parse(tomorrowDate),
+            taskDueDate: Date.parse(todaysDate),
             taskPriority: "",
             taskDifficulty: "",
             isTaskComplete: false,
