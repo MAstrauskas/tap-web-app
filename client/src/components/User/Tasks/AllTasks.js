@@ -77,6 +77,8 @@ const TableButton = styled.button`
   }
 `;
 
+const Checkbox = styled.input``;
+
 export default class AllTasks extends Component {
   state = {
     isFetching: false,
@@ -140,7 +142,9 @@ export default class AllTasks extends Component {
 
                 return (
                   <tr>
-                    <TableContent>{task.taskName}</TableContent>
+                    <TableContent>
+                      <Checkbox type="checkbox" /> {task.taskName}
+                    </TableContent>
                     <TableContent>{task.taskDescription}</TableContent>
                     <TableContent>{dueDate}</TableContent>
                     <TableContent>{task.taskPriority}</TableContent>

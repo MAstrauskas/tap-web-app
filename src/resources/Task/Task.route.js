@@ -38,4 +38,18 @@ router.put("/edit/:id", TaskController.editTask_post);
  **/
 router.delete("/delete/:id", TaskController.deleteTask_post);
 
+/**
+ * @route GET api/tasks/completed/all
+ * @desc GET request for completed tasks
+ * @access Public
+ **/
+router.get("/completed/all", TaskController.tasksCompleted_get);
+
+/**
+ * @route PATCH api/tasks/completed/add
+ * @desc PATCH request for making a task completed
+ * @access Public
+ */
+router.patch("/completed/add", TaskController.tasksCompleted_add);
+
 module.exports = router;

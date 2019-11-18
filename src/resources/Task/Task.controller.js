@@ -116,3 +116,58 @@ exports.deleteTask_post = async (req, res, next) => {
 
   res.json({ resultMessage });
 };
+
+/**
+ * POST /api/tasks/delete/id
+ *
+ * @export
+ * @param {any} req
+ * @param {any} res
+ **/
+exports.deleteTask_post = async (req, res, next) => {
+  const resultMessage = await Task.findByIdAndDelete(req.params.id)
+    .then(() => console.log(req))
+    .catch(next);
+
+  res.json({ resultMessage });
+};
+
+/**
+ * GET /api/tasks/completed/all
+ *
+ * @export
+ * @param {any} req
+ * @param {any} res
+ **/
+exports.tasksCompleted_get = (req, res, next) => {
+  Task.find({ isTaskComplete: true }, (err, tasks) => {
+    res.send({ tasks: tasks });
+  }).catch(next);
+};
+
+/**
+ * PATCH /api/tasks/completed/add
+ *
+ * @export
+ * @param {any} req
+ * @param {any} res
+ **/
+exports.tasksCompleted_add = (req, res, next) => {
+  let taskId = req.body.id;
+
+  const data = {
+    isTaskComplete: true
+  };
+
+  Task.findByIdAndUpdate(taskId, data, (err, task) => {
+    if (err) {
+      res
+        .status(500)
+        .send(
+          "Error occured while trying to add a task to completed list Please check if the information is correct"
+        );
+    }
+
+    res.send("Task has been updated.");
+  }).catch(next);
+};

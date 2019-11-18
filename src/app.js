@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const testItem = require("./resources/testItem/testItem.route");
 const user = require("./resources/User/User.route");
 const task = require("./resources/Task/Task.route");
 
