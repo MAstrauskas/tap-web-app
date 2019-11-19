@@ -9,6 +9,7 @@ import {
 } from "react-icons/md";
 
 import Theme from "../../shared/Theme/Theme";
+import Checkbox from "../../shared/Checkbox";
 
 const Table = styled.table`
   display: flex;
@@ -22,8 +23,11 @@ const Table = styled.table`
 
 const TableBody = styled.tbody`
   width: 100%;
-
   border-radius: 9px;
+
+  tr:nth-child(even) {
+    background-color: ${Theme.colors.secondary};
+  }
 `;
 
 const TableHeader = styled.th`
@@ -47,7 +51,6 @@ const TableContent = styled.td`
   width: 100%;
 
   padding: 0.5rem;
-  border: 1px solid ${Theme.colors.primary};
   border-right: 0px;
   border-top: 0px;
 
@@ -63,7 +66,7 @@ const TableContent = styled.td`
 
 const TableButton = styled.button`
   border: 0px;
-  background: white;
+  background: transparent;
   transition: color 0.3s ease;
   cursor: pointer;
 
@@ -77,6 +80,10 @@ const TableButton = styled.button`
   }
 `;
 
+const TaskName = styled.span`
+  margin-left: 10px;
+`;
+
 export default class Home extends Component {
   state = {
     isFetching: false,
@@ -87,7 +94,12 @@ export default class Home extends Component {
     this.setState({ ...this.state, isFetching: true });
 
     await axios.get("http://localhost:9000/api/tasks").then(res => {
-      this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
+      this.setState({
+        tasks: [
+          ...this.state.tasks.filter(task => !task.isTaskComplete),
+          ...res.data.tasks
+        ]
+      });
     });
 
     this.setState({ ...this.state, isFetching: false });
@@ -103,6 +115,14 @@ export default class Home extends Component {
       }
     );
 
+    this.setState({ tasks: [] });
+
+    await axios.get("http://localhost:9000/api/tasks").then(res => {
+      this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
+    });
+  };
+
+  handleComplete = async () => {
     this.setState({ tasks: [] });
 
     await axios.get("http://localhost:9000/api/tasks").then(res => {
@@ -139,15 +159,21 @@ export default class Home extends Component {
 
                   return (
                     dueDate.setHours(0, 0, 0, 0) ===
-                    todaysDate.setHours(0, 0, 0, 0)
+                      todaysDate.setHours(0, 0, 0, 0) && !task.isTaskComplete
                   );
                 })
                 .map(task => {
-                  const dueDate = moment(task.taskDueDate).format("LL hh:mm A");
+                  const dueDate = moment(task.taskDueDate).format("LL");
 
                   return (
-                    <tr>
-                      <TableContent>{task.taskName}</TableContent>
+                    <tr disabled={task.isTaskComplete}>
+                      <TableContent>
+                        <Checkbox
+                          id={task._id}
+                          handleComplete={this.handleComplete}
+                        />
+                        <TaskName>{task.taskName}</TaskName>
+                      </TableContent>
                       <TableContent>{dueDate}</TableContent>
                       <TableContent>
                         <Link

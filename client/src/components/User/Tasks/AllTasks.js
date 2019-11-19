@@ -9,6 +9,7 @@ import {
 } from "react-icons/md";
 
 import Theme from "../../shared/Theme/Theme";
+import Checkbox from "../../shared/Checkbox";
 
 const Table = styled.table`
   display: flex;
@@ -22,8 +23,11 @@ const Table = styled.table`
 
 const TableBody = styled.tbody`
   width: 100%;
-
   border-radius: 9px;
+
+  tr:nth-child(even) {
+    background-color: ${Theme.colors.secondary};
+  }
 `;
 
 const TableHeader = styled.th`
@@ -47,7 +51,7 @@ const TableContent = styled.td`
   width: 100%;
 
   padding: 0.5rem;
-  border: 1px solid ${Theme.colors.primary};
+
   border-right: 0px;
   border-top: 0px;
 
@@ -63,7 +67,7 @@ const TableContent = styled.td`
 
 const TableButton = styled.button`
   border: 0px;
-  background: white;
+  background: transparent;
   transition: color 0.3s ease;
   cursor: pointer;
 
@@ -77,7 +81,9 @@ const TableButton = styled.button`
   }
 `;
 
-const Checkbox = styled.input``;
+const TaskName = styled.span`
+  margin-left: 10px;
+`;
 
 export default class AllTasks extends Component {
   state = {
@@ -112,6 +118,14 @@ export default class AllTasks extends Component {
     });
   };
 
+  handleComplete = async () => {
+    this.setState({ tasks: [] });
+
+    await axios.get("http://localhost:9000/api/tasks").then(res => {
+      this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
+    });
+  };
+
   componentDidMount() {
     this.handleTasks();
   }
@@ -130,47 +144,53 @@ export default class AllTasks extends Component {
             <TableBody>
               <tr>
                 <TableHeader>Task</TableHeader>
-                <TableHeader>Description</TableHeader>
                 <TableHeader>Due Date</TableHeader>
                 <TableHeader>Priority</TableHeader>
                 <TableHeader>Difficulty</TableHeader>
                 <TableHeader>Edit</TableHeader>
                 <TableHeader>Delete</TableHeader>
               </tr>
-              {tasks.map(task => {
-                const dueDate = moment(task.taskDueDate).format("LL hh:mm A");
+              {tasks
+                .filter(task => !task.isTaskComplete)
+                .map(task => {
+                  const dueDate = moment(task.taskDueDate).format("LL");
 
-                return (
-                  <tr>
-                    <TableContent>
-                      <Checkbox type="checkbox" /> {task.taskName}
-                    </TableContent>
-                    <TableContent>{task.taskDescription}</TableContent>
-                    <TableContent>{dueDate}</TableContent>
-                    <TableContent>{task.taskPriority}</TableContent>
-                    <TableContent>{task.taskDifficulty}</TableContent>
-                    <TableContent>
-                      <Link
-                        to={{
-                          pathname: "/tasks/edit",
-                          state: {
-                            task: task
-                          }
-                        }}
-                      >
-                        <TableButton>
-                          <EditIcon />
+                  return (
+                    <tr>
+                      <TableContent>
+                        <Checkbox
+                          id={task._id}
+                          handleComplete={this.handleComplete}
+                        />
+                        <TaskName>{task.taskName}</TaskName>
+                      </TableContent>
+                      <TableContent>{dueDate}</TableContent>
+                      <TableContent>{task.taskPriority}</TableContent>
+                      <TableContent>{task.taskDifficulty}</TableContent>
+                      <TableContent>
+                        <Link
+                          to={{
+                            pathname: "/tasks/edit",
+                            state: {
+                              task: task
+                            }
+                          }}
+                        >
+                          <TableButton>
+                            <EditIcon />
+                          </TableButton>
+                        </Link>
+                      </TableContent>
+                      <TableContent>
+                        <TableButton
+                          onClick={() => this.handleDelete(task._id)}
+                        >
+                          <DeleteIcon />
                         </TableButton>
-                      </Link>
-                    </TableContent>
-                    <TableContent>
-                      <TableButton onClick={() => this.handleDelete(task._id)}>
-                        <DeleteIcon />
-                      </TableButton>
-                    </TableContent>
-                  </tr>
-                );
-              })}
+                      </TableContent>
+                    </tr>
+                  );
+                })}
             </TableBody>
           </Table>
         )}

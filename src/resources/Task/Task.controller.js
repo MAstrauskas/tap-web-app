@@ -156,7 +156,8 @@ exports.tasksCompleted_add = (req, res, next) => {
   let taskId = req.body.id;
 
   const data = {
-    isTaskComplete: true
+    isTaskComplete: true,
+    taskUpdateDate: req.body.taskUpdateDate
   };
 
   Task.findByIdAndUpdate(taskId, data, (err, task) => {
