@@ -221,6 +221,7 @@ export class Mood extends Component {
                     <label htmlFor="mood">How are you feeling?</label>
                     <Field
                       type="text"
+                      data-testid="mood-name"
                       name="mood"
                       placeholder="Enter your mood..."
                       value={values.mood}
@@ -236,6 +237,7 @@ export class Mood extends Component {
                     </label>
                     <Field
                       as="select"
+                      data-testid="mood-motivation"
                       name="moodMotivation"
                       value={values.moodMotivation}
                       onChange={handleChange}
@@ -254,6 +256,7 @@ export class Mood extends Component {
                     <label htmlFor="moodTired">Are you tired?</label>
                     <Field
                       as="select"
+                      data-testid="mood-tired"
                       name="moodTired"
                       value={values.moodTired}
                       onChange={handleChange}

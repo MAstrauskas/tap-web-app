@@ -4,6 +4,16 @@ import AddTask from "../AddTaskForm";
 
 describe("Add Task", () => {
   it("renders correctly", () => {
-    const { getByText } = render(<AddTask />);
+    const {} = render(<AddTask />);
+  });
+
+  it("has all the fields required", () => {
+    const { getByTestId } = render(<AddTask />);
+
+    getByTestId("task-name");
+    getByTestId("task-description");
+    getByTestId("task-due-date");
+    getByTestId("task-priority");
+    getByTestId("task-difficulty");
   });
 });

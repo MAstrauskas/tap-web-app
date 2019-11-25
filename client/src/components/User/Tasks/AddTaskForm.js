@@ -290,6 +290,7 @@ export class AddTask extends Component {
                     <label htmlFor="taskName">Name</label>
                     <Field
                       type="text"
+                      data-testid="task-name"
                       name="taskName"
                       placeholder="Enter a task..."
                       value={values.taskName}
@@ -303,6 +304,7 @@ export class AddTask extends Component {
                     <label htmlFor="taskDescription">Description</label>
                     <Field
                       as="textarea"
+                      data-testid="task-description"
                       name="taskDescription"
                       rows="5"
                       placeholder="Enter a description..."
@@ -313,7 +315,9 @@ export class AddTask extends Component {
                     <ErrorMessage name="taskDescription" component={Error} />
                   </FormDescription>
                   <FormGroup>
-                    <label htmlFor="taskDueDate">Due Date</label>
+                    <label htmlFor="taskDueDate" data-testid="task-due-date">
+                      Due Date
+                    </label>
                     <Field
                       as={DatePicker}
                       name="taskDueDate"
@@ -330,6 +334,7 @@ export class AddTask extends Component {
                     <label htmlFor="taskPriority">Priority</label>
                     <Field
                       as="select"
+                      data-testid="task-priority"
                       name="taskPriority"
                       value={values.taskPriority}
                       onChange={handleChange}
@@ -346,6 +351,7 @@ export class AddTask extends Component {
                     <label htmlFor="taskDifficulty">Difficulty</label>
                     <Field
                       as="select"
+                      data-testid="task-difficulty"
                       name="taskDifficulty"
                       value={values.taskDifficulty}
                       onChange={handleChange}
