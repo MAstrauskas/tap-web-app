@@ -5,10 +5,18 @@ const MoodSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true
+    required: false // TODO Change to true when users are available
   },
   moodName: {
     type: String,
+    required: true
+  },
+  moodMotivation: {
+    type: String,
+    required: true
+  },
+  isTired: {
+    type: Boolean,
     required: true
   },
   moodType: {

@@ -7,6 +7,7 @@ import Home from "./components/User/Home/Home";
 import AddTask from "./components/User/Tasks/AddTaskForm";
 import AllTasks from "./components/User/Tasks/AllTasks";
 import EditTask from "./components/User/Tasks/EditTask";
+import Mood from "./components/User/Mood/Mood";
 
 import "./App.css";
 
@@ -30,6 +31,11 @@ class App extends React.Component {
             <Route path="/tasks/all">
               <UserLayout>
                 <AllTasks />
+              </UserLayout>
+            </Route>
+            <Route path="/tasks/moodist">
+              <UserLayout>
+                <Mood />
               </UserLayout>
             </Route>
             <Route path="/">

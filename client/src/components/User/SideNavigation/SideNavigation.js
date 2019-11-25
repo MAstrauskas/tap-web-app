@@ -12,8 +12,6 @@ import {
 } from "react-icons/md";
 
 import Theme from "../../shared/Theme/Theme";
-import UserLayout from "../Layout/Layout";
-import AddTask from "../Tasks/AddTaskForm";
 
 const Navigation = styled.div`
   border-right: 1px solid ${Theme.colors.primary};
@@ -35,7 +33,7 @@ const Nav = styled.nav`
   padding: 10rem 1rem 10rem 3rem;
 
   a {
-    padding: 1rem 1rem;
+    padding: 1rem 0rem;
     color: ${Theme.colors.primary};
     font-size: ${Theme.fontSize.navLink};
     transition: color 0.3s ease;
