@@ -21,11 +21,14 @@ const MoodSchema = new Schema({
   },
   moodType: {
     type: String,
-    required: true
+    required: false
   },
   finalMood: {
     type: String,
-    required: true
+    required: false
+  },
+  suggestedTasks: {
+    type: Array
   }
 });
 
