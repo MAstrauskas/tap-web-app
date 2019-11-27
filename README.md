@@ -13,5 +13,7 @@
 
 1. Install all the required dependencies by typing `yarn && yarn client-install` in the terminal
 2. Type `yarn dev` in the terminal to run both client and server side concurrently
-3. To run only client side, type `yarn client` in the terminal
-4. To run only server side, type `yarn server` in the terminal
+   1. To run only client side, type `yarn client` in the terminal
+   2. To run only server side, type `yarn server` in the terminal
+3. The client will run on `localhost:3000` and server on `localhost:9000`
+   1. Go to `localhost:3000` to access the full web app in your browser
