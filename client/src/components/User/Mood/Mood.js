@@ -139,7 +139,9 @@ const Button = styled.button`
 
 export class Mood extends Component {
   state = {
-    addSuccessful: false
+    addSuccessful: false,
+    moodList: [],
+    isFetching: false
   };
 
   handleSubmit = async (values, { setSubmitting }) => {
@@ -176,19 +178,38 @@ export class Mood extends Component {
     }
   };
 
+  handleMoodList = async () => {
+    try {
+      this.setState({ ...this.state, isFetching: true });
+
+      await axios.get("http://localhost:9000/api/moodlist/").then(response => {
+        this.setState({
+          moodList: [
+            ...this.state.moodList,
+            ...response.data.map(mood => mood.moodName)
+          ]
+        });
+      });
+
+      this.setState({ ...this.state, isFetching: false });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  componentDidMount() {
+    this.handleMoodList();
+  }
+
   render() {
-    const { addSuccessful } = this.state;
+    const { addSuccessful, moodList } = this.state;
 
     if (addSuccessful) {
       return <Redirect to={`/tasks/all`} />;
     }
 
     const moodSchema = Yup.object().shape({
-      mood: Yup.string()
-        .typeError("You must enter a text.")
-        .min(2, "Mood is too short.")
-        .max(30, "Mood is too long.")
-        .required("Mood is required."),
+      mood: Yup.string(),
       moodMotivation: Yup.string(),
       moodTired: Yup.string()
     });
@@ -215,87 +236,93 @@ export class Mood extends Component {
             return (
               <form onSubmit={handleSubmit} data-testid="add-mood-form">
                 <Title>Moodist</Title>
+                {this.state.isFetching ? (
+                  <h2>Loading...</h2>
+                ) : (
+                  <Form>
+                    <FormGroup>
+                      <label htmlFor="mood">How are you feeling?</label>
+                      <Field
+                        as="select"
+                        data-testid="mood-name"
+                        name="mood"
+                        placeholder="Enter your mood..."
+                        value={values.mood}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        {moodList.map(mood => {
+                          return <option>{mood}</option>;
+                        })}
+                      </Field>
+                      <ErrorMessage name="mood" component={Error} />
+                    </FormGroup>
+                    <FormGroup>
+                      <label htmlFor="moodMotivation">
+                        Rate your motivation level
+                      </label>
+                      <Field
+                        as="select"
+                        data-testid="mood-motivation"
+                        name="moodMotivation"
+                        value={values.moodMotivation}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        <option value="None">None</option>
+                        <option value="Low">Low - I have no motivation</option>
+                        <option value="Medium">
+                          Medium - I want to do some stuff
+                        </option>
+                        <option value="High">High - bring it on!</option>
+                      </Field>
+                      <ErrorMessage name="moodMotivation" component={Error} />
+                    </FormGroup>
+                    <FormGroup>
+                      <label htmlFor="moodTired">Are you tired?</label>
+                      <Field
+                        as="select"
+                        data-testid="mood-tired"
+                        name="moodTired"
+                        value={values.moodTired}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      >
+                        <option value="None">None</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </Field>
+                      <ErrorMessage name="moodTired" component={Error} />
+                    </FormGroup>
 
-                <Form>
-                  <FormGroup>
-                    <label htmlFor="mood">How are you feeling?</label>
-                    <Field
-                      type="text"
-                      data-testid="mood-name"
-                      name="mood"
-                      placeholder="Enter your mood..."
-                      value={values.mood}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={"Wrong"}
-                    />
-                    <ErrorMessage name="mood" component={Error} />
-                  </FormGroup>
-                  <FormGroup>
-                    <label htmlFor="moodMotivation">
-                      Rate your motivation level
-                    </label>
-                    <Field
-                      as="select"
-                      data-testid="mood-motivation"
-                      name="moodMotivation"
-                      value={values.moodMotivation}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    >
-                      <option value="None">None</option>
-                      <option value="Low">Low - I have no motivation</option>
-                      <option value="Medium">
-                        Medium - I want to do some stuff
-                      </option>
-                      <option value="High">High - bring it on!</option>
-                    </Field>
-                    <ErrorMessage name="moodMotivation" component={Error} />
-                  </FormGroup>
-                  <FormGroup>
-                    <label htmlFor="moodTired">Are you tired?</label>
-                    <Field
-                      as="select"
-                      data-testid="mood-tired"
-                      name="moodTired"
-                      value={values.moodTired}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    >
-                      <option value="None">None</option>
-                      <option value="Yes">Yes</option>
-                      <option value="No">No</option>
-                    </Field>
-                    <ErrorMessage name="moodTired" component={Error} />
-                  </FormGroup>
-
-                  <Button type="submit" disabled={!isValid}>
-                    Add My Mood
-                  </Button>
-                  <button
-                    style={{
-                      marginTop: "1.5rem",
-                      width: "40%",
-                      height: "37px",
-                      background: `${Theme.colors.secondary}`,
-                      border: `1px solid ${Theme.colors.primary}`,
-                      borderRadius: "9px",
-                      fontSize: "16px",
-                      lineHeight: "18px",
-                      cursor: "pointer"
-                    }}
-                  >
-                    <a
-                      href="/tasks"
+                    <Button type="submit" disabled={!isValid}>
+                      Add My Mood
+                    </Button>
+                    <button
                       style={{
-                        textDecoration: "none",
-                        color: `${Theme.colors.primary}`
+                        marginTop: "1.5rem",
+                        width: "40%",
+                        height: "37px",
+                        background: `${Theme.colors.secondary}`,
+                        border: `1px solid ${Theme.colors.primary}`,
+                        borderRadius: "9px",
+                        fontSize: "16px",
+                        lineHeight: "18px",
+                        cursor: "pointer"
                       }}
                     >
-                      Cancel
-                    </a>
-                  </button>
-                </Form>
+                      <a
+                        href="/tasks"
+                        style={{
+                          textDecoration: "none",
+                          color: `${Theme.colors.primary}`
+                        }}
+                      >
+                        Cancel
+                      </a>
+                    </button>
+                  </Form>
+                )}
               </form>
             );
           }}

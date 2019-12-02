@@ -10,7 +10,7 @@ const Task = require("./Task.model");
 exports.taskList = (req, res, next) => {
   Task.find({}, (err, tasks) => {
     res.send({ tasks: tasks });
-  });
+  }).sort("taskDueDate");
 };
 
 /**
