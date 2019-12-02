@@ -35,16 +35,16 @@ exports.addMood_post = (req, res, next) => {
     isTired: req.body.isTired
   });
 
-  newMood.save((err, task) => {
+  newMood.save((err, mood) => {
     if (err) {
-      res
+      return res
         .status(500)
         .send(
           "Error occured while trying to add a mood. Please check if the information is correct"
         );
     }
 
-    res.send("Mood has been added - " + `"${mood.moodName}"`);
+    return res.send("Mood has been added");
   });
 };
 

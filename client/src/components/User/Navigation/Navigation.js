@@ -169,7 +169,7 @@ const Menu = styled.ul`
   }
 `;
 
-const MenuLink = styled.a`
+const MenuLink = styled(NavLink)`
   transition: color 0.3s ease;
   cursor: pointer;
   &:hover {
@@ -207,13 +207,13 @@ const Navigation = () => {
             <MenuLine></MenuLine>
 
             <Menu>
-              <MenuLink>
+              <MenuLink to="/tasks/" activeClassName="active">
                 <li>SETTINGS</li>
               </MenuLink>
-              <MenuLink>
+              <MenuLink to="/tasks/moodist" activeClassName="active">
                 <li>MOODIST</li>
               </MenuLink>
-              <MenuLink>
+              <MenuLink to="/tasks/" activeClassName="active">
                 <li>LOGOUT</li>
               </MenuLink>
             </Menu>

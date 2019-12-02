@@ -151,7 +151,7 @@ export class Mood extends Component {
         moodMotivation: values.moodMotivation,
         isTired: values.moodTired === "Yes" ? true : false
       };
-
+      console.log(body.moodName);
       setSubmitting(true);
 
       await axios.post("http://localhost:9000/api/mood/add", body).then(
@@ -209,9 +209,11 @@ export class Mood extends Component {
     }
 
     const moodSchema = Yup.object().shape({
-      mood: Yup.string(),
-      moodMotivation: Yup.string(),
-      moodTired: Yup.string()
+      mood: Yup.string().required("Please choose how you feel."),
+      moodMotivation: Yup.string().required(
+        "Please choose your motivation level."
+      ),
+      moodTired: Yup.string().required("Please choose whether you are tired.")
     });
     return (
       <CustomForm>
@@ -246,11 +248,11 @@ export class Mood extends Component {
                         as="select"
                         data-testid="mood-name"
                         name="mood"
-                        placeholder="Enter your mood..."
                         value={values.mood}
                         onChange={handleChange}
                         onBlur={handleBlur}
                       >
+                        <option>None</option>
                         {moodList.map(mood => {
                           return <option>{mood}</option>;
                         })}
