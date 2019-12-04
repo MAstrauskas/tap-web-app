@@ -57,10 +57,6 @@ exports.addMood_post = (req, res, next) => {
  **/
 exports.calculateTasks_put = (req, res, next) => {
   // TODO 1. Calculate final mood for current date
-  /**
-   * 1. Take all the moods of the user of the current date
-   * 2.
-   */
   // TODO 2. Find all relavant tasks
   // TODO 3. Add them to the suggested array
 };
