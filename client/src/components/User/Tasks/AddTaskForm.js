@@ -249,9 +249,9 @@ export class AddTask extends Component {
       taskDueDate: Yup.number().min(
         moment(currentDate),
         "Task Due Date cannot be in the past."
-      ),
-      taskPriority: Yup.string(),
-      taskDifficulty: Yup.string(),
+      ).required("Task Due Date is required."),
+      taskPriority: Yup.string().required("Task Priority is required."),
+      taskDifficulty: Yup.string().required("Task Difficulty is required."),
       isTaskComplete: Yup.boolean(),
       isTaskSuggested: Yup.boolean()
     });
@@ -287,7 +287,7 @@ export class AddTask extends Component {
 
                 <Form>
                   <FormGroup>
-                    <label htmlFor="taskName">Name</label>
+                    <label htmlFor="taskName">Name *</label>
                     <Field
                       type="text"
                       data-testid="task-name"
@@ -316,7 +316,7 @@ export class AddTask extends Component {
                   </FormDescription>
                   <FormGroup>
                     <label htmlFor="taskDueDate" data-testid="task-due-date">
-                      Due Date
+                      Due Date *
                     </label>
                     <Field
                       as={DatePicker}
@@ -331,7 +331,7 @@ export class AddTask extends Component {
                     <ErrorMessage name="taskDueDate" component={ErrorDate} />
                   </FormGroup>
                   <FormGroup>
-                    <label htmlFor="taskPriority">Priority</label>
+                    <label htmlFor="taskPriority">Priority *</label>
                     <Field
                       as="select"
                       data-testid="task-priority"
@@ -348,7 +348,7 @@ export class AddTask extends Component {
                     <ErrorMessage name="taskPriority" component={Error} />
                   </FormGroup>
                   <FormGroup>
-                    <label htmlFor="taskDifficulty">Difficulty</label>
+                    <label htmlFor="taskDifficulty">Difficulty *</label>
                     <Field
                       as="select"
                       data-testid="task-difficulty"

@@ -27,7 +27,7 @@ exports.addUser_post = (req, res, next) => {
     userId: 1,
     firstName: fullName[0],
     lastName: fullName[1],
-    emailAddress: req.body.emailAddress,
+    email: req.body.email,
     password: req.body.password, // TODO: HASH password later,
     userMood: req.body.userMood
   });

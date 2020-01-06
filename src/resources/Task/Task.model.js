@@ -20,15 +20,15 @@ const TaskSchema = new Schema({
   },
   taskDueDate: {
     type: Date,
-    required: false
+    required: true
   },
   taskPriority: {
     type: String,
-    required: false
+    required: true
   },
   taskDifficulty: {
     type: String,
-    required: false
+    required: true
   },
   isTaskComplete: {
     type: Boolean,
