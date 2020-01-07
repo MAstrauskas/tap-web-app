@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useAuth0 } from "./react-auth0-spa";
 import Layout from "./components/Layout/Layout";
 import UserLayout from "./components/User/Layout/Layout";
 import Cover from "./components/Cover/Cover";
@@ -11,8 +12,15 @@ import Mood from "./components/User/Mood/Mood";
 
 import "./App.css";
 
-class App extends React.Component {
-  render() {
+function App() {
+    const { loading } = useAuth0();
+
+    if (loading) {
+      return (
+        <div>Loading...</div>
+      )
+    }
+
     return (
       <Router>
         <div className="App">
@@ -47,7 +55,6 @@ class App extends React.Component {
         </div>
       </Router>
     );
-  }
 }
 
 export default App;

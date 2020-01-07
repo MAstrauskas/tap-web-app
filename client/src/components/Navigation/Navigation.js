@@ -1,4 +1,5 @@
 import React from "react";
+import { useAuth0 } from "../../react-auth0-spa";
 import styled from "@emotion/styled";
 import Theme from "../shared/Theme/Theme";
 
@@ -35,24 +36,30 @@ const Links = styled.div`
   padding-top: 0.2rem;
 `;
 
-const NavLink = styled.a`
+const NavLink = styled.button`
   padding: 0 3rem 0 1rem;
   color: ${Theme.colors.primary};
   font-size: ${Theme.fontSize.navLink};
-
+  cursor: pointer;
+  border: none;
+  transition: color 0.3s ease;
+  
   &:hover {
-    opacity: 0.5;
+    color: ${Theme.colors.activeLink};
   }
 `;
 
 const Navigation = () => {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+
   return (
     <>
       <Nav data-testid="navigation">
         <NavLogo href="/">TAP</NavLogo>
         <Links data-testid="navigation-links">
-          <NavLink href="/">LOGIN</NavLink>
-          <NavLink href="/">REGISTER</NavLink>
+        {!isAuthenticated && (
+          <NavLink onClick={() => loginWithRedirect({})}>LOGIN / REGISTER</NavLink>
+        )}
         </Links>
       </Nav>
     </>

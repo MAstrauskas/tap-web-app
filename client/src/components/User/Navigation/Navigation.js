@@ -1,4 +1,5 @@
 import React from "react";
+import { useAuth0 } from "../../../react-auth0-spa";
 import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
 import { MdAddCircle as AddIcon } from "react-icons/md";
@@ -156,7 +157,7 @@ const Menu = styled.ul`
   transform: translate(100%, 0);
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
-  li {
+  li, button {
     display: flex;
     justify-content: center;
     padding: 20px 0;
@@ -166,6 +167,13 @@ const Menu = styled.ul`
     &:hover {
       color: ${Theme.colors.activeLink};
     }
+  }
+
+  button {
+    background: ${Theme.colors.primary};
+    border-style: none;
+    cursor: pointer;
+    width: 300px;
   }
 `;
 
@@ -178,6 +186,7 @@ const MenuLink = styled(NavLink)`
 `;
 
 const Navigation = () => {
+  const { isAuthenticated, logout } = useAuth0();
   return (
     <>
       <Nav data-testid="navigation">
@@ -213,9 +222,7 @@ const Navigation = () => {
               <MenuLink to="/tasks/moodist" activeClassName="active">
                 <li>MOODIST</li>
               </MenuLink>
-              <MenuLink to="/tasks/" activeClassName="active">
-                <li>LOGOUT</li>
-              </MenuLink>
+              {isAuthenticated && (<button onClick={() => logout() }>LOGOUT</button>)}
             </Menu>
           </MenuToggle>
         </Links>
