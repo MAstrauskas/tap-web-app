@@ -9,52 +9,68 @@ import AddTask from "./components/User/Tasks/AddTaskForm";
 import AllTasks from "./components/User/Tasks/AllTasks";
 import EditTask from "./components/User/Tasks/EditTask";
 import Mood from "./components/User/Mood/Mood";
-
+import Error from "./components/Error/Error";
 import "./App.css";
 
 function App() {
-    const { loading } = useAuth0();
+  const { isAuthenticated, loading } = useAuth0();
 
-    if (loading) {
-      return (
-        <div>Loading...</div>
-      )
-    }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-    return (
-      <Router>
-        <div className="App">
-          <Switch>
-            <Route path="/home">
+  return (
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/home">
+            {isAuthenticated ? (
               <UserLayout>
                 <Home />
               </UserLayout>
-            </Route>
-            <Route path="/tasks/add">
+            ) : (
+              <Error errCode="404" />
+            )}
+          </Route>
+          <Route path="/tasks/add">
+            {isAuthenticated ? (
               <UserLayout>
                 <AddTask />
               </UserLayout>
-            </Route>
+            ) : (
+              <Error errCode="404" />
+            )}
+          </Route>
+          {isAuthenticated && (
             <Route path="/tasks/edit" component={EditTask}></Route>
-            <Route path="/tasks/all">
+          )}
+          <Route path="/tasks/all">
+            {isAuthenticated ? (
               <UserLayout>
                 <AllTasks />
               </UserLayout>
-            </Route>
-            <Route path="/tasks/moodist">
+            ) : (
+              <Error errCode="404" />
+            )}
+          </Route>
+          <Route path="/tasks/moodist">
+            {isAuthenticated ? (
               <UserLayout>
                 <Mood />
               </UserLayout>
-            </Route>
-            <Route path="/">
-              <Layout>
-                <Cover />
-              </Layout>
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    );
+            ) : (
+              <Error errCode="404" />
+            )}
+          </Route>
+          <Route path="/">
+            <Layout>
+              <Cover />
+            </Layout>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

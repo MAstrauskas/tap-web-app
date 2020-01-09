@@ -40,10 +40,11 @@ const NavLink = styled.button`
   padding: 0 3rem 0 1rem;
   color: ${Theme.colors.primary};
   font-size: ${Theme.fontSize.navLink};
+  background-color: ${Theme.colors.white};
   cursor: pointer;
   border: none;
   transition: color 0.3s ease;
-  
+
   &:hover {
     color: ${Theme.colors.activeLink};
   }
@@ -57,9 +58,11 @@ const Navigation = () => {
       <Nav data-testid="navigation">
         <NavLogo href="/">TAP</NavLogo>
         <Links data-testid="navigation-links">
-        {!isAuthenticated && (
-          <NavLink onClick={() => loginWithRedirect({})}>LOGIN / REGISTER</NavLink>
-        )}
+          {!isAuthenticated && (
+            <NavLink onClick={() => loginWithRedirect({})}>
+              LOGIN / REGISTER
+            </NavLink>
+          )}
         </Links>
       </Nav>
     </>

@@ -1,10 +1,7 @@
 import React from "react";
+import Layout from "../Layout/Layout";
 import styled from "@emotion/styled";
-import { useAuth0 } from "../../react-auth0-spa";
-import { Link } from "react-router-dom";
-
 import Theme from "../shared/Theme/Theme";
-import Button from "../shared/Button";
 
 const Content = styled.div`
   display: flex;
@@ -55,33 +52,32 @@ const Content = styled.div`
   }
 `;
 
-const Title = styled.h1`
-  font-size: ${Theme.fontSize.xxlarge};
-`;
+const Title = styled.h1``;
 
 const SubTitle = styled.span`
   margin: auto 30%;
   margin-bottom: 30px;
   text-align: center;
-  font-size: ${Theme.fontSize.medium};
+  font-size: ${Theme.fontSize.small};
 `;
 
-const Cover = () => {
-  const { isAuthenticated } = useAuth0();
-
+const Error = ({ errCode }) => {
   return (
-    <Content>
-      <Title data-testid="cover-title">Task Activity Planner</Title>
-      <SubTitle data-testid="cover-subtitle">
-        A new way of task management - based on your emotions
-      </SubTitle>
-      {isAuthenticated && (
-        <Link to="/home">
-          <Button title="Enter" />
-        </Link>
-      )}
-    </Content>
+    <div>
+      <Layout>
+        <Content>
+          {errCode == "404" && (
+            <>
+              <Title>404 - page not found</Title>
+              <SubTitle>
+                Make sure that you have access to the app by login/register
+              </SubTitle>
+            </>
+          )}
+        </Content>
+      </Layout>
+    </div>
   );
 };
 
-export default Cover;
+export default Error;
