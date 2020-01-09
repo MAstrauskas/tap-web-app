@@ -187,6 +187,7 @@ export class AddTask extends Component {
     try {
       const taskCreateDate = Date.now();
       const body = {
+        email: this.props.userEmail,
         taskName: values.taskName,
         taskDescription: values.taskDescription,
         taskCreateDate,
@@ -246,10 +247,9 @@ export class AddTask extends Component {
         .typeError("You must enter a text.")
         .min(2, "Task Description is too short.")
         .max(150, "Task Description is too long."),
-      taskDueDate: Yup.number().min(
-        moment(currentDate),
-        "Task Due Date cannot be in the past."
-      ).required("Task Due Date is required."),
+      taskDueDate: Yup.number()
+        .min(moment(currentDate), "Task Due Date cannot be in the past.")
+        .required("Task Due Date is required."),
       taskPriority: Yup.string().required("Task Priority is required."),
       taskDifficulty: Yup.string().required("Task Difficulty is required."),
       isTaskComplete: Yup.boolean(),

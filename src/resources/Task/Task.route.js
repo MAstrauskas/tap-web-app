@@ -8,7 +8,7 @@ const TaskController = require("./Task.controller");
  * @desc Get All Tasks
  * @access Public
  **/
-router.get("/", TaskController.taskList);
+router.get("/:email", TaskController.taskList);
 
 /**
  * @route GET api/tasks/id

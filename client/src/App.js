@@ -35,7 +35,7 @@ function App() {
           <Route path="/tasks/add">
             {isAuthenticated ? (
               <UserLayout>
-                <AddTask />
+                <AddTask userEmail={user.email} />
               </UserLayout>
             ) : (
               <Error errCode="404" />
@@ -47,7 +47,7 @@ function App() {
           <Route path="/tasks/all">
             {isAuthenticated ? (
               <UserLayout>
-                <AllTasks />
+                <AllTasks userEmail={user.email} />
               </UserLayout>
             ) : (
               <Error errCode="404" />

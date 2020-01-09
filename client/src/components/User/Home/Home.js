@@ -93,14 +93,16 @@ export default class Home extends Component {
   handleTasks = async () => {
     this.setState({ ...this.state, isFetching: true });
 
-    await axios.get("http://localhost:9000/api/tasks").then(res => {
-      this.setState({
-        tasks: [
-          ...this.state.tasks.filter(task => !task.isTaskComplete),
-          ...res.data.tasks
-        ]
+    await axios
+      .get(`http://localhost:9000/api/tasks/${this.props.email}`)
+      .then(res => {
+        this.setState({
+          tasks: [
+            ...this.state.tasks.filter(task => !task.isTaskComplete),
+            ...res.data.tasks
+          ]
+        });
       });
-    });
 
     this.setState({ ...this.state, isFetching: false });
   };
@@ -153,7 +155,7 @@ export default class Home extends Component {
 
   render() {
     const { tasks } = this.state;
-    console.log(this.props.email);
+
     return (
       <>
         <h1>Today's tasks</h1>

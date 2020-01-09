@@ -8,7 +8,8 @@ const Task = require("./Task.model");
  * @param {any} res
  **/
 exports.taskList = (req, res, next) => {
-  Task.find({}, (err, tasks) => {
+  console.log(req.params.email);
+  Task.find({ email: req.params.email }, (err, tasks) => {
     res.send({ tasks: tasks });
   }).sort("taskDueDate");
 };
@@ -43,7 +44,7 @@ exports.taskDetail = (req, res, next) => {
  **/
 exports.addTask_post = (req, res, next) => {
   const newTask = new Task({
-    userId: req.body.userId,
+    email: req.body.email,
     taskName: req.body.taskName,
     taskDescription: req.body.taskDescription,
     taskCreateDate: req.body.taskCreateDate,

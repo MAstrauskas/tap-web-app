@@ -94,9 +94,11 @@ export default class AllTasks extends Component {
   handleTasks = async () => {
     this.setState({ ...this.state, isFetching: true });
 
-    await axios.get("http://localhost:9000/api/tasks").then(res => {
-      this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
-    });
+    await axios
+      .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
+      .then(res => {
+        this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
+      });
 
     this.setState({ ...this.state, isFetching: false });
   };

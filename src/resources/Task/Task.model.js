@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
+  email: {
+    // User Email
+    type: String,
+    ref: "User",
+    required: true
+  },
   taskName: {
     type: String,
     required: true
@@ -37,11 +43,6 @@ const TaskSchema = new Schema({
   isTaskSuggested: {
     type: Boolean,
     required: true
-  },
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: false // TODO Make it true once User system is implemented
   }
 });
 
