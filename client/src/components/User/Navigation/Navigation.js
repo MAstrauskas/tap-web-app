@@ -157,7 +157,8 @@ const Menu = styled.ul`
   transform: translate(100%, 0);
   transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
 
-  li, button {
+  li,
+  button {
     display: flex;
     justify-content: center;
     padding: 20px 0;
@@ -185,8 +186,12 @@ const MenuLink = styled(NavLink)`
   }
 `;
 
+const NavText = styled.p`
+  color: ${Theme.colors.primary};
+`;
+
 const Navigation = () => {
-  const { isAuthenticated, logout } = useAuth0();
+  const { isAuthenticated, logout, user } = useAuth0();
   return (
     <>
       <Nav data-testid="navigation">
@@ -195,6 +200,7 @@ const Navigation = () => {
         </LogoContainer>
 
         <Links data-testid="navigation-links">
+          <NavText>Hi, {user.name && user.name.split(" ")[0]}</NavText>
           <NavLink to="/tasks/add" activeClassName="active">
             <Icon>
               <AddIcon />
@@ -222,7 +228,9 @@ const Navigation = () => {
               <MenuLink to="/tasks/moodist" activeClassName="active">
                 <li>MOODIST</li>
               </MenuLink>
-              {isAuthenticated && (<button onClick={() => logout() }>LOGOUT</button>)}
+              {isAuthenticated && (
+                <button onClick={() => logout()}>LOGOUT</button>
+              )}
             </Menu>
           </MenuToggle>
         </Links>
