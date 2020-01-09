@@ -14,10 +14,6 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
   userMood: {
     type: String,
     required: false
@@ -27,7 +23,7 @@ const UserSchema = new Schema({
       taskId: {
         type: Schema.Types.ObjectId,
         ref: "Task",
-        required: true
+        required: false
       }
     }
   ]

@@ -13,7 +13,7 @@ import Error from "./components/Error/Error";
 import "./App.css";
 
 function App() {
-  const { isAuthenticated, loading } = useAuth0();
+  const { loading, isAuthenticated, user } = useAuth0();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -26,7 +26,7 @@ function App() {
           <Route path="/home">
             {isAuthenticated ? (
               <UserLayout>
-                <Home />
+                <Home name={user.name} email={user.email} />
               </UserLayout>
             ) : (
               <Error errCode="404" />

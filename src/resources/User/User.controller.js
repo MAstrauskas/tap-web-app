@@ -21,19 +21,22 @@ exports.userList = (req, res, next) => {
  * @param {any} res
  **/
 exports.addUser_post = (req, res, next) => {
-  const fullName = req.body.fullName.split(" ");
+  const fullName = req.body.name.split(" ");
 
-  const newUser = new User({
-    userId: 1,
-    firstName: fullName[0],
-    lastName: fullName[1],
-    email: req.body.email,
-    password: req.body.password, // TODO: HASH password later,
-    userMood: req.body.userMood
+  User.findOne({ email: req.body.email }, function(err, doc) {
+    if (doc && doc.email === req.body.email) {
+    } else {
+      const newUser = new User({
+        userId: 1,
+        firstName: fullName[0],
+        lastName: fullName[1],
+        email: req.body.email
+      });
+
+      newUser
+        .save()
+        .then(user => res.json(user))
+        .catch(() => next());
+    }
   });
-
-  newUser
-    .save()
-    .then(user => res.json(user))
-    .catch(() => next());
 };

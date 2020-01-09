@@ -130,13 +130,30 @@ export default class Home extends Component {
     });
   };
 
+  handleUserRegistration = async () => {
+    this.setState({ ...this.state, isFetching: true });
+
+    const body = {
+      name: this.props.name,
+      email: this.props.email
+    };
+
+    await axios
+      .post("http://localhost:9000/api/user/add", body)
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
+
+    this.setState({ ...this.state, isFetching: false });
+  };
+
   componentDidMount() {
     this.handleTasks();
+    this.handleUserRegistration();
   }
 
   render() {
     const { tasks } = this.state;
-
+    console.log(this.props.email);
     return (
       <>
         <h1>Today's tasks</h1>
