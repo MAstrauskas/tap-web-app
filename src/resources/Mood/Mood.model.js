@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const MoodSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
+  email: {
+    // User Email
+    type: String,
     ref: "User",
-    required: false // TODO Change to true when users are available
+    required: true
   },
   moodName: {
     type: String,

@@ -56,7 +56,7 @@ function App() {
           <Route path="/tasks/moodist">
             {isAuthenticated ? (
               <UserLayout>
-                <Mood />
+                <Mood userEmail={user.email} />
               </UserLayout>
             ) : (
               <Error errCode="404" />

@@ -30,6 +30,7 @@ exports.moodDetail = (req, res, next) => {
  **/
 exports.addMood_post = (req, res, next) => {
   const newMood = new Mood({
+    email: req.body.email,
     moodName: req.body.moodName,
     moodMotivation: req.body.moodMotivation,
     isTired: req.body.isTired

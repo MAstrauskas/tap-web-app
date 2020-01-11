@@ -34,5 +34,10 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
+  },
+  "proxy": {
+    "/api/*": {
+      "target": "http://[::1]:9000"
+    }
   }
 }

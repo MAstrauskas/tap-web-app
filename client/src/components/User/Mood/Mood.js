@@ -168,6 +168,7 @@ export class Mood extends Component {
   handleSubmit = async (values, { setSubmitting }) => {
     try {
       const body = {
+        email: this.props.userEmail,
         moodName: values.mood,
         moodMotivation: values.moodMotivation,
         isTired: values.moodTired === "Yes" ? true : false

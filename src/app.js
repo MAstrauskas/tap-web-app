@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const user = require("./resources/User/User.route");
 const task = require("./resources/Task/Task.route");
 const mood = require("./resources/Mood/Mood.route");
-const moodList = require("./resources/MoodList/MoodList.route");
 
 const app = express();
 
@@ -38,6 +37,5 @@ app.use(function(req, res, next) {
 app.use("/api/user", user);
 app.use("/api/tasks", task);
 app.use("/api/mood", mood);
-app.use("/api/moodlist", moodList);
 
 module.exports = app;
