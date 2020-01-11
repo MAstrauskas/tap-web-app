@@ -18,6 +18,10 @@ const UserSchema = new Schema({
     type: String,
     required: false
   },
+  userProductivity: {
+    type: Number,
+    required: false
+  },
   tasks: [
     {
       taskId: {

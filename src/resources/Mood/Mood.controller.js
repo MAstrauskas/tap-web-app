@@ -1,4 +1,5 @@
 const Mood = require("./Mood.model");
+const MoodCalculator = require("./helpers/MoodCalculator");
 
 /**
  * GET /api/mood/id
@@ -45,19 +46,13 @@ exports.addMood_post = (req, res, next) => {
         );
     }
 
+    MoodCalculator.calculateMoodAndProductivity(
+      req.body.email,
+      req.body.moodName,
+      req.body.moodMotivation,
+      req.body.isTired
+    );
+
     return res.send("Mood has been added");
   });
-};
-
-/**
- * PUT /api/mood/calculate
- * TODO Calculate the final mood + add suggested tasks to the array
- * @export
- * @param {any} req
- * @param {any} res
- **/
-exports.calculateTasks_put = (req, res, next) => {
-  // TODO 1. Calculate final mood for current date
-  // TODO 2. Find all relavant tasks
-  // TODO 3. Add them to the suggested array
 };
