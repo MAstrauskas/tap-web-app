@@ -6,7 +6,11 @@ import styled from "@emotion/styled";
 
 import Theme from "../../shared/Theme/Theme";
 import * as Yup from "yup";
-
+import {
+  IoMdHappy as PositiveEmoji,
+  IoMdSad as NegativeEmoji
+} from "react-icons/io";
+import { MdSentimentNeutral as NeutralEmoji } from "react-icons/md";
 import "react-datepicker/dist/react-datepicker.css";
 
 const CustomForm = styled.div`
@@ -137,10 +141,27 @@ const Button = styled.button`
   }
 `;
 
+const Icon = styled.i`
+  svg {
+    margin-top: -6px;
+    width: 35px;
+    height: 33px;
+  }
+`;
+
+const RadioGroup = styled.div`
+  display: flex;
+  justify-content: space-around;
+
+  input {
+    margin-top: -1%;
+    margin-left: -10%;
+  }
+`;
+
 export class Mood extends Component {
   state = {
     addSuccessful: false,
-    moodList: [],
     isFetching: false
   };
 
@@ -178,31 +199,8 @@ export class Mood extends Component {
     }
   };
 
-  handleMoodList = async () => {
-    try {
-      this.setState({ ...this.state, isFetching: true });
-
-      await axios.get("http://localhost:9000/api/moodlist/").then(response => {
-        this.setState({
-          moodList: [
-            ...this.state.moodList,
-            ...response.data.map(mood => mood.moodName)
-          ]
-        });
-      });
-
-      this.setState({ ...this.state, isFetching: false });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  componentDidMount() {
-    this.handleMoodList();
-  }
-
   render() {
-    const { addSuccessful, moodList } = this.state;
+    const { addSuccessful } = this.state;
 
     if (addSuccessful) {
       return <Redirect to={`/tasks/all`} />;
@@ -243,25 +241,56 @@ export class Mood extends Component {
                 ) : (
                   <Form>
                     <FormGroup>
-                      <label htmlFor="mood">How are you feeling?</label>
-                      <Field
-                        as="select"
-                        data-testid="mood-name"
-                        name="mood"
-                        value={values.mood}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      >
-                        <option>None</option>
-                        {moodList.map(mood => {
-                          return <option>{mood}</option>;
-                        })}
-                      </Field>
+                      <label htmlFor="mood">How are you feeling? * </label>
+
+                      <RadioGroup>
+                        <Icon>
+                          <PositiveEmoji />
+                        </Icon>
+
+                        <Field
+                          as="input"
+                          type="radio"
+                          data-testid="mood-positive"
+                          name="mood"
+                          value="positive"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+
+                        <Icon>
+                          <NeutralEmoji />
+                        </Icon>
+                        <Field
+                          as="input"
+                          type="radio"
+                          data-testid="mood-neutral"
+                          name="mood"
+                          value="neutral"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+
+                        <Icon>
+                          <NegativeEmoji />
+                        </Icon>
+
+                        <Field
+                          as="input"
+                          type="radio"
+                          data-testid="mood-negative"
+                          name="mood"
+                          value="negative"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                      </RadioGroup>
+
                       <ErrorMessage name="mood" component={Error} />
                     </FormGroup>
                     <FormGroup>
                       <label htmlFor="moodMotivation">
-                        Rate your motivation level
+                        Rate your motivation level *
                       </label>
                       <Field
                         as="select"
@@ -281,7 +310,7 @@ export class Mood extends Component {
                       <ErrorMessage name="moodMotivation" component={Error} />
                     </FormGroup>
                     <FormGroup>
-                      <label htmlFor="moodTired">Are you tired?</label>
+                      <label htmlFor="moodTired">Are you tired? *</label>
                       <Field
                         as="select"
                         data-testid="mood-tired"
