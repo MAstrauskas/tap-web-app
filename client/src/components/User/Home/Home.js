@@ -84,6 +84,25 @@ const TaskName = styled.span`
   margin-left: 10px;
 `;
 
+const Tables = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  @media screen and (max-width: 750px) {
+    flex-direction: column;
+  }
+`;
+
+const EachTable = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 5rem;
+
+  @media screen and (max-width: 750px) {
+    flex-direction: column;
+  }
+`;
+
 export default class Home extends Component {
   state = {
     isFetching: false,
@@ -158,69 +177,131 @@ export default class Home extends Component {
 
     return (
       <>
-        <h1>Today's tasks</h1>
+        <Tables>
+          <EachTable>
+            <h1>Today's tasks</h1>
 
-        {this.state.isFetching ? (
-          <h2>Loading...</h2>
-        ) : (
-          <Table data-testid="table">
-            <TableBody>
-              <tr>
-                <TableHeader>Task</TableHeader>
-                <TableHeader>Due Date</TableHeader>
-                <TableHeader>Edit</TableHeader>
-                <TableHeader>Delete</TableHeader>
-              </tr>
-              {tasks
-                .filter(task => {
-                  const dueDate = new Date(task.taskDueDate);
-                  const todaysDate = new Date();
+            {this.state.isFetching ? (
+              <h2>Loading...</h2>
+            ) : (
+              <Table data-testid="table">
+                <TableBody>
+                  <tr>
+                    <TableHeader>Task</TableHeader>
+                    <TableHeader>Due Date</TableHeader>
+                    <TableHeader>Edit</TableHeader>
+                    <TableHeader>Delete</TableHeader>
+                  </tr>
+                  {tasks
+                    .filter(task => {
+                      const dueDate = new Date(task.taskDueDate);
+                      const todaysDate = new Date();
 
-                  return (
-                    dueDate.setHours(0, 0, 0, 0) ===
-                      todaysDate.setHours(0, 0, 0, 0) && !task.isTaskComplete
-                  );
-                })
-                .map(task => {
-                  const dueDate = moment(task.taskDueDate).format("LL");
+                      return (
+                        dueDate.setHours(0, 0, 0, 0) ===
+                          todaysDate.setHours(0, 0, 0, 0) &&
+                        !task.isTaskComplete
+                      );
+                    })
+                    .map(task => {
+                      const dueDate = moment(task.taskDueDate).format("LL");
 
-                  return (
-                    <tr disabled={task.isTaskComplete}>
-                      <TableContent>
-                        <Checkbox
-                          id={task._id}
-                          handleComplete={this.handleComplete}
-                        />
-                        <TaskName>{task.taskName}</TaskName>
-                      </TableContent>
-                      <TableContent>{dueDate}</TableContent>
-                      <TableContent>
-                        <Link
-                          to={{
-                            pathname: "/tasks/edit",
-                            state: {
-                              task: task
-                            }
-                          }}
-                        >
-                          <TableButton>
-                            <EditIcon />
-                          </TableButton>
-                        </Link>
-                      </TableContent>
-                      <TableContent>
-                        <TableButton
-                          onClick={() => this.handleDelete(task._id)}
-                        >
-                          <DeleteIcon />
-                        </TableButton>
-                      </TableContent>
-                    </tr>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        )}
+                      return (
+                        <tr disabled={task.isTaskComplete}>
+                          <TableContent>
+                            <Checkbox
+                              id={task._id}
+                              handleComplete={this.handleComplete}
+                            />
+                            <TaskName>{task.taskName}</TaskName>
+                          </TableContent>
+                          <TableContent>{dueDate}</TableContent>
+                          <TableContent>
+                            <Link
+                              to={{
+                                pathname: "/tasks/edit",
+                                state: {
+                                  task: task
+                                }
+                              }}
+                            >
+                              <TableButton>
+                                <EditIcon />
+                              </TableButton>
+                            </Link>
+                          </TableContent>
+                          <TableContent>
+                            <TableButton
+                              onClick={() => this.handleDelete(task._id)}
+                            >
+                              <DeleteIcon />
+                            </TableButton>
+                          </TableContent>
+                        </tr>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            )}
+          </EachTable>
+
+          <EachTable>
+            <h1>Suggested tasks</h1>
+            {this.state.isFetching ? (
+              <h2>Loading...</h2>
+            ) : (
+              <Table data-testid="table">
+                <TableBody>
+                  <tr>
+                    <TableHeader>Task</TableHeader>
+                    <TableHeader>Due Date</TableHeader>
+                    <TableHeader>Edit</TableHeader>
+                    <TableHeader>Delete</TableHeader>
+                  </tr>
+                  {tasks
+                    .filter(task => task.isTaskSuggested)
+                    .map(task => {
+                      const dueDate = moment(task.taskDueDate).format("LL");
+
+                      return (
+                        <tr disabled={task.isTaskComplete}>
+                          <TableContent>
+                            <Checkbox
+                              id={task._id}
+                              handleComplete={this.handleComplete}
+                            />
+                            <TaskName>{task.taskName}</TaskName>
+                          </TableContent>
+                          <TableContent>{dueDate}</TableContent>
+                          <TableContent>
+                            <Link
+                              to={{
+                                pathname: "/tasks/edit",
+                                state: {
+                                  task: task
+                                }
+                              }}
+                            >
+                              <TableButton>
+                                <EditIcon />
+                              </TableButton>
+                            </Link>
+                          </TableContent>
+                          <TableContent>
+                            <TableButton
+                              onClick={() => this.handleDelete(task._id)}
+                            >
+                              <DeleteIcon />
+                            </TableButton>
+                          </TableContent>
+                        </tr>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            )}
+          </EachTable>
+        </Tables>
       </>
     );
   }

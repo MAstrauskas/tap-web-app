@@ -1,4 +1,5 @@
 const Task = require("./Task.model");
+const TaskSuggester = require("./helpers/TaskSuggester");
 
 /**
  * GET /api/tasks
@@ -8,8 +9,9 @@ const Task = require("./Task.model");
  * @param {any} res
  **/
 exports.taskList = (req, res, next) => {
-  console.log(req.params.email);
   Task.find({ email: req.params.email }, (err, tasks) => {
+    TaskSuggester.calculateTaskSuggestion(req.params.email, tasks);
+
     res.send({ tasks: tasks });
   }).sort("taskDueDate");
 };
