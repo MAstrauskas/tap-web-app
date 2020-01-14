@@ -17,15 +17,15 @@ exports.calculateMoodAndProductivity = async (
   let productivityLevel = 0;
 
   if (mood === "positive") {
-    productivityLevel = productivityCalculator(7, motivation, isTired);
+    productivityLevel = productivityCalculator(10, motivation, isTired);
   }
 
   if (mood === "neutral") {
-    productivityLevel = productivityCalculator(5, motivation, isTired);
+    productivityLevel = productivityCalculator(7, motivation, isTired);
   }
 
   if (mood === "negative") {
-    productivityLevel = productivityCalculator(3, motivation, isTired);
+    productivityLevel = productivityCalculator(5, motivation, isTired);
   }
 
   // 3. Assign user mood & productivity level to the User
