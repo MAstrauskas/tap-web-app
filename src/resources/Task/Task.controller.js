@@ -11,6 +11,7 @@ const TaskSuggester = require("./helpers/TaskSuggester");
 exports.taskList = (req, res, next) => {
   Task.find({ email: req.params.email }, (err, tasks) => {
     TaskSuggester.calculateTaskSuggestion(req.params.email, tasks);
+    TaskSuggester.makeTaskSuggested(req.params.email, tasks);
 
     res.send({ tasks: tasks });
   }).sort("taskDueDate");

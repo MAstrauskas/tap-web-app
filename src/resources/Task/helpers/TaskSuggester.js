@@ -152,3 +152,70 @@ function calculateTaskGroup(totalPoints) {
 
   return taskGroup;
 }
+
+exports.makeTaskSuggested = async (email, tasks) => {
+  let userProductivity = 0;
+  let countUserProductivity = 0;
+  /**
+   * 1. FIND THE USER
+   */
+  await Users.find({ email })
+    .then(res => (userProductivity = res[0].userProductivity))
+    .catch(e => console.log("Cannot find the user. " + e));
+
+  /**
+   * 2. MAKE TASK IS SUGGESTED
+   */
+
+  tasks
+    .filter(task => task.taskDueDate)
+    .map(task => {
+      const taskGroup = task.taskGroup;
+      const taskPoints = task.taskTotalPoints;
+
+      let isTaskSuggested = false;
+
+      if (countUserProductivity <= userProductivity) {
+        if (
+          taskGroup === 1 &&
+          countUserProductivity + taskPoints <= userProductivity &&
+          taskPoints !== 0
+        ) {
+          isTaskSuggested = true;
+          countUserProductivity += taskPoints;
+        } else if (
+          taskGroup === 2 &&
+          countUserProductivity + taskPoints <= userProductivity &&
+          taskPoints !== 0
+        ) {
+          isTaskSuggested = true;
+          countUserProductivity += taskPoints;
+        } else if (
+          taskGroup === 3 &&
+          countUserProductivity + taskPoints <= userProductivity &&
+          taskPoints !== 0
+        ) {
+          isTaskSuggested = true;
+          countUserProductivity += taskPoints;
+        }
+      }
+
+      /**
+       * ADD IS SUGGESTED TO THE TASK
+       */
+
+      const data = {
+        isTaskSuggested: isTaskSuggested
+      };
+
+      Task.findByIdAndUpdate(task._id, data, (err, task) => {
+        if (err) {
+          console.log(
+            "Error occured while trying to update 'isTaskSuggested'. Please check if the information is correct"
+          );
+        }
+
+        console.log("Task 'isSuggested' has been updated.");
+      });
+    });
+};
