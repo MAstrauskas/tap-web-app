@@ -295,7 +295,7 @@ export class EditTask extends Component {
 
                   <Form>
                     <FormGroup>
-                      <label htmlFor="taskName">Name</label>
+                      <label htmlFor="taskName">Name *</label>
                       <Field
                         type="text"
                         data-testid="task-name"
@@ -324,7 +324,7 @@ export class EditTask extends Component {
                     </FormDescription>
                     <FormGroup>
                       <label htmlFor="taskDueDate" data-testid="task-due-date">
-                        Due Date
+                        Due Date *
                       </label>
                       <Field
                         as={DatePicker}
@@ -339,7 +339,7 @@ export class EditTask extends Component {
                       <ErrorMessage name="taskDueDate" component={ErrorDate} />
                     </FormGroup>
                     <FormGroup>
-                      <label htmlFor="taskPriority">Priority</label>
+                      <label htmlFor="taskPriority">Priority *</label>
                       <Field
                         as="select"
                         data-testid="task-priority"
@@ -348,7 +348,6 @@ export class EditTask extends Component {
                         onChange={handleChange}
                         onBlur={handleBlur}
                       >
-                        <option value="None">None</option>
                         <option value="Low">Low</option>
                         <option value="Medium">Medium</option>
                         <option value="High">High</option>
@@ -356,7 +355,7 @@ export class EditTask extends Component {
                       <ErrorMessage name="taskPriority" component={Error} />
                     </FormGroup>
                     <FormGroup>
-                      <label htmlFor="taskDifficulty">Difficulty</label>
+                      <label htmlFor="taskDifficulty">Difficulty *</label>
                       <Field
                         as="select"
                         data-testid="task-difficulty"
@@ -365,7 +364,6 @@ export class EditTask extends Component {
                         onChange={handleChange}
                         onBlur={handleBlur}
                       >
-                        <option value="None">None</option>
                         <option value="Easy">Easy</option>
                         <option value="Medium">Medium</option>
                         <option value="Hard">Hard</option>
