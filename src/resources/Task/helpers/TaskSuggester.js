@@ -1,5 +1,5 @@
 const Users = require("../../User/User.model");
-
+const Task = require("../Task.model");
 exports.calculateTaskSuggestion = async (email, tasks) => {
   let userProductivity = 0;
 
@@ -10,13 +10,6 @@ exports.calculateTaskSuggestion = async (email, tasks) => {
     .then(res => (userProductivity = res[0].userProductivity))
     .catch(e => console.log("Cannot find the user. " + e));
 
-  console.log(userProductivity);
-  // Idea:
-  // Go through all of the tasks and individually check them by deadline, difficulty and priority
-  // Add total points to it based on the scenarios doc.
-  // Mark it with one of three: Group 1, Group 2 or Group 3.
-  // Go through all of the tasks again and make `isSuggested` to true starting from Group 1 until reach userProductivity limit
-  console.log(tasks);
   tasks.map(task => {
     /**
      * 2. CALCULATION OF TOTAL POINTS BASED ON DEADLINE, PRIORITY & DIFFICULTY OF THE TASK
@@ -75,7 +68,30 @@ exports.calculateTaskSuggestion = async (email, tasks) => {
       );
     }
 
-    console.log("Total PTS: " + totalPoints);
+    /**
+     * 3. ASSIGN A GROUP BASED ON TOTAL POINTS
+     */
+
+    const taskGroup = calculateTaskGroup(totalPoints);
+
+    /**
+     * 4. ADD TASK GROUP & TOTAL POINTS TO THE TASK
+     */
+
+    const data = {
+      taskGroup: taskGroup,
+      taskTotalPoints: totalPoints
+    };
+
+    Task.findByIdAndUpdate(task._id, data, (err, task) => {
+      if (err) {
+        console.log(
+          "Error occured while trying to add Group & Points to a task. Please check if the information is correct"
+        );
+      }
+
+      console.log("Task has been updated.");
+    });
   });
 };
 
@@ -121,4 +137,18 @@ function calculateDifficulty(difficulty, totalPoints) {
   }
 
   return totalPoints;
+}
+
+function calculateTaskGroup(totalPoints) {
+  let taskGroup = 0;
+
+  if (totalPoints >= 0 && totalPoints < 2) {
+    taskGroup = 3;
+  } else if (totalPoints >= 2 && totalPoints < 3) {
+    taskGroup = 2;
+  } else if (totalPoints >= 3 && totalPoints <= 4) {
+    taskGroup = 1;
+  }
+
+  return taskGroup;
 }

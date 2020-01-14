@@ -43,6 +43,14 @@ const TaskSchema = new Schema({
   isTaskSuggested: {
     type: Boolean,
     required: true
+  },
+  taskGroup: {
+    type: Number,
+    required: false
+  },
+  taskTotalPoints: {
+    type: Number,
+    required: false
   }
 });
 
