@@ -66,7 +66,14 @@ const Error = ({ errCode }) => {
     <div>
       <Layout>
         <Content>
-          {errCode == "404" && (
+          {errCode == "401" ? (
+            <>
+              <Title>401 - Unauthorized</Title>
+              <SubTitle>
+                Make sure that you have access to the app by login/register
+              </SubTitle>
+            </>
+          ) : (
             <>
               <Title>404 - page not found</Title>
               <SubTitle>

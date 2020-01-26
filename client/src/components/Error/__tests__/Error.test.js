@@ -1,9 +1,9 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, getByText } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useAuth0 } from "../../../react-auth0-spa";
 
-import Layout from "../Layout";
+import Error from "../Error";
 
 const user = {
   email: "test@test.com",
@@ -14,7 +14,7 @@ const user = {
 
 jest.mock("../../../react-auth0-spa");
 
-describe("Layout", () => {
+describe("Error", () => {
   beforeEach(() => {
     // Mock Auth0 and return logged out state
     useAuth0.mockReturnValue({
@@ -25,13 +25,13 @@ describe("Layout", () => {
     });
   });
 
-  it("renders navigation inside layout", () => {
-    const { getByTestId } = render(
+  it("Shows unauthorized if errCode is 401 and user is not logged in", () => {
+    const { getByText } = render(
       <Router>
-        <Layout />
+        <Error errCode="401" />
       </Router>
     );
 
-    getByTestId("navigation");
+    getByText("401 - Unauthorized");
   });
 });

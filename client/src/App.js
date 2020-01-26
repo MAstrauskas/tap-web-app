@@ -29,7 +29,7 @@ function App() {
                 <Home name={user.name} email={user.email} />
               </UserLayout>
             ) : (
-              <Error errCode="404" />
+              <Error errCode="401" />
             )}
           </Route>
           <Route path="/tasks/add">
@@ -38,7 +38,7 @@ function App() {
                 <AddTask userEmail={user.email} />
               </UserLayout>
             ) : (
-              <Error errCode="404" />
+              <Error errCode="401" />
             )}
           </Route>
           {isAuthenticated && (
@@ -50,7 +50,7 @@ function App() {
                 <AllTasks userEmail={user.email} />
               </UserLayout>
             ) : (
-              <Error errCode="404" />
+              <Error errCode="401" />
             )}
           </Route>
           <Route path="/tasks/moodist">
@@ -59,7 +59,7 @@ function App() {
                 <Mood userEmail={user.email} />
               </UserLayout>
             ) : (
-              <Error errCode="404" />
+              <Error errCode="401" />
             )}
           </Route>
           <Route path="/">
