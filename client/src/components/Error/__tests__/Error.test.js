@@ -34,4 +34,14 @@ describe("Error", () => {
 
     getByText("401 - Unauthorized");
   });
+
+  it("Shows page not found if errCode is not 401 and user is not logged in", () => {
+    const { getByText } = render(
+      <Router>
+        <Error />
+      </Router>
+    );
+
+    getByText("404 - page not found");
+  });
 });

@@ -126,6 +126,7 @@ export default class Home extends Component {
     this.setState({ ...this.state, isFetching: false });
   };
 
+  /* istanbul ignore next */
   handleDelete = async taskId => {
     await axios.delete(`http://localhost:9000/api/tasks/delete/${taskId}`).then(
       response => {
@@ -143,6 +144,7 @@ export default class Home extends Component {
     });
   };
 
+  /* istanbul ignore next */
   handleComplete = async () => {
     this.setState({ tasks: [] });
 
@@ -184,7 +186,7 @@ export default class Home extends Component {
             {this.state.isFetching ? (
               <h2>Loading...</h2>
             ) : (
-              <Table data-testid="table">
+              <Table data-testid="today-table">
                 <TableBody>
                   <tr>
                     <TableHeader>Task</TableHeader>
@@ -250,7 +252,7 @@ export default class Home extends Component {
             {this.state.isFetching ? (
               <h2>Loading...</h2>
             ) : (
-              <Table data-testid="table">
+              <Table data-testid="suggested-table">
                 <TableBody>
                   <tr>
                     <TableHeader>Task</TableHeader>

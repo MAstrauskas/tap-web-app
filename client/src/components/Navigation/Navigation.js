@@ -59,6 +59,7 @@ const Navigation = () => {
         <NavLogo href="/">TAP</NavLogo>
         <Links data-testid="navigation-links">
           {!isAuthenticated && (
+            /* istanbul ignore next */
             <NavLink onClick={() => loginWithRedirect({})}>
               LOGIN / REGISTER
             </NavLink>
