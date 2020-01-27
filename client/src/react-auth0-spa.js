@@ -1,6 +1,7 @@
 // Taken from the Auth0 official tutorial on how to set up Auth0 for a custom application
 // Source: https://auth0.com/docs/quickstart/spa/react#install-the-auth0-react-wrapper
 // Date: 07/01/2020
+/* istanbul ignore file */
 import React, { useState, useEffect, useContext } from "react";
 import createAuth0Client from "@auth0/auth0-spa-js";
 

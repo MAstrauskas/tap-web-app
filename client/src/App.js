@@ -15,6 +15,7 @@ import "./App.css";
 function App() {
   const { loading, isAuthenticated, user } = useAuth0();
 
+  /* istanbul ignore next */
   if (loading) {
     return <div>Loading...</div>;
   }
