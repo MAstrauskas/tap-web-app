@@ -1,8 +1,11 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import Enzyme, { render, mount } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import { useAuth0 } from "../../../../react-auth0-spa";
 
 import AddTask from "../AddTaskForm";
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const user = {
   email: "test@test.com",
@@ -28,13 +31,21 @@ describe("Add Task", () => {
     const {} = render(<AddTask />);
   });
 
-  it("has all the fields required", () => {
-    const { getByTestId } = render(<AddTask />);
+  it("should add the task if all props are passed", async () => {
+    const values = {
+      taskName: "To do",
+      taskDueDate: 1503123,
+      taskDifficulty: "Hard",
+      isTaskComplete: false,
+      isTaskSuggested: false
+    };
 
-    getByTestId("task-name");
-    getByTestId("task-description");
-    getByTestId("task-due-date");
-    getByTestId("task-priority");
-    getByTestId("task-difficulty");
+    const setSubmitting = jest.fn();
+
+    const wrapper = mount(<AddTask userEmail={user.email} />);
+
+    expect(wrapper.state().addSuccessful).toBe(false);
+
+    await wrapper.instance().handleSubmit(values, { setSubmitting });
   });
 });

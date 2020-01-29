@@ -184,6 +184,7 @@ export class EditTask extends Component {
     editSuccessful: false
   };
 
+  /* istanbul ignore next */
   handleSubmit = async (values, { setSubmitting }) => {
     try {
       const taskUpdateDate = Date.now();

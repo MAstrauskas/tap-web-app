@@ -20,31 +20,31 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">56.76% </span>
+        <span class="strong">91.89% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>21/37</span>
+        <span class='fraction'>34/37</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/4</span>
+        <span class='fraction'>3/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/9</span>
+        <span class='fraction'>6/9</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">60% </span>
+        <span class="strong">94.29% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>21/35</span>
+        <span class='fraction'>33/35</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -636,9 +636,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -650,37 +650,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1039,10 +1039,10 @@ export class AddTask extends Component {
     addSuccessful: false
   };
 &nbsp;
-  handleSubmit = <span class="fstat-no" title="function not covered" >as</span>ync (values, { setSubmitting }) =&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const taskCreateDate = <span class="cstat-no" title="statement not covered" >Date.now();</span>
-      const body = <span class="cstat-no" title="statement not covered" >{</span>
+  handleSubmit = async (values, { setSubmitting }) =&gt; {
+    try {
+      const taskCreateDate = Date.now();
+      const body = {
         email: this.props.userEmail,
         taskName: values.taskName,
         taskDescription: values.taskDescription,
@@ -1054,26 +1054,26 @@ export class AddTask extends Component {
         isTaskSuggested: values.isTaskSuggested
       };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      setSubmitting(true);</span>
+      setSubmitting(true);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      await axios.post("http://localhost:9000/api/tasks/add", body).then(</span>
+      await axios.post("http://localhost:9000/api/tasks/add", body).then(
 <span class="fstat-no" title="function not covered" >        re</span>sponse =&gt; {
 <span class="cstat-no" title="statement not covered" >          console.log(response);</span>
         },
-<span class="fstat-no" title="function not covered" >        er</span>ror =&gt; {
-<span class="cstat-no" title="statement not covered" >          console.log(error);</span>
+        error =&gt; {
+          console.log(error);
         }
       );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      setSubmitting(false);</span>
-<span class="cstat-no" title="statement not covered" >      this.setState(<span class="fstat-no" title="function not covered" >pr</span>evState =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      setSubmitting(false);
+      this.setState(prevState =&gt; ({
         ...prevState,
         addSuccessful: true
       }));
     } catch (e) {
-<span class="cstat-no" title="statement not covered" >      console.log(e);</span>
-<span class="cstat-no" title="statement not covered" >      setSubmitting(false);</span>
-<span class="cstat-no" title="statement not covered" >      this.setState(<span class="fstat-no" title="function not covered" >pr</span>evState =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      console.log(e);
+      setSubmitting(false);
+      this.setState(<span class="fstat-no" title="function not covered" >pr</span>evState =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
         ...prevState,
         addSuccessful: false
       }));
@@ -1083,8 +1083,8 @@ export class AddTask extends Component {
   render() {
     const { addSuccessful } = this.state;
 &nbsp;
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (addSuccessful) {
-<span class="cstat-no" title="statement not covered" >      return &lt;Redirect to={`/tasks/all`} /&gt;;</span>
+    if (addSuccessful) {
+      return &lt;Redirect to={`/tasks/all`} /&gt;;
     }
 &nbsp;
     // Initialize dates for validation
@@ -1264,7 +1264,7 @@ export default AddTask;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 29 2020 05:17:29 GMT+0000 (Greenwich Mean Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 29 2020 05:50:41 GMT+0000 (Greenwich Mean Time)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

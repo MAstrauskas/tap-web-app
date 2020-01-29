@@ -1,7 +1,6 @@
 import React from "react";
 import { cleanup } from "@testing-library/react";
-import Enzyme, { shallow, render, mount } from "enzyme";
-import toJson from "enzyme-to-json";
+import Enzyme, { render, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { useAuth0 } from "../../../react-auth0-spa";
 
@@ -40,8 +39,6 @@ describe("Checkbox", () => {
   });
 
   it("should throw an error if props are missing", async () => {
-    const handleComplete = jest.fn();
-
     const wrapper = mount(<Checkbox id={2} />);
 
     expect(wrapper.state().editSuccessful).toBe(false);
