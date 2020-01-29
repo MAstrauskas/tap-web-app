@@ -69,7 +69,10 @@ export default class Checkbox extends Component {
     return (
       <>
         <CustomCheckbox type="checkbox" />
-        <StyledCheckbox onClick={this.handleEdit}></StyledCheckbox>
+        <StyledCheckbox
+          data-testid="Checkbox"
+          onClick={this.handleEdit}
+        ></StyledCheckbox>
       </>
     );
   }

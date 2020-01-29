@@ -165,6 +165,7 @@ export class Mood extends Component {
     isFetching: false
   };
 
+  /* istanbul ignore next */
   handleSubmit = async (values, { setSubmitting }) => {
     try {
       const body = {
@@ -173,7 +174,7 @@ export class Mood extends Component {
         moodMotivation: values.moodMotivation,
         isTired: values.moodTired === "Yes" ? true : false
       };
-      console.log(body.moodName);
+
       setSubmitting(true);
 
       await axios.post("http://localhost:9000/api/mood/add", body).then(
