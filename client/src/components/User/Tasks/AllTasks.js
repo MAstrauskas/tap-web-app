@@ -91,6 +91,7 @@ export default class AllTasks extends Component {
     tasks: []
   };
 
+  /* istanbul ignore next */
   handleTasks = async () => {
     this.setState({ ...this.state, isFetching: true });
 
@@ -103,6 +104,7 @@ export default class AllTasks extends Component {
     this.setState({ ...this.state, isFetching: false });
   };
 
+  /* istanbul ignore next */
   handleDelete = async taskId => {
     await axios.delete(`http://localhost:9000/api/tasks/delete/${taskId}`).then(
       response => {
@@ -120,6 +122,7 @@ export default class AllTasks extends Component {
     });
   };
 
+  /* istanbul ignore next */
   handleComplete = async () => {
     this.setState({ tasks: [] });
 
