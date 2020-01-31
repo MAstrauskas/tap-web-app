@@ -18,7 +18,10 @@ exports.moodDetail = (req, res, next) => {
         );
     }
   })
-    .then(task => res.json(task))
+    .then(mood => {
+      console.log(mood);
+      return res.json(mood);
+    })
     .catch(next);
 };
 
