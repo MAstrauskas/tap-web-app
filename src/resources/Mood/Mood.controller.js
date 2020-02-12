@@ -33,14 +33,7 @@ exports.moodDetail = (req, res, next) => {
  * @param {any} res
  **/
 exports.addMood_post = (req, res, next) => {
-  const newMood = new Mood({
-    email: req.body.email,
-    moodName: req.body.moodName,
-    moodMotivation: req.body.moodMotivation,
-    isTired: req.body.isTired
-  });
-
-  newMood.save((err, mood) => {
+  Mood.create(req.body, function(err, mood) {
     if (err) {
       return res
         .status(500)
@@ -56,6 +49,6 @@ exports.addMood_post = (req, res, next) => {
       req.body.isTired
     );
 
-    return res.send("Mood has been added");
+    return res.json(mood);
   });
 };
