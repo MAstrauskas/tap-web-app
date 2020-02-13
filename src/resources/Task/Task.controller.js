@@ -14,7 +14,7 @@ exports.taskList = (req, res, next) => {
     TaskSuggester.makeTaskSuggested(req.params.email, tasks);
 
     res.send({ tasks: tasks });
-  }).sort("taskDueDate");
+  });
 };
 
 /**
@@ -25,7 +25,7 @@ exports.taskList = (req, res, next) => {
  * @param {any} res
  **/
 exports.taskDetail = (req, res, next) => {
-  Task.findOne({ _id: req.params.id }, err => {
+  Task.findOne({ _id: req.params.id }, function(err, task) {
     if (err) {
       res
         .status(500)
@@ -33,9 +33,9 @@ exports.taskDetail = (req, res, next) => {
           "Error occured trying to find a task. Please check if the information is correct."
         );
     }
-  })
-    .then(task => res.json(task))
-    .catch(next);
+
+    return res.json(task);
+  });
 };
 
 /**
@@ -46,30 +46,31 @@ exports.taskDetail = (req, res, next) => {
  * @param {any} res
  **/
 exports.addTask_post = (req, res, next) => {
-  const newTask = new Task({
-    email: req.body.email,
-    taskName: req.body.taskName,
-    taskDescription: req.body.taskDescription,
-    taskCreateDate: req.body.taskCreateDate,
-    taskUpdateDate: req.body.taskUpdateDate,
-    taskDueDate: req.body.taskDueDate,
-    taskPriority: req.body.taskPriority,
-    taskDifficulty: req.body.taskDifficulty,
-    isTaskComplete: req.body.isTaskComplete,
-    isTaskSuggested: req.body.isTaskSuggested
-  });
+  Task.create(
+    {
+      email: req.body.email,
+      taskName: req.body.taskName,
+      taskDescription: req.body.taskDescription,
+      taskCreateDate: req.body.taskCreateDate,
+      taskUpdateDate: req.body.taskUpdateDate,
+      taskDueDate: req.body.taskDueDate,
+      taskPriority: req.body.taskPriority,
+      taskDifficulty: req.body.taskDifficulty,
+      isTaskComplete: req.body.isTaskComplete,
+      isTaskSuggested: req.body.isTaskSuggested
+    },
+    function(err, task) {
+      if (err) {
+        res
+          .status(500)
+          .send(
+            "Error occured while trying to add a task. Please check if the information is correct"
+          );
+      }
 
-  newTask.save((err, task) => {
-    if (err) {
-      res
-        .status(500)
-        .send(
-          "Error occured while trying to add a task. Please check if the information is correct"
-        );
+      res.send("Task has been added - " + `"${task.taskName}"`);
     }
-
-    res.send("Task has been added - " + `"${task.taskName}"`);
-  });
+  );
 };
 
 /**
@@ -103,22 +104,7 @@ exports.editTask_post = (req, res, next) => {
     }
 
     res.send("Task has been updated.");
-  }).catch(next);
-};
-
-/**
- * POST /api/tasks/delete/id
- *
- * @export
- * @param {any} req
- * @param {any} res
- **/
-exports.deleteTask_post = async (req, res, next) => {
-  const resultMessage = await Task.findByIdAndDelete(req.params.id)
-    .then(() => console.log(req))
-    .catch(next);
-
-  res.json({ resultMessage });
+  });
 };
 
 /**
@@ -146,7 +132,7 @@ exports.deleteTask_post = async (req, res, next) => {
 exports.tasksCompleted_get = (req, res, next) => {
   Task.find({ isTaskComplete: true }, (err, tasks) => {
     res.send({ tasks: tasks });
-  }).catch(next);
+  });
 };
 
 /**
@@ -174,5 +160,5 @@ exports.tasksCompleted_add = (req, res, next) => {
     }
 
     res.send("Task has been updated.");
-  }).catch(next);
+  });
 };

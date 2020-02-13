@@ -5,7 +5,7 @@ const test = sinonTest(sinon);
 const MoodController = require("../Mood.controller");
 const Mood = require("../Mood.model");
 
-describe("Mood Controller", function() {
+describe("Mood Controller", () => {
   let req = {
     body: {
       email: "__EMAIL__",
@@ -13,7 +13,7 @@ describe("Mood Controller", function() {
       moodMotivation: "__MOOD_MOTIVATION__",
       isTired: false
     },
-    params: {},
+    params: { id: "__ID__" },
     error: new Error({ error: "Tests not working" }),
     res: {},
     expectedResult: {}

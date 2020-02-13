@@ -195,6 +195,13 @@ export default class Home extends Component {
                     <TableHeader>Delete</TableHeader>
                   </tr>
                   {tasks
+                    .sort((a, b) => {
+                      const dueDate = moment(a.taskDueDate).format("LL");
+                      const dueDate2 = moment(b.taskDueDate).format("LL");
+
+                      if (dueDate > dueDate2) return 1;
+                      else return -1;
+                    })
                     .filter(task => {
                       const dueDate = new Date(task.taskDueDate);
                       const todaysDate = new Date();
