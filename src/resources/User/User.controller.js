@@ -7,10 +7,18 @@ const User = require("./User.model");
  * @param {any} req
  * @param {any} res
  **/
+
+/* istanbul ignore next */
 exports.userList = (req, res, next) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(() => next());
+  User.find({}, function(err, users) {
+    if (err) {
+      console.log("Error finding users");
+
+      return next();
+    }
+
+    res.json(users);
+  });
 };
 
 /**
@@ -20,6 +28,8 @@ exports.userList = (req, res, next) => {
  * @param {any} req
  * @param {any} res
  **/
+
+/* istanbul ignore next */
 exports.addUser_post = (req, res, next) => {
   const fullName = req.body.name.split(" ");
 

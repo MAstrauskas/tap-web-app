@@ -27,7 +27,7 @@ describe("Mood Controller", () => {
   });
 
   it(
-    "should add mood to the databse",
+    "should add mood to the database",
     test(function() {
       expectedResult = req.body;
       this.stub(Mood, "create").yields(null, expectedResult);

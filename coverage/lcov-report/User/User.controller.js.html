@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for Task/Task.model.js</title>
+    <title>Code coverage report for User/User.controller.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,28 +16,32 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">all files</a> / <a href="index.html">Task/</a> Task.model.js
+      <a href="../index.html">all files</a> / <a href="index.html">User/</a> User.controller.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>4/4</span>
+        <span class='fraction'>15/15</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>4/4</span>
+        <span class='fraction'>15/15</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">11 statements, 2 functions, 6 branches</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
       </div>
     </div>
   </div>
@@ -95,55 +99,26 @@
 50
 51
 52
-53
-54
-55
-56
-57
-58</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+53</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,63 +132,77 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const User = require("./User.model");
 &nbsp;
-const TaskSchema = new Schema({
-  email: {
-    // User Email
-    type: String,
-    ref: "User",
-    required: true
-  },
-  taskName: {
-    type: String,
-    required: true
-  },
-  taskDescription: {
-    type: String,
-    required: false
-  },
-  taskCreateDate: {
-    type: Date,
-    required: true
-  },
-  taskUpdateDate: {
-    type: Date,
-    required: false
-  },
-  taskDueDate: {
-    type: Date,
-    required: true
-  },
-  taskPriority: {
-    type: String,
-    required: true
-  },
-  taskDifficulty: {
-    type: String,
-    required: true
-  },
-  isTaskComplete: {
-    type: Boolean,
-    required: true
-  },
-  isTaskSuggested: {
-    type: Boolean,
-    required: true
-  },
-  taskGroup: {
-    type: Number,
-    required: false
-  },
-  taskTotalPoints: {
-    type: Number,
-    required: false
-  }
-});
+/**
+ * GET /api/user
+ *
+ * @export
+ * @param {any} req
+ * @param {any} res
+ **/
 &nbsp;
-module.exports = mongoose.model("Task", TaskSchema);
+/* istanbul ignore next */
+exports.userList = (req, res, next) =&gt; {
+  User.find({}, <span class="fstat-skip" title="function not covered" >function(err, users) {</span>
+<span class="cstat-skip" title="statement not covered" >    if (err) {</span>
+<span class="cstat-skip" title="statement not covered" >      console.log("Error finding users");</span>
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >      return next();</span>
+    }
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >    res.json(users);</span>
+  });
+};
+&nbsp;
+/**
+ * POST /api/user/add
+ *
+ * @export
+ * @param {any} req
+ * @param {any} res
+ **/
+&nbsp;
+/* istanbul ignore next */
+exports.addUser_post = (req, res, next) =&gt; {
+<span class="cstat-skip" title="statement not covered" >  const fullName = req.body.name.split(" ");</span>
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >  User.findOne({ email: req.body.email }, <span class="fstat-skip" title="function not covered" >function(err, doc) {</span></span>
+<span class="cstat-skip" title="statement not covered" >    if (doc &amp;&amp; doc.email === req.body.email) {</span>
+    } else {
+<span class="cstat-skip" title="statement not covered" >      const newUser = new User({</span>
+        userId: 1,
+        firstName: fullName[0],
+        lastName: fullName[1],
+        email: req.body.email
+      });
+&nbsp;
+<span class="cstat-skip" title="statement not covered" >      newUser</span>
+        .save()
+        .then(user =&gt; <span class="cstat-skip" title="statement not covered" >res.json(user))</span>
+        .catch(() =&gt; <span class="cstat-skip" title="statement not covered" >next())</span>;
+    }
+  });
+};
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

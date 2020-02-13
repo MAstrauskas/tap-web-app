@@ -8,6 +8,8 @@ const MoodCalculator = require("./helpers/MoodCalculator");
  * @param {any} req
  * @param {any} res
  **/
+
+/* istanbul ignore next */
 exports.moodDetail = (req, res, next) => {
   Mood.findOne({ _id: req.params.id }, err => {
     if (err) {
