@@ -1,3 +1,12 @@
+import { createMuiTheme } from "@material-ui/core/styles";
+import lightBlue from "@material-ui/core/colors/lightBlue";
+
+export const theme = createMuiTheme({
+  palette: {
+    primary: lightBlue
+  }
+});
+
 const Theme = {
   colors: {
     primary: "#19A2CD",
@@ -7,7 +16,11 @@ const Theme = {
     error: "red",
     disabled: "#D3D3D3",
     activeLink: "tomato",
-    success: "green"
+    success: "green",
+    first: "#c60021",
+    second: "#f6f6f8",
+    third: "#e3e3e3",
+    fourth: "#f2031f"
   },
   fontSize: {
     navLogo: "20px",

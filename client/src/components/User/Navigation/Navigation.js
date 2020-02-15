@@ -1,240 +1,296 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth0 } from "../../../react-auth0-spa";
-import styled from "@emotion/styled";
+import clsx from "clsx";
 import { NavLink } from "react-router-dom";
-import { MdAddCircle as AddIcon } from "react-icons/md";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  AppBar,
+  Button,
+  CssBaseline,
+  Divider,
+  Drawer,
+  IconButton,
+  Toolbar,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Typography
+} from "@material-ui/core";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import DonutLargeIcon from "@material-ui/icons/DonutLarge";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import ListIcon from "@material-ui/icons/List";
+import MenuIcon from "@material-ui/icons/Menu";
+import MoodIcon from "@material-ui/icons/Mood";
+import TodayIcon from "@material-ui/icons/Today";
 import Theme from "../../shared/Theme/Theme";
 
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 2px solid ${Theme.colors.primary};
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+const drawerWidth = 240;
 
-  a {
-    text-decoration: none;
-  }
-
-  @media screen and (max-width: 550px) {
-    width: 100%;
-    max-width: 100%;
-    a {
-      padding: 0rem;
+const useStyles = makeStyles(theme => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    backgroundColor: `${Theme.colors.white}`,
+    borderBottom: `2px solid ${Theme.colors.first}`,
+    boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  menuButton: {
+    marginRight: 36,
+    color: `${Theme.colors.first}`
+  },
+  rightGroup: {
+    marginLeft: "auto"
+  },
+  hide: {
+    display: "none"
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+    backgroundColor: `${Theme.colors.white}`
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    backgroundColor: `${Theme.colors.white}`
+  },
+  drawerClose: {
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    backgroundColor: `${Theme.colors.white}`,
+    overflowX: "hidden",
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing(9) + 1
     }
-
-    div a {
-      padding-left: 1rem;
-    }
-  }
-`;
-
-const LogoContainer = styled.div`
-  padding: 1rem;
-`;
-
-const NavLogo = styled.a`
-  padding: 0 2rem 0 3rem;
-  color: ${Theme.colors.black};
-  font-size: ${Theme.fontSize.navLogo};
-  font-weight: bold;
-`;
-
-const Links = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-top: 0.2rem;
-
-  a {
-    padding-top: 1rem;
-    padding-left: 1rem;
-    color: ${Theme.colors.primary};
-    font-size: ${Theme.fontSize.navLink};
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: ${Theme.colors.activeLink};
-    }
-
-    &.active {
-      color: ${Theme.colors.activeLink};
-    }
-  }
-`;
-
-const Icon = styled.i`
-  svg {
-    margin-top: -6px;
-    width: 35px;
-    height: 33px;
-  }
-`;
-
-const MenuToggle = styled.div`
-  display: block;
-  position: relative;
-  top: 15px;
-  right: 35px;
-  z-index: 1;
-  user-select: none;
-  -webkit-user-select: none;
-
-  input {
-    display: block;
-    width: 40px;
-    height: 32px;
-    position: absolute;
-    top: -7px;
-    right: -5px;
-    opacity: 0;
-    z-index: 2;
-    -webkit-touch-callout: none;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-    &:checked ~ span {
-      opacity: 1;
-      transform: rotate(45deg) translate(-2px, -1px);
-      background: ${Theme.colors.black};
-    }
-
-    &:checked ~ span:nth-last-child(3) {
-      opacity: 0;
-      transform: rotate(0deg) scale(0.2, 0.2);
-    }
-
-    &:checked ~ span:nth-last-child(2) {
-      transform: rotate(-45deg) translate(0, -1px);
-    }
-
-    &:not(:checked) ~ ul {
-      display: none;
-      visibility: hidden;
-    }
-
-    &:checked ~ ul {
-      transform: none;
-      visibility: visible;
+  },
+  toolbar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: theme.spacing(0, 1),
+    backgroundColor: `${Theme.colors.white}`,
+    ...theme.mixins.toolbar
+  },
+  links: {
+    textDecoration: "none",
+    color: `${Theme.colors.white}`
+  },
+  active: {
+    backgroundColor: `${Theme.colors.first}`,
+    color: `${Theme.colors.white}`,
+    "& > div": {
+      "& > svg": { color: `${Theme.colors.white}` }
+    },
+    "&:hover": {
+      backgroundColor: `${Theme.colors.fourth}`
     }
   }
-`;
-
-const MenuLine = styled.span`
-  display: block;
-  width: 33px;
-  height: 4px;
-  margin-bottom: 5px;
-  position: relative;
-  background: ${Theme.colors.primary};
-  border-radius: 3px;
-  z-index: 1;
-  transform-origin: 4px 0px;
-
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
-    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
-
-  &:first-child {
-    transform-origin: 0% 0%;
-  }
-
-  &:nth-last-child(2) {
-    transform-origin: 0% 100%;
-  }
-`;
-
-const Menu = styled.ul`
-  position: absolute;
-  width: 300px;
-  margin: 11px 0 0 -322px;
-  padding: 50px;
-  border-radius: 1%;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background: ${Theme.colors.primary};
-  list-style-type: none;
-  -webkit-font-smoothing: antialiased;
-  transform-origin: 0% 0%;
-  transform: translate(100%, 0);
-  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-
-  li,
-  button {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
-    font-size: ${Theme.fontSize.navLink};
-    color: ${Theme.colors.white};
-    transition: color 0.3s ease;
-    &:hover {
-      color: ${Theme.colors.activeLink};
-    }
-  }
-
-  button {
-    background: ${Theme.colors.primary};
-    border-style: none;
-    cursor: pointer;
-    width: 300px;
-  }
-`;
-
-const MenuLink = styled(NavLink)`
-  transition: color 0.3s ease;
-  cursor: pointer;
-  &:hover {
-    color: ${Theme.colors.activeLink};
-  }
-`;
-
-const NavText = styled.p`
-  color: ${Theme.colors.primary};
-`;
+}));
 
 const Navigation = () => {
-  const { isAuthenticated, logout, user } = useAuth0();
+  const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
+  const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+  const [userMenu, setUserMenu] = useState(null);
+
+  const userMenuOpen = Boolean(userMenu);
+
+  const handleUserMenu = event => {
+    setUserMenu(event.currentTarget);
+  };
+
+  const handleUserMenuClose = () => {
+    setUserMenu(null);
+  };
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
-      <Nav data-testid="navigation">
-        <LogoContainer>
-          <NavLogo href="/">TAP</NavLogo>
-        </LogoContainer>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        color="transparent"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open
+        })}
+        data-testid="navigation"
+      >
+        <Toolbar>
+          {isAuthenticated && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, {
+                [classes.hide]: open
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
 
-        <Links data-testid="navigation-links">
-          <NavText>Hi, {user.name && user.name.split(" ")[0]}</NavText>
-          <NavLink to="/tasks/add" activeClassName="active">
-            <Icon>
-              <AddIcon />
-            </Icon>
-          </NavLink>
-          <NavLink
-            to="/tasks/all"
-            activeClassName="active"
-            style={{ paddingRight: "3.5rem" }}
-          >
-            MY TASKS
-          </NavLink>
+          <Typography variant="h6" noWrap className={classes.title}>
+            TAP
+          </Typography>
 
-          <MenuToggle>
-            <input type="checkbox" />
+          {!isAuthenticated && (
+            /* istanbul ignore next */
+            <div className={classes.rightGroup}>
+              <Button color="inherit" onClick={() => loginWithRedirect({})}>
+                <ExitToAppIcon />
+                LOGIN / REGISTER
+              </Button>
+            </div>
+          )}
 
-            <MenuLine></MenuLine>
-            <MenuLine></MenuLine>
-            <MenuLine></MenuLine>
+          {isAuthenticated && (
+            <div className={classes.rightGroup}>
+              <IconButton
+                aria-label="current user account"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleUserMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={userMenu}
+                anchorOrigin={{ vertical: "left", horizontal: "right" }}
+                keepMounted
+                transformOrigin={{ vertical: "left", horizontal: "right" }}
+                open={userMenuOpen}
+                onClose={handleUserMenuClose}
+              >
+                <MenuItem onClick={handleUserMenuClose}>My Account</MenuItem>
+                <MenuItem onClick={() => logout()}>Logout</MenuItem>
+              </Menu>
+            </div>
+          )}
+        </Toolbar>
+      </AppBar>
+      {isAuthenticated && (
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open
+            })
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {open === false ? null : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            <ListItem
+              button
+              component={NavLink}
+              to="/home"
+              activeClassName={classes.active}
+              key="Today"
+            >
+              <ListItemIcon>
+                <TodayIcon />
+              </ListItemIcon>
+              <ListItemText primary="Today" />
+            </ListItem>
 
-            <Menu>
-              <MenuLink to="/tasks/" activeClassName="active">
-                <li>SETTINGS</li>
-              </MenuLink>
-              <MenuLink to="/tasks/moodist" activeClassName="active">
-                <li>MOODIST</li>
-              </MenuLink>
-              {isAuthenticated && (
-                <button onClick={() => logout()}>LOGOUT</button>
-              )}
-            </Menu>
-          </MenuToggle>
-        </Links>
-      </Nav>
+            <ListItem
+              button
+              component={NavLink}
+              to="/tasks/all"
+              activeClassName={classes.active}
+              key="All Tasks"
+            >
+              <ListItemIcon>
+                <ListIcon />
+              </ListItemIcon>
+              <ListItemText primary="All Tasks" />
+            </ListItem>
+
+            <ListItem
+              button
+              component={NavLink}
+              to="/tasks/add"
+              activeClassName={classes.active}
+              key="Add a Task"
+            >
+              <ListItemIcon>
+                <AddCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Add a Task" />
+            </ListItem>
+
+            <ListItem
+              button
+              component={NavLink}
+              to="/tasks/moodist"
+              activeClassName={classes.active}
+              key="Moodist"
+            >
+              <ListItemIcon>
+                <MoodIcon />
+              </ListItemIcon>
+              <ListItemText primary="Moodist" />
+            </ListItem>
+
+            <ListItem
+              button
+              component={NavLink}
+              to="/tasks/summary"
+              activeClassName={classes.active}
+              key="Summary"
+            >
+              <ListItemIcon>
+                <DonutLargeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Summary" />
+            </ListItem>
+          </List>
+        </Drawer>
+      )}
     </>
   );
 };

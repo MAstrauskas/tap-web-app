@@ -3,7 +3,7 @@ import { ThemeProvider } from "emotion-theming";
 import styled from "@emotion/styled";
 
 import Theme from "../shared/Theme/Theme";
-import Navigation from "../Navigation/Navigation";
+import Navigation from "../User/Navigation/Navigation";
 
 const Content = styled.main`
   display: flex;

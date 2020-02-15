@@ -12,6 +12,8 @@ import Mood from "./components/User/Mood/Mood";
 import Error from "./components/Error/Error";
 import "./App.css";
 
+import "typeface-roboto";
+
 function App() {
   const { loading, isAuthenticated, user } = useAuth0();
 

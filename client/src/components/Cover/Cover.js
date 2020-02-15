@@ -4,7 +4,8 @@ import { useAuth0 } from "../../react-auth0-spa";
 import { Link } from "react-router-dom";
 
 import Theme from "../shared/Theme/Theme";
-import Button from "../shared/Button";
+//import Button from "../shared/Button";
+import Button from "@material-ui/core/Button";
 
 const Content = styled.div`
   display: flex;
@@ -77,7 +78,9 @@ const Cover = () => {
       </SubTitle>
       {isAuthenticated && (
         <Link to="/home">
-          <Button title="Enter" />
+          <Button variant="contained" color="primary">
+            Enter
+          </Button>
         </Link>
       )}
     </Content>

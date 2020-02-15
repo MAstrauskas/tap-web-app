@@ -1,36 +1,45 @@
 import React from "react";
 import { ThemeProvider } from "emotion-theming";
-import styled from "@emotion/styled";
-
+import { makeStyles } from "@material-ui/core/styles";
 import Theme from "../../shared/Theme/Theme";
 import Navigation from "../Navigation/Navigation";
-import SideNavigation from "../SideNavigation/SideNavigation";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
-const Content = styled.main`
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin: auto auto;
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-`;
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex"
+  },
+  toolbar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar
+  },
+  content: {
+    flexGrow: 0,
+    padding: theme.spacing(12)
+  }
+}));
 
 const Layout = props => {
+  const classes = useStyles();
+
   return (
-    <>
+    <div className={classes.root}>
       <ThemeProvider theme={Theme}>
         <Navigation />
-        <Row>
-          <SideNavigation />
-          <Content>{props.children}</Content>
-        </Row>
+
+        <Grid container justify="center">
+          <main className={classes.content}>
+            <div className={classes.toolbar}>
+              <Typography paragraph>{props.children}</Typography>
+            </div>
+          </main>
+        </Grid>
       </ThemeProvider>
-    </>
+    </div>
   );
 };
 
