@@ -12,6 +12,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
+import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import {
   MdEdit as EditIcon,
@@ -134,101 +135,115 @@ export default class AllTasks extends Component {
       Math.min(rowsPerPage, filteredTasks.length - page * rowsPerPage);
 
     return (
-      <TableContainer component={Paper}>
-        <Table aria-label="all tasks table">
-          <TableHead>
-            <TableRow>
-              <CustomTableCell></CustomTableCell>
-              <CustomTableCell>Task</CustomTableCell>
-              <CustomTableCell align="right">Description</CustomTableCell>
-              <CustomTableCell align="right">Due Date</CustomTableCell>
-              <CustomTableCell align="right">Priority</CustomTableCell>
-              <CustomTableCell align="right">Difficulty</CustomTableCell>
-              <CustomTableCell align="right">Edit</CustomTableCell>
-              <CustomTableCell align="right">Delete</CustomTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? filteredTasks.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : filteredTasks
-            ).map(task => {
-              const dueDate = moment(task.taskDueDate).format("LL");
+      <Paper>
+        <Typography
+          style={{
+            flex: "1 1 100%",
+            backgroundColor: `${Theme.colors.first}`,
+            color: `${Theme.colors.white}`,
+            paddingLeft: `1.25rem`
+          }}
+          variant="h6"
+          id="all-tasks"
+        >
+          All Tasks
+        </Typography>
+        <TableContainer>
+          <Table aria-label="all tasks table">
+            <TableHead>
+              <TableRow>
+                <CustomTableCell></CustomTableCell>
+                <CustomTableCell>Task</CustomTableCell>
+                <CustomTableCell align="right">Description</CustomTableCell>
+                <CustomTableCell align="right">Due Date</CustomTableCell>
+                <CustomTableCell align="right">Priority</CustomTableCell>
+                <CustomTableCell align="right">Difficulty</CustomTableCell>
+                <CustomTableCell align="right">Edit</CustomTableCell>
+                <CustomTableCell align="right">Delete</CustomTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? filteredTasks.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : filteredTasks
+              ).map(task => {
+                const dueDate = moment(task.taskDueDate).format("LL");
 
-              return (
-                <CustomTableRow key={task._id}>
-                  <CustomTableCell component="th" scope="row">
-                    <Checkbox
-                      id={task._id}
-                      handleComplete={this.handleComplete}
-                    />
-                  </CustomTableCell>
-                  <CustomTableCell component="th" scope="row">
-                    {task.taskName}
-                  </CustomTableCell>
-                  <CustomTableCell align="right">
-                    {task.taskDescription}
-                  </CustomTableCell>
-                  <CustomTableCell align="right">{dueDate}</CustomTableCell>
-                  <CustomTableCell align="right">
-                    {task.taskPriority}
-                  </CustomTableCell>
-                  <CustomTableCell align="right">
-                    {task.taskDifficulty}
-                  </CustomTableCell>
-                  <CustomTableCell align="right">
-                    <Link
-                      to={{
-                        pathname: "/tasks/edit",
-                        state: {
-                          task: task
-                        }
-                      }}
-                    >
-                      <TableButton>
-                        <EditIcon />
+                return (
+                  <CustomTableRow key={task._id}>
+                    <CustomTableCell component="th" scope="row">
+                      <Checkbox
+                        id={task._id}
+                        handleComplete={this.handleComplete}
+                      />
+                    </CustomTableCell>
+                    <CustomTableCell component="th" scope="row">
+                      {task.taskName}
+                    </CustomTableCell>
+                    <CustomTableCell align="right">
+                      {task.taskDescription}
+                    </CustomTableCell>
+                    <CustomTableCell align="right">{dueDate}</CustomTableCell>
+                    <CustomTableCell align="right">
+                      {task.taskPriority}
+                    </CustomTableCell>
+                    <CustomTableCell align="right">
+                      {task.taskDifficulty}
+                    </CustomTableCell>
+                    <CustomTableCell align="right">
+                      <Link
+                        to={{
+                          pathname: "/tasks/edit",
+                          state: {
+                            task: task
+                          }
+                        }}
+                      >
+                        <TableButton>
+                          <EditIcon />
+                        </TableButton>
+                      </Link>
+                    </CustomTableCell>
+                    <CustomTableCell align="right">
+                      <TableButton onClick={() => this.handleDelete(task._id)}>
+                        <DeleteIcon />
                       </TableButton>
-                    </Link>
-                  </CustomTableCell>
-                  <CustomTableCell align="right">
-                    <TableButton onClick={() => this.handleDelete(task._id)}>
-                      <DeleteIcon />
-                    </TableButton>
-                  </CustomTableCell>
+                    </CustomTableCell>
+                  </CustomTableRow>
+                );
+              })}
+
+              {emptyRows > 0 && (
+                <CustomTableRow style={{ height: 53 * emptyRows }}>
+                  <CustomTableCell colSpan={12} />
                 </CustomTableRow>
-              );
-            })}
+              )}
+            </TableBody>
 
-            {emptyRows > 0 && (
-              <CustomTableRow style={{ height: 53 * emptyRows }}>
-                <CustomTableCell colSpan={12} />
-              </CustomTableRow>
-            )}
-          </TableBody>
-
-          <TableFooter>
-            <TableRow style={{ textAlign: "right" }}>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
-                colSpan={12}
-                count={filteredTasks.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { "aria-label": "rows per page" },
-                  native: true
-                }}
-                onChangePage={this.handleTablePageChange}
-                onChangeRowsPerPage={this.handleTablePerPageChange}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+            <TableFooter>
+              <TableRow style={{ textAlign: "right" }}>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
+                  colSpan={12}
+                  count={filteredTasks.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { "aria-label": "rows per page" },
+                    native: true
+                  }}
+                  onChangePage={this.handleTablePageChange}
+                  onChangeRowsPerPage={this.handleTablePerPageChange}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Paper>
     );
   }
 }
