@@ -17,7 +17,7 @@ const StyledCheckbox = styled.span`
   width: 12px;
   background-color: white;
   border-radius: 5px;
-  border: 2px solid ${Theme.colors.primary};
+  border: 2px solid ${Theme.colors.first};
 `;
 
 export default class Checkbox extends Component {
