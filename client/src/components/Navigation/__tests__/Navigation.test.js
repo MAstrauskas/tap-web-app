@@ -1,9 +1,9 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { useAuth0 } from "../../../../react-auth0-spa";
+import { useAuth0 } from "../../../react-auth0-spa";
 
-import Layout from "../Layout";
+import Navigation from "../Navigation";
 
 const user = {
   email: "test@test.com",
@@ -12,9 +12,9 @@ const user = {
   sub: "google-oauth2|231231232"
 };
 
-jest.mock("../../../../react-auth0-spa");
+jest.mock("../../../react-auth0-spa");
 
-describe("Layout", () => {
+describe("Navigation", () => {
   beforeEach(() => {
     // Mock Auth0 and return logged out state
     useAuth0.mockReturnValue({
@@ -25,23 +25,41 @@ describe("Layout", () => {
     });
   });
 
-  it("renders navigation inside layout", () => {
+  it("has logo link", () => {
+    const { getByText } = render(
+      <Router>
+        <Navigation />
+      </Router>
+    );
+
+    getByText("TAP");
+  });
+
+  it("has Navigation", () => {
     const { getByTestId } = render(
       <Router>
-        <Layout />
+        <Navigation />
       </Router>
     );
 
     getByTestId("navigation");
   });
 
-  it("renders side navigation inside layout", () => {
+  it("has Navigation links", () => {
+    // Authenticated
+    useAuth0.mockReturnValue({
+      isAuthenticated: true,
+      user,
+      logout: jest.fn(),
+      loginWithRedirect: jest.fn()
+    });
+
     const { getByTestId } = render(
       <Router>
-        <Layout />
+        <Navigation />
       </Router>
     );
 
-    getByTestId("side-navigation");
+    getByTestId("navigation-links");
   });
 });

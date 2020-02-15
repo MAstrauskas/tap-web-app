@@ -35,40 +35,6 @@ describe("Task Controller", () => {
   });
 
   it(
-    "should get task list from the database",
-    test(function() {
-      expectedResult = req.expectedResult;
-      this.stub(Task, "find").yields(null, expectedResult);
-
-      TaskController.taskList(req, res);
-
-      sinon.assert.calledWith(Task.find, req.params);
-      sinon.assert.calledWith(res.send, sinon.match.object);
-      sinon.assert.calledWith(
-        res.send,
-        sinon.match({
-          tasks: [
-            {
-              _id: "__ID__",
-              email: "__EMAIL__",
-              taskName: "__NAME__",
-              taskDescription: "__DESCRIPTION__",
-              taskCreateDate: "__DATE__",
-              taskDueDate: "__DATE__",
-              taskPriority: "__PRIORITY__",
-              taskDifficulty: "__DIFFICULTY__",
-              isTaskComplete: false,
-              isTaskSuggested: true,
-              taskGroup: 3,
-              taskTotalPoints: 1.75
-            }
-          ]
-        })
-      );
-    })
-  );
-
-  it(
     "should get 1 task from the database",
     test(function() {
       req.params = { id: "__ID__" };

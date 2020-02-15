@@ -14,7 +14,7 @@ exports.taskList = (req, res, next) => {
     TaskSuggester.makeTaskSuggested(req.params.email, tasks);
 
     res.send({ tasks: tasks });
-  });
+  }).catch(next);
 };
 
 /**

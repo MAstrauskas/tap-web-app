@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth0 } from "../../../react-auth0-spa";
+import { useAuth0 } from "../../react-auth0-spa";
 import clsx from "clsx";
 import { NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,7 +28,7 @@ import ListIcon from "@material-ui/icons/List";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoodIcon from "@material-ui/icons/Mood";
 import TodayIcon from "@material-ui/icons/Today";
-import Theme from "../../shared/Theme/Theme";
+import Theme from "../shared/Theme/Theme";
 
 const drawerWidth = 240;
 
@@ -223,7 +223,7 @@ const Navigation = () => {
             </IconButton>
           </div>
           <Divider />
-          <List>
+          <List data-testid="navigation-links">
             <ListItem
               button
               component={NavLink}

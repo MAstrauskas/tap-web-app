@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
 import Layout from "./components/Layout/Layout";
-import UserLayout from "./components/User/Layout/Layout";
 import Cover from "./components/Cover/Cover";
 import Home from "./components/User/Home/Home";
 import AddTask from "./components/User/Tasks/AddTaskForm";
@@ -28,18 +27,18 @@ function App() {
         <Switch>
           <Route path="/home">
             {isAuthenticated ? (
-              <UserLayout>
+              <Layout>
                 <Home name={user.name} email={user.email} />
-              </UserLayout>
+              </Layout>
             ) : (
               <Error errCode="401" />
             )}
           </Route>
           <Route path="/tasks/add">
             {isAuthenticated ? (
-              <UserLayout>
+              <Layout>
                 <AddTask userEmail={user.email} />
-              </UserLayout>
+              </Layout>
             ) : (
               <Error errCode="401" />
             )}
@@ -49,18 +48,18 @@ function App() {
           )}
           <Route path="/tasks/all">
             {isAuthenticated ? (
-              <UserLayout>
+              <Layout>
                 <AllTasks userEmail={user.email} />
-              </UserLayout>
+              </Layout>
             ) : (
               <Error errCode="401" />
             )}
           </Route>
           <Route path="/tasks/moodist">
             {isAuthenticated ? (
-              <UserLayout>
+              <Layout>
                 <Mood userEmail={user.email} />
-              </UserLayout>
+              </Layout>
             ) : (
               <Error errCode="401" />
             )}

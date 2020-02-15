@@ -26,11 +26,11 @@ describe("User Controller", () => {
     "should get a list of users from the database",
     test(function() {
       expectedResult = req.expectedResult;
-      this.stub(User, "findOne").yields(null, expectedResult);
+      this.stub(User, "find").yields(null, expectedResult);
 
       UserController.userList(req, res);
 
-      sinon.assert.calledWith(User.findOne, {});
+      sinon.assert.calledWith(User.find, {});
       sinon.assert.calledWith(res.json, sinon.match(expectedResult));
     })
   );

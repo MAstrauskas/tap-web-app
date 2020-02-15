@@ -20,31 +20,31 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/10</span>
+        <span class='fraction'>5/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/1</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>2/2</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -124,8 +124,7 @@
 <a name='L76'></a><a href='#L76'>76</a>
 <a name='L77'></a><a href='#L77'>77</a>
 <a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -141,15 +140,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -208,7 +206,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
 import Layout from "./components/Layout/Layout";
-import UserLayout from "./components/User/Layout/Layout";
 import Cover from "./components/Cover/Cover";
 import Home from "./components/User/Home/Home";
 import AddTask from "./components/User/Tasks/AddTaskForm";
@@ -220,53 +217,53 @@ import "./App.css";
 &nbsp;
 import "typeface-roboto";
 &nbsp;
-function <span class="fstat-no" title="function not covered" >App(</span>) {
-  const { loading, isAuthenticated, user } = <span class="cstat-no" title="statement not covered" >useAuth0();</span>
+function App() {
+  const { loading, isAuthenticated, user } = useAuth0();
 &nbsp;
   /* istanbul ignore next */
   if (loading) {
     return &lt;div&gt;Loading...&lt;/div&gt;;
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;Router&gt;
       &lt;div className="App"&gt;
         &lt;Switch&gt;
           &lt;Route path="/home"&gt;
             {isAuthenticated ? (
-              &lt;UserLayout&gt;
+<span class="branch-0 cbranch-no" title="branch not covered" >              &lt;Layout&gt;</span>
                 &lt;Home name={user.name} email={user.email} /&gt;
-              &lt;/UserLayout&gt;
+              &lt;/Layout&gt;
             ) : (
               &lt;Error errCode="401" /&gt;
             )}
           &lt;/Route&gt;
           &lt;Route path="/tasks/add"&gt;
             {isAuthenticated ? (
-              &lt;UserLayout&gt;
+<span class="branch-0 cbranch-no" title="branch not covered" >              &lt;Layout&gt;</span>
                 &lt;AddTask userEmail={user.email} /&gt;
-              &lt;/UserLayout&gt;
+              &lt;/Layout&gt;
             ) : (
               &lt;Error errCode="401" /&gt;
             )}
           &lt;/Route&gt;
           {isAuthenticated &amp;&amp; (
-            &lt;Route path="/tasks/edit" component={EditTask}&gt;&lt;/Route&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" >            &lt;Route path="/tasks/edit" component={EditTask}&gt;&lt;/Route&gt;</span>
           )}
           &lt;Route path="/tasks/all"&gt;
             {isAuthenticated ? (
-              &lt;UserLayout&gt;
+<span class="branch-0 cbranch-no" title="branch not covered" >              &lt;Layout&gt;</span>
                 &lt;AllTasks userEmail={user.email} /&gt;
-              &lt;/UserLayout&gt;
+              &lt;/Layout&gt;
             ) : (
               &lt;Error errCode="401" /&gt;
             )}
           &lt;/Route&gt;
           &lt;Route path="/tasks/moodist"&gt;
             {isAuthenticated ? (
-              &lt;UserLayout&gt;
+<span class="branch-0 cbranch-no" title="branch not covered" >              &lt;Layout&gt;</span>
                 &lt;Mood userEmail={user.email} /&gt;
-              &lt;/UserLayout&gt;
+              &lt;/Layout&gt;
             ) : (
               &lt;Error errCode="401" /&gt;
             )}
@@ -289,7 +286,7 @@ export default App;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Feb 15 2020 15:11:22 GMT+0000 (Greenwich Mean Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Feb 15 2020 15:51:05 GMT+0000 (Greenwich Mean Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

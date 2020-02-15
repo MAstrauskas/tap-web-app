@@ -66,7 +66,7 @@ const Error = ({ errCode }) => {
     <div>
       <Layout>
         <Content>
-          {errCode == "401" ? (
+          {errCode === "401" ? (
             <>
               <Title>401 - Unauthorized</Title>
               <SubTitle>

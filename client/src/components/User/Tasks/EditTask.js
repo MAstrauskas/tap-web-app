@@ -9,7 +9,7 @@ import styled from "@emotion/styled";
 import { jsx } from "@emotion/core";
 
 import Theme from "../../shared/Theme/Theme";
-import UserLayout from "../Layout/Layout";
+import UserLayout from "../../Layout/Layout";
 
 import "react-datepicker/dist/react-datepicker.css";
 
