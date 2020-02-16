@@ -1,33 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
-import styled from "@emotion/styled";
+import Checkbox from "@material-ui/core/Checkbox";
 
-import Theme from "../shared/Theme/Theme";
-
-const CustomCheckbox = styled.input`
-  opacity: 0;
-`;
-
-const StyledCheckbox = styled.span`
-  position: absolute;
-  cursor: pointer;
-  margin-left: -17px;
-  margin-top: 2px;
-  height: 12px;
-  width: 12px;
-  background-color: white;
-  border-radius: 5px;
-  border: 2px solid ${Theme.colors.first};
-`;
-
-export default class Checkbox extends Component {
+export default class TaskCheckbox extends Component {
   constructor(props) {
     super(props);
 
     this.handleEdit = this.handleEdit.bind(this);
   }
   state = {
-    editSuccessful: false
+    editSuccessful: false,
+    checked: false
   };
 
   handleEdit = async () => {
@@ -35,45 +18,52 @@ export default class Checkbox extends Component {
       const taskUpdateDate = Date.now();
       const body = {
         id: this.props.id,
+        isTaskComplete: true,
         taskUpdateDate: taskUpdateDate
       };
 
-      await axios
-        .patch(`http://localhost:9000/api/tasks/completed/add/`, body)
-        .then(
-          response => {
-            console.log(response);
-          },
-          error => {
-            console.log(error);
-          }
-        );
+      await axios.patch(`http://localhost:9000/api/tasks/completed`, body).then(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
 
       this.setState(prevState => ({
         ...prevState,
-        editSuccessful: true
+        editSuccessful: true,
+        checked: true
       }));
-      console.log(this.props);
-      this.props.handleComplete();
+
+      setTimeout(async () => {
+        await this.props.handleComplete(true, this.props.id);
+      }, 100);
     } catch (e) {
       console.log(e);
 
       this.setState(prevState => ({
         ...prevState,
-        editSuccessful: false
+        editSuccessful: false,
+        checked: false
       }));
     }
   };
 
   render() {
+    const { checked } = this.state;
+
     return (
-      <>
-        <CustomCheckbox type="checkbox" />
-        <StyledCheckbox
+      <div>
+        <Checkbox
           data-testid="Checkbox"
-          onClick={this.handleEdit}
-        ></StyledCheckbox>
-      </>
+          checked={checked}
+          onChange={this.handleEdit}
+          value="primary"
+          inputProps={{ "aria-label": "make task complete" }}
+        />
+      </div>
     );
   }
 }

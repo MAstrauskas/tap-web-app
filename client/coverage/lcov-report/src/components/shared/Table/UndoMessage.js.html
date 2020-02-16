@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/components/shared/Theme/Theme.js</title>
+    <title>Code coverage report for src/components/shared/Table/UndoMessage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../../prettify.css" />
     <link rel="stylesheet" href="../../../../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../../../index.html">All files</a> / <a href="index.html">src/components/shared/Theme</a> Theme.js
+      <a href="../../../../index.html">All files</a> / <a href="index.html">src/components/shared/Table</a> UndoMessage.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/2</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/2</span>
+        <span class='fraction'>1/1</span>
       </div>
     </div>
     <p class="quiet">
@@ -78,22 +78,14 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -118,48 +110,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createMuiTheme } from "@material-ui/core/styles";
-import lightBlue from "@material-ui/core/colors/lightBlue";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Fragment } from "react";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 &nbsp;
-export const theme = createMuiTheme({
-  palette: {
-    primary: lightBlue
-  }
-});
-&nbsp;
-const Theme = {
-  colors: {
-    primary: "#19A2CD",
-    secondary: "rgba(25, 162, 205, 0.2)",
-    black: "#000000",
-    white: "#ffffff",
-    error: "red",
-    disabled: "#D3D3D3",
-    activeLink: "tomato",
-    success: "green",
-    first: "#c60021",
-    second: "#f6f6f8",
-    third: "#e3e3e3",
-    fourth: "#f2031f"
-  },
-  fontSize: {
-    navLogo: "20px",
-    navLink: "16px",
-    xxlarge: "70px",
-    xlarge: "48px",
-    large: "30px",
-    medium: "24px",
-    small: "20px",
-    xsmall: "16px",
-    xxsmall: "12px"
-  }
-};
-&nbsp;
-export default Theme;
+export default function UndoMessage({ open, handleClose, handleUndo }) {
+  return (
+    &lt;Snackbar
+      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      open={open}
+      autoHideDuration={10000}
+      onClose={handleClose}
+      message="Task completed"
+      action={
+        &lt;Fragment&gt;
+          &lt;Button color="secondary" size="small" onClick={handleUndo}&gt;
+            UNDO
+          &lt;/Button&gt;
+          &lt;IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+          &gt;
+            &lt;CloseIcon fontSize="small" /&gt;
+          &lt;/IconButton&gt;
+        &lt;/Fragment&gt;
+      }
+    /&gt;
+  );
+}
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

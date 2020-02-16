@@ -3,11 +3,15 @@ import axios from "axios";
 import moment from "moment";
 
 import TaskTable from "../../shared/Table/Table";
+import UndoMessage from "../../shared/Table/UndoMessage";
 
 export default class AllTasks extends Component {
   state = {
     isFetching: false,
-    tasks: []
+    tasks: [],
+    editSuccessful: false,
+    open: false,
+    taskId: ""
   };
 
   /* istanbul ignore next */
@@ -34,24 +38,60 @@ export default class AllTasks extends Component {
       }
     );
 
-    this.setState({ tasks: [] });
-
     await axios
       .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
       .then(res => {
-        this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
+        this.setState({ tasks: [...res.data.tasks] });
       });
   };
 
   /* istanbul ignore next */
-  handleComplete = async () => {
-    this.setState({ tasks: [] });
-
+  handleComplete = async (isOpen, taskId) => {
     await axios
       .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
       .then(res => {
-        this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
+        this.setState({
+          tasks: [...res.data.tasks],
+          open: isOpen,
+          taskId: taskId
+        });
       });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") return;
+
+    this.setState({ open: false });
+  };
+
+  /* istanbul ignore next */
+  handleUndo = async taskId => {
+    try {
+      const taskUpdateDate = Date.now();
+      const body = {
+        id: this.state.taskId,
+        isTaskComplete: false,
+        taskUpdateDate: taskUpdateDate
+      };
+
+      await axios.patch(`http://localhost:9000/api/tasks/completed`, body).then(
+        response => {
+          this.setState({ open: false });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+
+      await axios
+        .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
+        .then(res => {
+          this.setState({ tasks: [...res.data.tasks] });
+        });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   componentDidMount() {
@@ -59,7 +99,7 @@ export default class AllTasks extends Component {
   }
 
   render() {
-    const { tasks } = this.state;
+    const { tasks, open } = this.state;
 
     // Sort by date and not include finished tasks
     const filteredTasks = tasks
@@ -81,16 +121,23 @@ export default class AllTasks extends Component {
     ];
 
     return (
-      <TaskTable
-        tasks={filteredTasks}
-        title="All Tasks"
-        headers={headers}
-        isTaskDescription={true}
-        isEdit={true}
-        isDelete={true}
-        handleComplete={this.handleComplete}
-        handleDelete={this.handleDelete}
-      />
+      <>
+        <TaskTable
+          tasks={filteredTasks}
+          title="All Tasks"
+          headers={headers}
+          isTaskDescription={true}
+          isEdit={true}
+          isDelete={true}
+          handleComplete={this.handleComplete}
+          handleDelete={this.handleDelete}
+        />
+        <UndoMessage
+          open={open}
+          handleClose={this.handleClose}
+          handleUndo={this.handleUndo}
+        />
+      </>
     );
   }
 }
