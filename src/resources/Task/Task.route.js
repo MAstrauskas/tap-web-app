@@ -46,10 +46,10 @@ router.delete("/delete/:id", TaskController.deleteTask_post);
 router.get("/completed/all", TaskController.tasksCompleted_get);
 
 /**
- * @route PATCH api/tasks/completed/add
- * @desc PATCH request for making a task completed
+ * @route PATCH api/tasks/completed
+ * @desc PATCH request for making a task completed/uncomplete
  * @access Public
  */
-router.patch("/completed/add", TaskController.tasksCompleted_add);
+router.patch("/completed", TaskController.tasksCompleted);
 
 module.exports = router;

@@ -45,32 +45,31 @@ exports.taskDetail = (req, res, next) => {
  * @param {any} req
  * @param {any} res
  **/
-exports.addTask_post = (req, res, next) => {
-  Task.create(
-    {
-      email: req.body.email,
-      taskName: req.body.taskName,
-      taskDescription: req.body.taskDescription,
-      taskCreateDate: req.body.taskCreateDate,
-      taskUpdateDate: req.body.taskUpdateDate,
-      taskDueDate: req.body.taskDueDate,
-      taskPriority: req.body.taskPriority,
-      taskDifficulty: req.body.taskDifficulty,
-      isTaskComplete: req.body.isTaskComplete,
-      isTaskSuggested: req.body.isTaskSuggested
-    },
-    function(err, task) {
-      if (err) {
-        res
-          .status(500)
-          .send(
-            "Error occured while trying to add a task. Please check if the information is correct"
-          );
-      }
+exports.addTask_post = async (req, res, next) => {
+  const body = await {
+    email: req.body.email,
+    taskName: req.body.taskName,
+    taskDescription: req.body.taskDescription,
+    taskCreateDate: req.body.taskCreateDate,
+    taskUpdateDate: req.body.taskUpdateDate,
+    taskDueDate: req.body.taskDueDate,
+    taskPriority: req.body.taskPriority,
+    taskDifficulty: req.body.taskDifficulty,
+    isTaskComplete: req.body.isTaskComplete,
+    isTaskSuggested: req.body.isTaskSuggested
+  };
 
-      res.send("Task has been added - " + `"${task.taskName}"`);
+  await Task.create(body, function(err, task) {
+    if (err) {
+      res
+        .status(500)
+        .send(
+          "Error occured while trying to add a task. Please check if the information is correct"
+        );
     }
-  );
+
+    res.send("Task has been added - " + `"${task.taskName}"`);
+  });
 };
 
 /**
@@ -136,17 +135,17 @@ exports.tasksCompleted_get = (req, res, next) => {
 };
 
 /**
- * PATCH /api/tasks/completed/add
+ * PATCH /api/tasks/completed
  *
  * @export
  * @param {any} req
  * @param {any} res
  **/
-exports.tasksCompleted_add = (req, res, next) => {
+exports.tasksCompleted = (req, res, next) => {
   let taskId = req.body.id;
 
   const data = {
-    isTaskComplete: true,
+    isTaskComplete: req.body.isTaskComplete,
     taskUpdateDate: req.body.taskUpdateDate
   };
 
