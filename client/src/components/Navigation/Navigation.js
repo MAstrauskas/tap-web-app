@@ -65,7 +65,8 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
-    backgroundColor: `${Theme.colors.white}`
+    backgroundColor: `${Theme.colors.white}`,
+    [theme.breakpoints.down("sm")]: { display: "none" }
   },
   drawerOpen: {
     width: drawerWidth,
@@ -73,7 +74,8 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     }),
-    backgroundColor: `${Theme.colors.white}`
+    backgroundColor: `${Theme.colors.white}`,
+    [theme.breakpoints.down("sm")]: { display: "flex" }
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
