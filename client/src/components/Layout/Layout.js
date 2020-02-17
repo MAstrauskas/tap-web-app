@@ -3,7 +3,6 @@ import { ThemeProvider } from "emotion-theming";
 import { makeStyles } from "@material-ui/core/styles";
 import Theme from "../shared/Theme/Theme";
 import Navigation from "../Navigation/Navigation";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({

@@ -4,6 +4,7 @@ import moment from "moment";
 
 import TaskTable from "../../shared/Table/Table";
 import UndoMessage from "../../shared/Table/UndoMessage";
+import WarningMessage from "../../shared/Table/WarningMessage";
 
 export default class AllTasks extends Component {
   state = {
@@ -11,7 +12,9 @@ export default class AllTasks extends Component {
     tasks: [],
     editSuccessful: false,
     open: false,
-    taskId: ""
+    openWarning: false,
+    taskId: "",
+    taskName: ""
   };
 
   /* istanbul ignore next */
@@ -94,12 +97,28 @@ export default class AllTasks extends Component {
     }
   };
 
+  handleWarningClick = async (taskId, taskName) => {
+    await this.setState({
+      openWarning: true,
+      taskId: taskId,
+      taskName: taskName
+    });
+  };
+
+  handleWarningClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ openWarning: false });
+  };
+
   componentDidMount() {
     this.handleTasks();
   }
 
   render() {
-    const { tasks, open } = this.state;
+    const { tasks, open, openWarning, taskName, taskId } = this.state;
 
     // Sort by date and not include finished tasks
     const filteredTasks = tasks
@@ -130,13 +149,22 @@ export default class AllTasks extends Component {
           isEdit={true}
           isDelete={true}
           handleComplete={this.handleComplete}
-          handleDelete={this.handleDelete}
+          handleWarningClick={this.handleWarningClick}
         />
-        <UndoMessage
-          open={open}
-          handleClose={this.handleClose}
-          handleUndo={this.handleUndo}
-        />
+        <div>
+          <UndoMessage
+            open={open}
+            handleClose={this.handleClose}
+            handleUndo={this.handleUndo}
+          />
+          <WarningMessage
+            open={openWarning}
+            task={taskName}
+            taskId={taskId}
+            handleDelete={this.handleDelete}
+            handleClose={this.handleWarningClose}
+          />
+        </div>
       </>
     );
   }
