@@ -147,8 +147,6 @@ exports.tasksCompleted = (req, res, next) => {
     taskUpdateDate: req.body.taskUpdateDate
   };
 
-  console.log(data.isTaskSuggested);
-
   Task.findByIdAndUpdate(taskId, data, (err, task) => {
     if (err) {
       res
@@ -173,7 +171,7 @@ exports.taskSuggest = (req, res, next) => {
   Task.find({ email: req.params.email }, (err, tasks) => {
     TaskSuggester.calculateTaskSuggestion(req.params.email, tasks);
     TaskSuggester.makeTaskSuggested(req.params.email, tasks);
-    console.log(tasks);
+
     res.send({ tasks: tasks });
   }).catch(next);
 };

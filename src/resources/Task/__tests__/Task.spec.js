@@ -69,7 +69,7 @@ describe("Task Controller", () => {
 
   it(
     "should create a task in the database",
-    test(function() {
+    test(async function() {
       req.body = {
         email: "__EMAIL__",
         taskName: "__NAME__",
@@ -86,7 +86,7 @@ describe("Task Controller", () => {
       expectedResult = req.expectedResult;
       this.stub(Task, "create").yields(null, req.body);
 
-      TaskController.addTask_post(req, res);
+      await TaskController.addTask_post(req, res);
 
       sinon.assert.calledWith(Task.create, req.body);
       sinon.assert.calledWith(
@@ -144,6 +144,7 @@ describe("Task Controller", () => {
     test(function() {
       const data = {
         isTaskComplete: true,
+        isTaskSuggested: false,
         taskUpdateDate: "__DATE__"
       };
 
@@ -153,7 +154,7 @@ describe("Task Controller", () => {
 
       this.stub(Task, "findByIdAndUpdate").yields(null, data);
 
-      TaskController.tasksCompleted_add(req, res);
+      TaskController.tasksCompleted(req, res);
 
       sinon.assert.calledWith(res.send, sinon.match("Task has been updated."));
     })
