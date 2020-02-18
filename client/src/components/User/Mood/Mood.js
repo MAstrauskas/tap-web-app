@@ -190,6 +190,10 @@ export class Mood extends Component {
         ...prevState,
         addSuccessful: true
       }));
+
+      setTimeout(async () => {
+        await this.handleTaskSuggestion();
+      }, 1000);
     } catch (e) {
       console.log(e);
       setSubmitting(false);
@@ -198,6 +202,15 @@ export class Mood extends Component {
         addSuccessful: false
       }));
     }
+  };
+
+  handleTaskSuggestion = async () => {
+    await axios
+      .get(`http://localhost:9000/api/tasks/suggest/${this.props.userEmail}`)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
