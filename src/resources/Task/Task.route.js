@@ -52,4 +52,11 @@ router.get("/completed/all", TaskController.tasksCompleted_get);
  */
 router.patch("/completed", TaskController.tasksCompleted);
 
+/**
+ * @route GET api/tasks/suggest
+ * @desc Get Make Tasks Suggested
+ * @access Public
+ **/
+router.get("/suggest/:email", TaskController.taskSuggest);
+
 module.exports = router;
