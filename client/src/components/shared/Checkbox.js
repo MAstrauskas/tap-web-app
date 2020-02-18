@@ -19,6 +19,7 @@ export default class TaskCheckbox extends Component {
       const body = {
         id: this.props.id,
         isTaskComplete: true,
+        isTaskSuggested: !this.props.isTaskSuggested,
         taskUpdateDate: taskUpdateDate
       };
 
@@ -38,7 +39,11 @@ export default class TaskCheckbox extends Component {
       }));
 
       setTimeout(async () => {
-        await this.props.handleComplete(true, this.props.id);
+        await this.props.handleComplete(
+          true,
+          this.props.id,
+          !this.props.isTaskSuggested
+        );
       }, 100);
     } catch (e) {
       console.log(e);

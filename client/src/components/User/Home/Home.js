@@ -13,7 +13,8 @@ export default class Home extends Component {
     open: false,
     openWarning: false,
     taskName: "",
-    taskId: ""
+    taskId: "",
+    isTaskSuggested: false
   };
 
   handleTasks = async () => {
@@ -52,14 +53,15 @@ export default class Home extends Component {
   };
 
   /* istanbul ignore next */
-  handleComplete = async (isOpen, taskId) => {
+  handleComplete = async (isOpen, taskId, isTaskSuggested) => {
     await axios
       .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
       .then(res => {
         this.setState({
           tasks: [...res.data.tasks],
           open: isOpen,
-          taskId: taskId
+          taskId: taskId,
+          isTaskSuggested: isTaskSuggested
         });
       });
   };
@@ -103,12 +105,13 @@ export default class Home extends Component {
   };
 
   /* istanbul ignore next */
-  handleUndo = async taskId => {
+  handleUndo = async () => {
     try {
       const taskUpdateDate = Date.now();
       const body = {
         id: this.state.taskId,
         isTaskComplete: false,
+        isTaskSuggested: !this.state.isTaskSuggested,
         taskUpdateDate: taskUpdateDate
       };
 
@@ -140,9 +143,28 @@ export default class Home extends Component {
   render() {
     const { tasks, open, openWarning, taskName, taskId } = this.state;
 
-    const suggestedTasks = tasks.filter(
-      task => task.isTaskSuggested && !task.isTaskComplete
-    );
+    const suggestedTasks = tasks
+      .filter(task => task.isTaskSuggested && !task.isTaskComplete)
+      .sort((a, b) => {
+        const taskOne = a.taskPriority;
+        const taskTwo = b.taskPriority;
+
+        // Sort by Task Priority
+        if (
+          (taskOne === "High" && taskTwo === "High") ||
+          (taskOne === "Medium" && taskTwo === "Medium") ||
+          (taskOne === "Low" && taskTwo === "Low")
+        )
+          return 0;
+
+        if (taskOne === "High" && taskTwo === "Medium") return -1;
+        if (taskOne === "High" && taskTwo === "Low") return -1;
+        if (taskOne === "Medium" && taskTwo === "High") return 1;
+        if (taskOne === "Medium" && taskTwo === "Low") return -1;
+        if (taskOne === "Low" && taskTwo === "High") return 1;
+        if (taskOne === "Low" && taskTwo === "Medium") return 1;
+      });
+
     const todaysTasks = tasks
       .sort((a, b) => {
         const dueDate = moment(a.taskDueDate).format("LL");
@@ -162,7 +184,7 @@ export default class Home extends Component {
         );
       });
 
-    const headers = ["Tasks", "Due Date", "Priority", "Difficulty"];
+    const headers = ["Task", "Due Date", "Priority"];
 
     return (
       <div>
@@ -171,6 +193,7 @@ export default class Home extends Component {
           title="Suggested Tasks"
           headers={headers}
           isTaskDescription={false}
+          isTaskDifficulty={false}
           isEdit={true}
           isDelete={true}
           handleComplete={this.handleComplete}
@@ -197,6 +220,7 @@ export default class Home extends Component {
           title="Today's Tasks"
           headers={headers}
           isTaskDescription={false}
+          isTaskDifficulty={false}
           isEdit={true}
           isDelete={true}
           handleComplete={this.handleComplete}

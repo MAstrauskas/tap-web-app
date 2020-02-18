@@ -146,6 +146,7 @@ export default class AllTasks extends Component {
           title="All Tasks"
           headers={headers}
           isTaskDescription={true}
+          isTaskDifficulty={true}
           isEdit={true}
           isDelete={true}
           handleComplete={this.handleComplete}

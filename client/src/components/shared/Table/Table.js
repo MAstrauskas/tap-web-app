@@ -59,6 +59,7 @@ export default function TaskTable({
   title,
   headers,
   isTaskDescription,
+  isTaskDifficulty,
   isEdit,
   isDelete,
   handleComplete,
@@ -132,7 +133,11 @@ export default function TaskTable({
                 <Fade in="true">
                   <CustomTableRow key={task._id}>
                     <CustomTableCell component="th" scope="row">
-                      <Checkbox id={task._id} handleComplete={handleComplete} />
+                      <Checkbox
+                        id={task._id}
+                        handleComplete={handleComplete}
+                        isTaskSuggested={task.isTaskSuggested}
+                      />
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
                       {task.taskName}
@@ -180,9 +185,12 @@ export default function TaskTable({
                     <CustomTableCell align="right">
                       {task.taskPriority}
                     </CustomTableCell>
-                    <CustomTableCell align="right">
-                      {task.taskDifficulty}
-                    </CustomTableCell>
+                    {isTaskDifficulty === true && (
+                      <CustomTableCell align="right">
+                        {task.taskDifficulty}
+                      </CustomTableCell>
+                    )}
+
                     {isEdit === true && (
                       <CustomTableCell align="right">
                         <Link
