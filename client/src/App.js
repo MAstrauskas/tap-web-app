@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
+import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Layout from "./components/Layout/Layout";
 import Cover from "./components/Cover/Cover";
 import Home from "./components/User/Home/Home";
@@ -13,12 +15,31 @@ import "./App.css";
 
 import "typeface-roboto";
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+    height: "100%",
+    justifyContent: "center",
+    "& > * + *": {
+      marginLeft: theme.spacing(12)
+    }
+  },
+  loader: {
+    marginTop: "25%"
+  }
+}));
+
 function App() {
+  const classes = useStyles();
   const { loading, isAuthenticated, user } = useAuth0();
 
   /* istanbul ignore next */
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={classes.root}>
+        <CircularProgress className={classes.loader} color="secondary" />
+      </div>
+    );
   }
 
   return (
