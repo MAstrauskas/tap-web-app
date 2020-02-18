@@ -168,7 +168,7 @@ exports.makeTaskSuggested = async (email, tasks) => {
    */
 
   tasks
-    .filter(task => task.taskDueDate)
+    .filter(task => task.taskDueDate && !task.isTaskComplete)
     .map(task => {
       const taskGroup = task.taskGroup;
       const taskPoints = task.taskTotalPoints;

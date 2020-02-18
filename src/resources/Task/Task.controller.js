@@ -146,8 +146,11 @@ exports.tasksCompleted = (req, res, next) => {
 
   const data = {
     isTaskComplete: req.body.isTaskComplete,
+    isTaskSuggested: req.body.isTaskSuggested,
     taskUpdateDate: req.body.taskUpdateDate
   };
+
+  console.log(data.isTaskSuggested);
 
   Task.findByIdAndUpdate(taskId, data, (err, task) => {
     if (err) {
