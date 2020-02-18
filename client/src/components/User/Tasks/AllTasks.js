@@ -49,14 +49,15 @@ export default class AllTasks extends Component {
   };
 
   /* istanbul ignore next */
-  handleComplete = async (isOpen, taskId) => {
+  handleComplete = async (isOpen, taskId, isTaskSuggested) => {
     await axios
       .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
       .then(res => {
         this.setState({
           tasks: [...res.data.tasks],
           open: isOpen,
-          taskId: taskId
+          taskId: taskId,
+          isTaskSuggested: isTaskSuggested
         });
       });
   };
@@ -74,6 +75,7 @@ export default class AllTasks extends Component {
       const body = {
         id: this.state.taskId,
         isTaskComplete: false,
+        isTaskSuggested: !this.state.isTaskSuggested,
         taskUpdateDate: taskUpdateDate
       };
 
