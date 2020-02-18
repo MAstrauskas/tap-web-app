@@ -62,7 +62,8 @@ export default function TaskTable({
   isEdit,
   isDelete,
   handleComplete,
-  handleWarningClick
+  handleWarningClick,
+  marginBottom
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -86,7 +87,9 @@ export default function TaskTable({
   if (mobileView) tableMaxWidth = "20rem";
 
   return (
-    <CustomPaper style={{ maxWidth: `${tableMaxWidth}` }}>
+    <CustomPaper
+      style={{ maxWidth: `${tableMaxWidth}`, marginBottom: marginBottom }}
+    >
       <Typography
         style={{
           flex: "1 1 100%",

@@ -27,24 +27,12 @@ describe("Checkbox", () => {
   });
 
   it("should make task completed after clicking a checkbox", async () => {
-    const handleComplete = jest.fn();
-
-    const wrapper = mount(<Checkbox handleComplete={handleComplete} />);
-
-    expect(wrapper.state().editSuccessful).toBe(false);
-
-    await wrapper.instance().handleEdit();
-
-    expect(wrapper.state().editSuccessful).toBe(true);
-  });
-
-  it("should throw an error if props are missing", async () => {
     const wrapper = mount(<Checkbox id={2} />);
 
     expect(wrapper.state().editSuccessful).toBe(false);
 
     await wrapper.instance().handleEdit();
 
-    expect(wrapper.state().editSuccessful).toBe(false);
+    expect(wrapper.state().editSuccessful).toBe(true);
   });
 });

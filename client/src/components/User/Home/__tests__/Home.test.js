@@ -76,23 +76,23 @@ describe("Home", () => {
   });
 
   it("renders today's table correctly", async () => {
-    const { getByText, getByTestId } = await render(
+    const { getByText } = await render(
       <Router>
-        <Home name={user.firstName} email={user.email} />
+        <Home name={user.firstName} userEmail={user.email} />
       </Router>
     );
 
-    getByText("Today's tasks");
+    getByText("Today's Tasks");
   });
 
   it("renders suggested table correctly", async () => {
     const { getByText } = await render(
       <Router>
-        <Home name={user.firstName} email={user.email} />
+        <Home name={user.firstName} userEmail={user.email} />
       </Router>
     );
 
-    getByText("Suggested tasks");
+    getByText("Suggested Tasks");
   });
 
   it("throws an error if user registrations fails", async () => {
@@ -131,7 +131,7 @@ describe("Home", () => {
 
     const {} = render(
       <Router>
-        <Home name={user.firstName} email={user.email} />
+        <Home name={user.firstName} userEmail={user.email} />
       </Router>
     );
   });

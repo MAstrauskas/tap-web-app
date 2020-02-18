@@ -1,119 +1,26 @@
 import React, { Component } from "react";
 import axios from "axios";
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
 import moment from "moment";
-import {
-  MdEdit as EditIcon,
-  MdDeleteForever as DeleteIcon
-} from "react-icons/md";
 
-import Theme from "../../shared/Theme/Theme";
-import Checkbox from "../../shared/Checkbox";
-
-const Table = styled.table`
-  display: flex;
-  height: calc(100vh - 200px);
-  width: 100%;
-  border-spacing: 0px !important;
-
-  border: 1px solid ${Theme.colors.primary};
-  border-radius: 9px;
-`;
-
-const TableBody = styled.tbody`
-  width: 100%;
-  border-radius: 9px;
-
-  tr:nth-child(even) {
-    background-color: ${Theme.colors.secondary};
-  }
-`;
-
-const TableHeader = styled.th`
-  width: 100%;
-  padding: 1rem 0.5rem 1rem 0.5rem;
-  font-size: ${Theme.fontSize.xsmall};
-  background: ${Theme.colors.primary};
-  color: ${Theme.colors.white};
-
-  :first-child {
-    border-top-left-radius: 6px;
-  }
-
-  :last-child {
-    border-top-right-radius: 6px;
-    border-right: 1px solid ${Theme.colors.primary};
-  }
-`;
-
-const TableContent = styled.td`
-  width: 100%;
-
-  padding: 0.5rem;
-  border-right: 0px;
-  border-top: 0px;
-
-  :first-child {
-    border-left: 0px;
-  }
-
-  :last-child {
-    border-right: 0px;
-    text-align: center;
-  }
-`;
-
-const TableButton = styled.button`
-  border: 0px;
-  background: transparent;
-  transition: color 0.3s ease;
-  cursor: pointer;
-
-  :hover {
-    color: ${Theme.colors.activeLink};
-  }
-
-  svg {
-    width: 17px;
-    height: 17px;
-  }
-`;
-
-const TaskName = styled.span`
-  margin-left: 10px;
-`;
-
-const Tables = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  @media screen and (max-width: 750px) {
-    flex-direction: column;
-  }
-`;
-
-const EachTable = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 5rem;
-
-  @media screen and (max-width: 750px) {
-    flex-direction: column;
-  }
-`;
+import TaskTable from "../../shared/Table/Table";
+import UndoMessage from "../../shared/Table/UndoMessage";
+import WarningMessage from "../../shared/Table/WarningMessage";
 
 export default class Home extends Component {
   state = {
     isFetching: false,
-    tasks: []
+    tasks: [],
+    open: false,
+    openWarning: false,
+    taskName: "",
+    taskId: ""
   };
 
   handleTasks = async () => {
     this.setState({ ...this.state, isFetching: true });
 
     await axios
-      .get(`http://localhost:9000/api/tasks/${this.props.email}`)
+      .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
       .then(res => {
         this.setState({
           tasks: [
@@ -137,20 +44,24 @@ export default class Home extends Component {
       }
     );
 
-    this.setState({ tasks: [] });
-
-    await axios.get("http://localhost:9000/api/tasks").then(res => {
-      this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
-    });
+    await axios
+      .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
+      .then(res => {
+        this.setState({ tasks: [...res.data.tasks] });
+      });
   };
 
   /* istanbul ignore next */
-  handleComplete = async () => {
-    this.setState({ tasks: [] });
-
-    await axios.get("http://localhost:9000/api/tasks").then(res => {
-      this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
-    });
+  handleComplete = async (isOpen, taskId) => {
+    await axios
+      .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
+      .then(res => {
+        this.setState({
+          tasks: [...res.data.tasks],
+          open: isOpen,
+          taskId: taskId
+        });
+      });
   };
 
   handleUserRegistration = async () => {
@@ -158,7 +69,7 @@ export default class Home extends Component {
 
     const body = {
       name: this.props.name,
-      email: this.props.email
+      email: this.props.userEmail
     };
 
     await axios
@@ -169,149 +80,143 @@ export default class Home extends Component {
     this.setState({ ...this.state, isFetching: false });
   };
 
+  handleWarningClick = (taskId, taskName) => {
+    this.setState({
+      openWarning: true,
+      taskId: taskId,
+      taskName: taskName
+    });
+  };
+
+  handleWarningClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ openWarning: false });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") return;
+
+    this.setState({ open: false });
+  };
+
+  /* istanbul ignore next */
+  handleUndo = async taskId => {
+    try {
+      const taskUpdateDate = Date.now();
+      const body = {
+        id: this.state.taskId,
+        isTaskComplete: false,
+        taskUpdateDate: taskUpdateDate
+      };
+
+      await axios.patch(`http://localhost:9000/api/tasks/completed`, body).then(
+        response => {
+          this.setState({ open: false });
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+
+      await axios
+        .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
+        .then(res => {
+          this.setState({ tasks: [...res.data.tasks] });
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   componentDidMount() {
     this.handleTasks();
     this.handleUserRegistration();
   }
 
   render() {
-    const { tasks } = this.state;
+    const { tasks, open, openWarning, taskName, taskId } = this.state;
+
+    const suggestedTasks = tasks.filter(
+      task => task.isTaskSuggested && !task.isTaskComplete
+    );
+    const todaysTasks = tasks
+      .sort((a, b) => {
+        const dueDate = moment(a.taskDueDate).format("LL");
+        const dueDate2 = moment(b.taskDueDate).format("LL");
+
+        if (dueDate > dueDate2) return 1;
+        else return -1;
+      })
+      .filter(task => {
+        const dueDate = new Date(task.taskDueDate);
+        const todaysDate = new Date();
+
+        return (
+          dueDate.setHours(0, 0, 0, 0) === todaysDate.setHours(0, 0, 0, 0) &&
+          !task.isTaskComplete &&
+          !suggestedTasks.includes(task)
+        );
+      });
+
+    const headers = ["Tasks", "Due Date", "Priority", "Difficulty"];
 
     return (
-      <>
-        <Tables>
-          <EachTable>
-            <h1>Today's tasks</h1>
+      <div>
+        <TaskTable
+          tasks={suggestedTasks}
+          title="Suggested Tasks"
+          headers={headers}
+          isTaskDescription={false}
+          isEdit={true}
+          isDelete={true}
+          handleComplete={this.handleComplete}
+          handleWarningClick={this.handleWarningClick}
+          marginBottom="2rem"
+        />
+        <div>
+          <UndoMessage
+            open={open}
+            handleClose={this.handleClose}
+            handleUndo={this.handleUndo}
+          />
+          <WarningMessage
+            open={openWarning}
+            task={taskName}
+            taskId={taskId}
+            handleDelete={this.handleDelete}
+            handleClose={this.handleWarningClose}
+          />
+        </div>
 
-            {this.state.isFetching ? (
-              <h2>Loading...</h2>
-            ) : (
-              <Table data-testid="today-table">
-                <TableBody>
-                  <tr>
-                    <TableHeader>Task</TableHeader>
-                    <TableHeader>Due Date</TableHeader>
-                    <TableHeader>Edit</TableHeader>
-                    <TableHeader>Delete</TableHeader>
-                  </tr>
-                  {tasks
-                    .sort((a, b) => {
-                      const dueDate = moment(a.taskDueDate).format("LL");
-                      const dueDate2 = moment(b.taskDueDate).format("LL");
-
-                      if (dueDate > dueDate2) return 1;
-                      else return -1;
-                    })
-                    .filter(task => {
-                      const dueDate = new Date(task.taskDueDate);
-                      const todaysDate = new Date();
-
-                      return (
-                        dueDate.setHours(0, 0, 0, 0) ===
-                          todaysDate.setHours(0, 0, 0, 0) &&
-                        !task.isTaskComplete
-                      );
-                    })
-                    .map(task => {
-                      const dueDate = moment(task.taskDueDate).format("LL");
-
-                      return (
-                        <tr disabled={task.isTaskComplete}>
-                          <TableContent>
-                            <Checkbox
-                              id={task._id}
-                              handleComplete={this.handleComplete}
-                            />
-                            <TaskName>{task.taskName}</TaskName>
-                          </TableContent>
-                          <TableContent>{dueDate}</TableContent>
-                          <TableContent>
-                            <Link
-                              to={{
-                                pathname: "/tasks/edit",
-                                state: {
-                                  task: task
-                                }
-                              }}
-                            >
-                              <TableButton>
-                                <EditIcon />
-                              </TableButton>
-                            </Link>
-                          </TableContent>
-                          <TableContent>
-                            <TableButton
-                              onClick={() => this.handleDelete(task._id)}
-                            >
-                              <DeleteIcon />
-                            </TableButton>
-                          </TableContent>
-                        </tr>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            )}
-          </EachTable>
-
-          <EachTable>
-            <h1>Suggested tasks</h1>
-            {this.state.isFetching ? (
-              <h2>Loading...</h2>
-            ) : (
-              <Table data-testid="suggested-table">
-                <TableBody>
-                  <tr>
-                    <TableHeader>Task</TableHeader>
-                    <TableHeader>Due Date</TableHeader>
-                    <TableHeader>Edit</TableHeader>
-                    <TableHeader>Delete</TableHeader>
-                  </tr>
-                  {tasks
-                    .filter(task => task.isTaskSuggested)
-                    .map(task => {
-                      const dueDate = moment(task.taskDueDate).format("LL");
-
-                      return (
-                        <tr disabled={task.isTaskComplete}>
-                          <TableContent>
-                            <Checkbox
-                              id={task._id}
-                              handleComplete={this.handleComplete}
-                            />
-                            <TaskName>{task.taskName}</TaskName>
-                          </TableContent>
-                          <TableContent>{dueDate}</TableContent>
-                          <TableContent>
-                            <Link
-                              to={{
-                                pathname: "/tasks/edit",
-                                state: {
-                                  task: task
-                                }
-                              }}
-                            >
-                              <TableButton>
-                                <EditIcon />
-                              </TableButton>
-                            </Link>
-                          </TableContent>
-                          <TableContent>
-                            <TableButton
-                              onClick={() => this.handleDelete(task._id)}
-                            >
-                              <DeleteIcon />
-                            </TableButton>
-                          </TableContent>
-                        </tr>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            )}
-          </EachTable>
-        </Tables>
-      </>
+        <TaskTable
+          tasks={todaysTasks}
+          title="Today's Tasks"
+          headers={headers}
+          isTaskDescription={false}
+          isEdit={true}
+          isDelete={true}
+          handleComplete={this.handleComplete}
+          handleWarningClick={this.handleWarningClick}
+        />
+        <div>
+          <UndoMessage
+            open={open}
+            handleClose={this.handleClose}
+            handleUndo={this.handleUndo}
+          />
+          <WarningMessage
+            open={openWarning}
+            task={taskName}
+            taskId={taskId}
+            handleDelete={this.handleDelete}
+            handleClose={this.handleWarningClose}
+          />
+        </div>
+      </div>
     );
   }
 }
