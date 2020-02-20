@@ -20,7 +20,8 @@ const Theme = {
     first: "#c60021",
     second: "#f6f6f8",
     third: "#e3e3e3",
-    fourth: "#f2031f"
+    fourth: "#f2031f",
+    fifth: "#eeeeee"
   },
   fontSize: {
     navLogo: "20px",

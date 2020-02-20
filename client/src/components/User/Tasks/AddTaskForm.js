@@ -1,111 +1,57 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Formik, Field } from "formik";
+import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
+import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+import { styled } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import { KeyboardDatePicker } from "@material-ui/pickers";
-
-import styled from "@emotion/styled";
-
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import Theme from "../../shared/Theme/Theme";
 import moment from "moment";
 import * as Yup from "yup";
 
-import "react-datepicker/dist/react-datepicker.css";
+const AddButton = styled(Button)({
+  backgroundColor: `${Theme.colors.first}`,
+  color: `${Theme.colors.white}`,
+  marginTop: "2.5rem",
 
-const CustomForm = styled.div`
-  border: 1px solid ${Theme.colors.primary};
-  border-radius: 9px;
-  form {
-    padding: 0rem 8rem;
+  "&:hover": {
+    backgroundColor: `${Theme.colors.fourth}`
+  },
+  "&:disabled": {
+    backgroundColor: `${Theme.colors.disabled}`
   }
+});
 
-  @media screen and (min-width: 550px) and (max-width: 1050px) {
-    margin-top: 10rem;
+const CancelButton = styled(Button)({
+  backgroundColor: `${Theme.colors.third}`,
+  color: `${Theme.colors.black}`,
+  marginTop: "1rem",
+  width: "100%",
+
+  "&:hover": {
+    backgroundColor: `${Theme.colors.fifth}`
   }
-`;
+});
 
-const Title = styled.h1`
-  font-size: ${Theme.fontSize.xlarge};
-
-  @media screen and (max-width: 550px) {
-    font-size: ${Theme.fontSize.large};
+const CustomPaper = withStyles(theme => ({
+  root: {
+    minWidth: "10rem"
   }
-`;
-
-const Form = styled.div`
-  padding: 0;
-  margin: 2rem -5rem;
-`;
-
-const Button = styled.button`
-  width: 55%;
-  height: 37px;
-  margin-right: 5%;
-  background: ${Theme.colors.primary};
-  border: 1px solid ${Theme.colors.primary};
-  border-radius: 9px;
-  font-size: 16px;
-  line-height: 18px;
-  color: ${Theme.colors.white};
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    opacity: 0.5;
-  }
-
-  &:disabled {
-    background: ${Theme.colors.disabled};
-    border-color: ${Theme.colors.disabled};
-    &:hover {
-      opacity: 1;
-      cursor: not-allowed;
-    }
-  }
-
-  &:active {
-    font-size: ${Theme.fontSize.small};
-    transform: translateY(1px);
-  }
-
-  &.active {
-    font-size: 0;
-    border-radius: 25px;
-    width: 50px;
-    background: transparent;
-  }
-
-  &.loader {
-    border-right: 2px solid ${Theme.colors.white};
-    animation: loader 0.4s linear infinite;
-  }
-
-  &.success {
-    background: ${Theme.colors.success};
-    border-color: ${Theme.colors.success};
-    font-size: ${Theme.fontSize.small};
-  }
-
-  @keyframes loader {
-    0% {
-      transform: rotateZ(0);
-    }
-    100% {
-      transform: rotateZ(360deg);
-    }
-  }
-`;
+}))(Paper);
 
 export class AddTask extends Component {
   state = {
-    addSuccessful: false,
-    selectedDate: new Date()
+    addSuccessful: false
   };
 
   handleSubmit = async (values, { setSubmitting }) => {
@@ -157,7 +103,7 @@ export class AddTask extends Component {
   };
 
   render() {
-    const { addSuccessful, selectedDate } = this.state;
+    const { addSuccessful } = this.state;
 
     if (addSuccessful) {
       return <Redirect to={`/tasks/all`} />;
@@ -188,7 +134,22 @@ export class AddTask extends Component {
       isTaskSuggested: Yup.boolean()
     });
     return (
-      <CustomForm>
+      <CustomPaper
+        style={{ minWidth: "20rem", marginBottom: 2, borderRadius: "1%" }}
+        elevation={3}
+      >
+        <Typography
+          style={{
+            flex: "1 1 100%",
+            backgroundColor: `${Theme.colors.first}`,
+            color: `${Theme.colors.white}`,
+            padding: `1rem`
+          }}
+          variant="h6"
+          id={`Add a Task`}
+        >
+          Add a Task
+        </Typography>
         <Formik
           initialValues={{
             taskName: "",
@@ -221,9 +182,13 @@ export class AddTask extends Component {
                 data-testid="add-task-form"
                 autoComplete="off"
               >
-                <Title>Add a Task</Title>
-
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    padding: "1rem"
+                  }}
+                >
                   <Field
                     as={TextField}
                     required
@@ -345,40 +310,23 @@ export class AddTask extends Component {
                       </FormHelperText>
                     )}
                   </FormControl>
-                </div>
-                <Form>
-                  <Button type="submit" disabled={!isValid}>
-                    Add Task
-                  </Button>
-                  <button
-                    style={{
-                      marginTop: "1.5rem",
-                      width: "40%",
-                      height: "37px",
-                      background: `${Theme.colors.secondary}`,
-                      border: `1px solid ${Theme.colors.primary}`,
-                      borderRadius: "9px",
-                      fontSize: "16px",
-                      lineHeight: "18px",
-                      cursor: "pointer"
-                    }}
+
+                  <AddButton
+                    variant="contained"
+                    type="submit"
+                    disabled={!isValid}
                   >
-                    <a
-                      href="/tasks"
-                      style={{
-                        textDecoration: "none",
-                        color: `${Theme.colors.primary}`
-                      }}
-                    >
-                      Cancel
-                    </a>
-                  </button>
-                </Form>
+                    Add Task
+                  </AddButton>
+                  <Link to="/tasks/all">
+                    <CancelButton>Go back</CancelButton>
+                  </Link>
+                </div>
               </form>
             );
           }}
         </Formik>
-      </CustomForm>
+      </CustomPaper>
     );
   }
 }

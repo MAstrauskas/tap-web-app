@@ -32,7 +32,7 @@ import Checkbox from "../Checkbox";
 
 const CustomPaper = withStyles(theme => ({
   root: {
-    minWidth: "rem"
+    minWidth: "10rem"
   }
 }))(Paper);
 
