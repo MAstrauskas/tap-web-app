@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import LuxonUtils from "@date-io/luxon";
+
 import Layout from "./components/Layout/Layout";
 import Cover from "./components/Cover/Cover";
 import Home from "./components/User/Home/Home";
@@ -44,54 +47,56 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/home">
-            {isAuthenticated ? (
-              <Layout>
-                <Home name={user.name} userEmail={user.email} />
-              </Layout>
-            ) : (
-              <Error errCode="401" />
+      <MuiPickersUtilsProvider utils={LuxonUtils}>
+        <div className="App">
+          <Switch>
+            <Route path="/home">
+              {isAuthenticated ? (
+                <Layout>
+                  <Home name={user.name} userEmail={user.email} />
+                </Layout>
+              ) : (
+                <Error errCode="401" />
+              )}
+            </Route>
+            <Route path="/tasks/add">
+              {isAuthenticated ? (
+                <Layout>
+                  <AddTask userEmail={user.email} />
+                </Layout>
+              ) : (
+                <Error errCode="401" />
+              )}
+            </Route>
+            {isAuthenticated && (
+              <Route path="/tasks/edit" component={EditTask}></Route>
             )}
-          </Route>
-          <Route path="/tasks/add">
-            {isAuthenticated ? (
+            <Route path="/tasks/all">
+              {isAuthenticated ? (
+                <Layout>
+                  <AllTasks userEmail={user.email} />
+                </Layout>
+              ) : (
+                <Error errCode="401" />
+              )}
+            </Route>
+            <Route path="/tasks/moodist">
+              {isAuthenticated ? (
+                <Layout>
+                  <Mood userEmail={user.email} />
+                </Layout>
+              ) : (
+                <Error errCode="401" />
+              )}
+            </Route>
+            <Route path="/">
               <Layout>
-                <AddTask userEmail={user.email} />
+                <Cover />
               </Layout>
-            ) : (
-              <Error errCode="401" />
-            )}
-          </Route>
-          {isAuthenticated && (
-            <Route path="/tasks/edit" component={EditTask}></Route>
-          )}
-          <Route path="/tasks/all">
-            {isAuthenticated ? (
-              <Layout>
-                <AllTasks userEmail={user.email} />
-              </Layout>
-            ) : (
-              <Error errCode="401" />
-            )}
-          </Route>
-          <Route path="/tasks/moodist">
-            {isAuthenticated ? (
-              <Layout>
-                <Mood userEmail={user.email} />
-              </Layout>
-            ) : (
-              <Error errCode="401" />
-            )}
-          </Route>
-          <Route path="/">
-            <Layout>
-              <Cover />
-            </Layout>
-          </Route>
-        </Switch>
-      </div>
+            </Route>
+          </Switch>
+        </div>
+      </MuiPickersUtilsProvider>
     </Router>
   );
 }

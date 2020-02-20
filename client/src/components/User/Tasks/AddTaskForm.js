@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, Field } from "formik";
 import { Redirect } from "react-router";
-import DatePicker from "react-datepicker";
+import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import InputLabel from "@material-ui/core/InputLabel";
+import { KeyboardDatePicker } from "@material-ui/pickers";
+
 import styled from "@emotion/styled";
-import { jsx } from "@emotion/core";
 
 import Theme from "../../shared/Theme/Theme";
 import moment from "moment";
@@ -35,88 +41,6 @@ const Title = styled.h1`
 const Form = styled.div`
   padding: 0;
   margin: 2rem -5rem;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  label {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    font-size: ${Theme.fontSize.medium};
-    font-weight: bold;
-  }
-
-  input,
-  select {
-    height: 2rem;
-    font-size: ${Theme.fontSize.xsmall};
-    background: #ffffff;
-    mix-blend-mode: normal;
-    border: 1px solid ${Theme.colors.primary};
-    box-sizing: border-box;
-    border-radius: 9px;
-    padding-left: 0.5rem;
-
-    ${({ error }) =>
-      error && {
-        boxShadow: `0 0 0 3px ${Theme.color.error}`
-      }};
-  }
-`;
-
-const FormDescription = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  label {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    font-size: ${Theme.fontSize.medium};
-    font-weight: bold;
-  }
-
-  textarea {
-    background: #ffffff;
-    font-size: ${Theme.fontSize.xsmall};
-    mix-blend-mode: normal;
-    border: 1px solid ${Theme.colors.primary};
-    box-sizing: border-box;
-    border-radius: 9px;
-    padding-top: 0.5rem;
-    padding-left: 0.5rem;
-  }
-`;
-
-const Error = styled.span`
-  width: 94%;
-  margin-left: 0.2rem;
-  padding: 0.5rem;
-
-  color: ${Theme.colors.error};
-  box-shadow: 0 0 0 3px ${Theme.colors.error};
-  border-bottom-left-radius: 9px;
-  border-bottom-right-radius: 9px;
-
-  background-color: ${Theme.colors.white};
-  text-align: center;
-  z-index: 500;
-`;
-
-const ErrorDate = styled.span`
-  width: 33%;
-  margin-left: 0.2rem;
-  padding: 0.5rem;
-
-  color: ${Theme.colors.error};
-  box-shadow: 0 0 0 3px ${Theme.colors.error};
-  border-bottom-left-radius: 9px;
-  border-bottom-right-radius: 9px;
-
-  background-color: ${Theme.colors.white};
-  text-align: center;
-  z-index: 0;
 `;
 
 const Button = styled.button`
@@ -180,7 +104,8 @@ const Button = styled.button`
 
 export class AddTask extends Component {
   state = {
-    addSuccessful: false
+    addSuccessful: false,
+    selectedDate: new Date()
   };
 
   handleSubmit = async (values, { setSubmitting }) => {
@@ -224,8 +149,15 @@ export class AddTask extends Component {
     }
   };
 
+  handleSelectedDate = date => {
+    this.setState(prevState => ({
+      ...prevState,
+      selectedDate: date
+    }));
+  };
+
   render() {
-    const { addSuccessful } = this.state;
+    const { addSuccessful, selectedDate } = this.state;
 
     if (addSuccessful) {
       return <Redirect to={`/tasks/all`} />;
@@ -240,9 +172,9 @@ export class AddTask extends Component {
     const taskSchema = Yup.object().shape({
       taskName: Yup.string()
         .typeError("You must enter a text.")
-        .min(2, "Task Name is too short.")
-        .max(30, "Task Name is too long.")
-        .required("Task Name is required."),
+        .min(2, "Task name is too short.")
+        .max(30, "Task name is too long.")
+        .required("Task name is required."),
       taskDescription: Yup.string()
         .typeError("You must enter a text.")
         .min(2, "Task Description is too short.")
@@ -278,93 +210,143 @@ export class AddTask extends Component {
               handleChange,
               handleBlur,
               handleSubmit,
-              isValid
+              isValid,
+              errors,
+              touched
             } = props;
 
             return (
-              <form onSubmit={handleSubmit} data-testid="add-task-form">
+              <form
+                onSubmit={handleSubmit}
+                data-testid="add-task-form"
+                autoComplete="off"
+              >
                 <Title>Add a Task</Title>
 
-                <Form>
-                  <FormGroup>
-                    <label htmlFor="taskName">Name *</label>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <Field
+                    as={TextField}
+                    required
+                    id="standard-required"
+                    name="taskName"
+                    label="Name"
+                    data-testid="task-name"
+                    value={values.taskName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(errors.taskName && touched.taskName)}
+                    helperText={
+                      errors.taskName &&
+                      touched.taskName &&
+                      String(errors.taskName)
+                    }
+                  />
+
+                  <Field
+                    as={TextField}
+                    id="standard-textarea"
+                    name="taskDescription"
+                    label="Description"
+                    data-testid="task-description"
+                    rows="5"
+                    multiline
+                    value={values.taskDescription}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(
+                      errors.taskDescription && touched.taskDescription
+                    )}
+                    helperText={
+                      errors.taskDescription &&
+                      touched.taskDescription &&
+                      String(errors.taskDescription)
+                    }
+                  />
+
+                  <Field
+                    as={KeyboardDatePicker}
+                    disableToolbar
+                    required
+                    id="date-picker-inline"
+                    name="taskDueDate"
+                    label="Due Date"
+                    data-testid="task-due-date"
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    value={new Date(values.taskDueDate)}
+                    onChange={date =>
+                      setFieldValue("taskDueDate", Date.parse(date))
+                    }
+                    minDate={new Date()}
+                    KeyboardButtonProps={{ "aria-label": "change due date" }}
+                    error={Boolean(errors.taskDueDate && touched.taskDueDate)}
+                    helperText={
+                      errors.taskDueDate &&
+                      touched.taskDueDate &&
+                      "You must choose a valid date."
+                    }
+                  />
+
+                  <FormControl
+                    required
+                    error={Boolean(errors.taskPriority && touched.taskPriority)}
+                  >
+                    <InputLabel id="priority-select-label">Priority</InputLabel>
                     <Field
-                      type="text"
-                      data-testid="task-name"
-                      name="taskName"
-                      placeholder="Enter a task..."
-                      value={values.taskName}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={"Wrong"}
-                    />
-                    <ErrorMessage name="taskName" component={Error} />
-                  </FormGroup>
-                  <FormDescription>
-                    <label htmlFor="taskDescription">Description</label>
-                    <Field
-                      as="textarea"
-                      data-testid="task-description"
-                      name="taskDescription"
-                      rows="5"
-                      placeholder="Enter a description..."
-                      value={values.taskDescription}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    <ErrorMessage name="taskDescription" component={Error} />
-                  </FormDescription>
-                  <FormGroup>
-                    <label htmlFor="taskDueDate" data-testid="task-due-date">
-                      Due Date *
-                    </label>
-                    <Field
-                      as={DatePicker}
-                      name="taskDueDate"
-                      selected={values.taskDueDate}
-                      onChange={date =>
-                        setFieldValue("taskDueDate", Date.parse(date))
-                      }
-                      dateFormat="dd/MM/yyyy"
-                      showTimeSelect
-                    />
-                    <ErrorMessage name="taskDueDate" component={ErrorDate} />
-                  </FormGroup>
-                  <FormGroup>
-                    <label htmlFor="taskPriority">Priority *</label>
-                    <Field
-                      as="select"
-                      data-testid="task-priority"
+                      as={Select}
+                      required
+                      labelId="priority-select-label"
+                      id="priority-select"
                       name="taskPriority"
+                      data-testid="task-priority"
                       value={values.taskPriority}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     >
-                      <option value="None">None</option>
-                      <option value="Low">Low</option>
-                      <option value="Medium">Medium</option>
-                      <option value="High">High</option>
+                      <MenuItem value="Low">Low</MenuItem>
+                      <MenuItem value="Medium">Medium</MenuItem>
+                      <MenuItem value="High">High</MenuItem>
                     </Field>
-                    <ErrorMessage name="taskPriority" component={Error} />
-                  </FormGroup>
-                  <FormGroup>
-                    <label htmlFor="taskDifficulty">Difficulty *</label>
+                    {errors.taskPriority && touched.taskPriority && (
+                      <FormHelperText>
+                        {String(errors.taskPriority)}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+
+                  <FormControl
+                    required
+                    error={Boolean(
+                      errors.taskDifficulty && touched.taskDifficulty
+                    )}
+                  >
+                    <InputLabel id="difficulty-select-label">
+                      Difficulty
+                    </InputLabel>
                     <Field
-                      as="select"
-                      data-testid="task-difficulty"
+                      as={Select}
+                      required
+                      labelId="difficulty-select-label"
+                      id="difficulty-select"
                       name="taskDifficulty"
+                      data-testid="task-difficulty"
                       value={values.taskDifficulty}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     >
-                      <option value="None">None</option>
-                      <option value="Easy">Easy</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Hard">Hard</option>
+                      <MenuItem value="Easy">Easy</MenuItem>
+                      <MenuItem value="Medium">Medium</MenuItem>
+                      <MenuItem value="Hard">Hard</MenuItem>
                     </Field>
-                    <ErrorMessage name="taskDifficulty" component={Error} />
-                  </FormGroup>
-
+                    {errors.taskDifficulty && touched.taskDifficulty && (
+                      <FormHelperText>
+                        {String(errors.taskDifficulty)}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                </div>
+                <Form>
                   <Button type="submit" disabled={!isValid}>
                     Add Task
                   </Button>
