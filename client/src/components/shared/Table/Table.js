@@ -130,7 +130,7 @@ export default function TaskTable({
               const dueDate = moment(task.taskDueDate).format("LL");
 
               return (
-                <Fade in="true">
+                <Fade in={true}>
                   <CustomTableRow key={task._id}>
                     <CustomTableCell component="th" scope="row">
                       <Checkbox
