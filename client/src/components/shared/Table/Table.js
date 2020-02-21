@@ -127,6 +127,7 @@ export default function TaskTable({
                 )
               : tasks
             ).map(task => {
+              const currentDate = moment(new Date()).format("LL");
               const dueDate = moment(task.taskDueDate).format("LL");
 
               return (
@@ -181,7 +182,16 @@ export default function TaskTable({
                       </CustomTableCell>
                     )}
 
-                    <CustomTableCell align="right">{dueDate}</CustomTableCell>
+                    <CustomTableCell
+                      align="right"
+                      style={
+                        dueDate < currentDate
+                          ? { color: `${Theme.colors.first}` }
+                          : { color: `${Theme.colors.black}` }
+                      }
+                    >
+                      {dueDate}
+                    </CustomTableCell>
                     <CustomTableCell align="right">
                       {task.taskPriority}
                     </CustomTableCell>

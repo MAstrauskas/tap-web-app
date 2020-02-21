@@ -1,7 +1,11 @@
 import React from "react";
 import Enzyme, { render, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import { Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { useAuth0 } from "../../../../react-auth0-spa";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import LuxonUtils from "@date-io/luxon";
 
 import AddTask from "../AddTaskForm";
 
@@ -28,24 +32,14 @@ describe("Add Task", () => {
   });
 
   it("renders correctly", () => {
-    const {} = render(<AddTask />);
-  });
-
-  it("should add the task if all props are passed", async () => {
-    const values = {
-      taskName: "To do",
-      taskDueDate: 1503123,
-      taskDifficulty: "Hard",
-      isTaskComplete: false,
-      isTaskSuggested: false
-    };
-
-    const setSubmitting = jest.fn();
-
-    const wrapper = mount(<AddTask userEmail={user.email} />);
-
-    expect(wrapper.state().addSuccessful).toBe(false);
-
-    await wrapper.instance().handleSubmit(values, { setSubmitting });
+    render(
+      <Router>
+        <MuiPickersUtilsProvider utils={LuxonUtils}>
+          <Link>
+            <AddTask />
+          </Link>
+        </MuiPickersUtilsProvider>
+      </Router>
+    );
   });
 });

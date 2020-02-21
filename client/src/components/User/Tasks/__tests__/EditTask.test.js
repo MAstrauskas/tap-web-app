@@ -3,6 +3,8 @@ import { render } from "@testing-library/react";
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useAuth0 } from "../../../../react-auth0-spa";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import LuxonUtils from "@date-io/luxon";
 
 import EditTask from "../EditTask";
 
@@ -37,12 +39,13 @@ describe("Edit Task", () => {
       }
     };
 
-    const { getByText } = render(
+    render(
       <Router>
-        {" "}
-        <Link>
-          <EditTask {...props} />
-        </Link>
+        <MuiPickersUtilsProvider utils={LuxonUtils}>
+          <Link>
+            <EditTask {...props} />
+          </Link>
+        </MuiPickersUtilsProvider>
       </Router>
     );
   });
@@ -58,9 +61,11 @@ describe("Edit Task", () => {
 
     const { getByTestId } = render(
       <Router>
-        <Link>
-          <EditTask {...props} />
-        </Link>
+        <MuiPickersUtilsProvider utils={LuxonUtils}>
+          <Link>
+            <EditTask {...props} />
+          </Link>
+        </MuiPickersUtilsProvider>
       </Router>
     );
 
