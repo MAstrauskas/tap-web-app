@@ -70,6 +70,8 @@ export default function TaskTable({
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const mobileView = useMediaQuery("(max-width: 600px)");
   const tabletView = useMediaQuery("(max-width: 800px)");
+  const desktopView = useMediaQuery("(min-width: 801px)");
+  const largeDesktopView = useMediaQuery("(min-width: 1201px)");
   let tableMaxWidth = "100%";
 
   const emptyRows =
@@ -85,11 +87,16 @@ export default function TaskTable({
   };
 
   if (tabletView) tableMaxWidth = "30rem";
+  if (desktopView) tableMaxWidth = "50rem";
+  if (largeDesktopView) tableMaxWidth = "60rem";
   if (mobileView) tableMaxWidth = "20rem";
 
   return (
     <CustomPaper
-      style={{ maxWidth: `${tableMaxWidth}`, marginBottom: marginBottom }}
+      style={{
+        maxWidth: `${tableMaxWidth}`,
+        marginBottom: marginBottom
+      }}
     >
       <Typography
         style={{
@@ -149,18 +156,18 @@ export default function TaskTable({
                           <ExpansionPanel>
                             <ExpansionPanelSummary
                               expandIcon={
-                                task.taskDescription.length > 30 && (
+                                task.taskDescription.length > 16 && (
                                   <ExpandMoreIcon />
                                 )
                               }
                               aria-controls="panel1a-content"
                               id="panel1a-header"
                             >
-                              {task.taskDescription.length <= 30
-                                ? task.taskDescription.substring(0, 30)
-                                : task.taskDescription.substring(0, 30) + " - "}
+                              {task.taskDescription.length <= 16
+                                ? task.taskDescription.substring(0, 16)
+                                : task.taskDescription.substring(0, 16) + " - "}
                             </ExpansionPanelSummary>
-                            {task.taskDescription.length > 30 && (
+                            {task.taskDescription.length > 16 && (
                               <ExpansionPanelDetails
                                 align="left"
                                 style={{
@@ -173,7 +180,7 @@ export default function TaskTable({
                                     fontSize: "14px"
                                   }}
                                 >
-                                  {task.taskDescription.substring(30)}
+                                  {task.taskDescription.substring(16)}
                                 </Typography>
                               </ExpansionPanelDetails>
                             )}

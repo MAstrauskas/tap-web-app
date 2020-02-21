@@ -1,5 +1,5 @@
 import React from "react";
-import Enzyme, { render, mount } from "enzyme";
+import Enzyme, { render } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";

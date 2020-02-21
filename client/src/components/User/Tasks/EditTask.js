@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Layout from "../../Layout/Layout";
-import TaskForm from "../../shared/TaskForm/TaskForm";
+import TaskForm from "../../shared/Forms/TaskForm";
 
 const CustomPaper = withStyles(theme => ({
   root: {
