@@ -38,7 +38,7 @@ export class AddTask extends Component {
 
       setSubmitting(true);
 
-      await axios.post("http://localhost:9000/api/tasks/add", body).then(
+      await axios.post("/api/tasks/add", body).then(
         response => {
           console.log(response);
         },

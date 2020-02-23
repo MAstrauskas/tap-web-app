@@ -33,7 +33,7 @@ export class Mood extends Component {
 
       setSubmitting(true);
 
-      await axios.post("http://localhost:9000/api/mood/add", body).then(
+      await axios.post("/api/mood/add", body).then(
         response => {
           console.log(response);
         },
@@ -63,7 +63,7 @@ export class Mood extends Component {
 
   handleTaskSuggestion = async () => {
     await axios
-      .get(`http://localhost:9000/api/tasks/suggest/${this.props.userEmail}`)
+      .get(`/api/tasks/suggest/${this.props.userEmail}`)
       .then(res => {
         console.log(res);
       })

@@ -66,13 +66,9 @@ describe("Home", () => {
       email: user.email
     };
 
-    mock
-      .onPost("http://localhost:9000/api/user/add")
-      .reply(200, registeredUser);
-    mock.onPost("http://localhost:9000/api/user/add").reply(200, data);
-    mock
-      .onGet(`http://localhost:9000/api/tasks/${user.email}`)
-      .reply(200, data);
+    mock.onPost("/api/user/add").reply(200, registeredUser);
+    mock.onPost("/api/user/add").reply(200, data);
+    mock.onGet(`/api/tasks/${user.email}`).reply(200, data);
   });
 
   it("renders today's table correctly", async () => {
@@ -121,13 +117,9 @@ describe("Home", () => {
       ]
     };
 
-    mock.onPost("http://localhost:9000/api/user/add").reply(200, data);
-    mock
-      .onGet(`http://localhost:9000/api/tasks/${user.email}`)
-      .reply(200, data);
-    mock
-      .onPost("http://localhost:9000/api/user/add")
-      .reply(404, unregisteredUser);
+    mock.onPost("/api/user/add").reply(200, data);
+    mock.onGet(`/api/tasks/${user.email}`).reply(200, data);
+    mock.onPost("/api/user/add").reply(404, unregisteredUser);
 
     const {} = render(
       <Router>

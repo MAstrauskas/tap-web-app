@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const user = require("./resources/User/User.route");
 const task = require("./resources/Task/Task.route");
@@ -19,22 +20,16 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  next();
-});
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 // Use Routes
 app.use("/api/user", user);
 app.use("/api/tasks", task);
 app.use("/api/mood", mood);
+
+// Handles any requests that don't match the ones above
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "client/build/index.html"));
+});
 
 module.exports = app;

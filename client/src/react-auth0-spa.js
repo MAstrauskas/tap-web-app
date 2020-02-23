@@ -15,8 +15,6 @@ export const Auth0Provider = ({
   onRedirectCallback = DEFAULT_REDIRECT_CALLBACK,
   ...initOptions,
 }) => {
-  // Custom Redirect URL after Login
-  initOptions.redirect_uri = "http://localhost:3000/home";
   const [isAuthenticated, setIsAuthenticated] = useState();
   const [user, setUser] = useState();
   const [auth0Client, setAuth0] = useState();

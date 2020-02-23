@@ -23,7 +23,7 @@ export default class TaskCheckbox extends Component {
         taskUpdateDate: taskUpdateDate
       };
 
-      await axios.patch(`http://localhost:9000/api/tasks/completed`, body).then(
+      await axios.patch(`/api/tasks/completed`, body).then(
         response => {
           console.log(response);
         },

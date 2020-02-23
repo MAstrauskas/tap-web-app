@@ -20,23 +20,21 @@ export default class Home extends Component {
   handleTasks = async () => {
     this.setState({ ...this.state, isFetching: true });
 
-    await axios
-      .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
-      .then(res => {
-        this.setState({
-          tasks: [
-            ...this.state.tasks.filter(task => !task.isTaskComplete),
-            ...res.data.tasks
-          ]
-        });
+    await axios.get(`/api/tasks/${this.props.userEmail}`).then(res => {
+      this.setState({
+        tasks: [
+          ...this.state.tasks.filter(task => !task.isTaskComplete),
+          ...res.data.tasks
+        ]
       });
+    });
 
     this.setState({ ...this.state, isFetching: false });
   };
 
   /* istanbul ignore next */
   handleDelete = async taskId => {
-    await axios.delete(`http://localhost:9000/api/tasks/delete/${taskId}`).then(
+    await axios.delete(`/api/tasks/delete/${taskId}`).then(
       response => {
         console.log(response);
       },
@@ -45,25 +43,21 @@ export default class Home extends Component {
       }
     );
 
-    await axios
-      .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
-      .then(res => {
-        this.setState({ tasks: [...res.data.tasks] });
-      });
+    await axios.get(`/api/tasks/${this.props.userEmail}`).then(res => {
+      this.setState({ tasks: [...res.data.tasks] });
+    });
   };
 
   /* istanbul ignore next */
   handleComplete = async (isOpen, taskId, isTaskSuggested) => {
-    await axios
-      .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
-      .then(res => {
-        this.setState({
-          tasks: [...res.data.tasks],
-          open: isOpen,
-          taskId: taskId,
-          isTaskSuggested: isTaskSuggested
-        });
+    await axios.get(`/api/tasks/${this.props.userEmail}`).then(res => {
+      this.setState({
+        tasks: [...res.data.tasks],
+        open: isOpen,
+        taskId: taskId,
+        isTaskSuggested: isTaskSuggested
       });
+    });
   };
 
   handleUserRegistration = async () => {
@@ -75,7 +69,7 @@ export default class Home extends Component {
     };
 
     await axios
-      .post("http://localhost:9000/api/user/add", body)
+      .post("/api/user/add", body)
       .then(res => console.log(res))
       .catch(e => console.log(e));
 
@@ -115,7 +109,7 @@ export default class Home extends Component {
         taskUpdateDate: taskUpdateDate
       };
 
-      await axios.patch(`http://localhost:9000/api/tasks/completed`, body).then(
+      await axios.patch(`/api/tasks/completed`, body).then(
         response => {
           this.setState({ open: false });
           console.log(response);
@@ -125,11 +119,9 @@ export default class Home extends Component {
         }
       );
 
-      await axios
-        .get(`http://localhost:9000/api/tasks/${this.props.userEmail}`)
-        .then(res => {
-          this.setState({ tasks: [...res.data.tasks] });
-        });
+      await axios.get(`/api/tasks/${this.props.userEmail}`).then(res => {
+        this.setState({ tasks: [...res.data.tasks] });
+      });
     } catch (e) {
       console.log(e);
     }

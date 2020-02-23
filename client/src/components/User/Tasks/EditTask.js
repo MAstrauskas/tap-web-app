@@ -40,10 +40,7 @@ export class EditTask extends Component {
       setSubmitting(true);
 
       await axios
-        .put(
-          `http://localhost:9000/api/tasks/edit/${this.props.location.state.task._id}`,
-          body
-        )
+        .put(`/api/tasks/edit/${this.props.location.state.task._id}`, body)
         .then(
           response => {
             console.log(response);
