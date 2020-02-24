@@ -24,6 +24,7 @@ const TaskSchema = new Schema({
     type: Date,
     required: false
   },
+
   taskDueDate: {
     type: Date,
     required: true
@@ -50,6 +51,10 @@ const TaskSchema = new Schema({
   },
   taskTotalPoints: {
     type: Number,
+    required: false
+  },
+  taskCompleteDate: {
+    type: Date,
     required: false
   }
 });

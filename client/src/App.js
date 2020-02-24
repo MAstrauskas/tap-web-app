@@ -13,6 +13,7 @@ import AddTask from "./components/User/Tasks/AddTaskForm";
 import AllTasks from "./components/User/Tasks/AllTasks";
 import EditTask from "./components/User/Tasks/EditTask";
 import Mood from "./components/User/Mood/Mood";
+import Summary from "./components/User/Summary/Summary";
 import Error from "./components/Error/Error";
 import "./App.css";
 
@@ -84,6 +85,15 @@ function App() {
               {isAuthenticated ? (
                 <Layout>
                   <Mood userEmail={user.email} />
+                </Layout>
+              ) : (
+                <Error errCode="401" />
+              )}
+            </Route>
+            <Route path="/tasks/summary">
+              {isAuthenticated ? (
+                <Layout>
+                  <Summary userEmail={user.email} />
                 </Layout>
               ) : (
                 <Error errCode="401" />

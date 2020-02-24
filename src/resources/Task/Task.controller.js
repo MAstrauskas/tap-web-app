@@ -140,11 +140,13 @@ exports.tasksCompleted_get = (req, res, next) => {
  **/
 exports.tasksCompleted = (req, res, next) => {
   let taskId = req.body.id;
+  const today = new Date();
 
   const data = {
     isTaskComplete: req.body.isTaskComplete,
     isTaskSuggested: req.body.isTaskSuggested,
-    taskUpdateDate: req.body.taskUpdateDate
+    taskUpdateDate: req.body.taskUpdateDate,
+    taskCompleteDate: today
   };
 
   Task.findByIdAndUpdate(taskId, data, (err, task) => {
