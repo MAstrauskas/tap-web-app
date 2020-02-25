@@ -101,7 +101,6 @@ export default function TaskHistory({ tasks }) {
                 justifyContent: "center",
                 paddingTop: "2rem"
               }}
-              onChange={() => handleTasksPerPage(0, 5)}
             />
           </List>
         </ExpansionPanelDetails>
