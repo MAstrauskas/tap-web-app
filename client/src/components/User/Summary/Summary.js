@@ -4,10 +4,12 @@ import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 
 import SummaryCard from "../../shared/Card";
+import TaskHistory from "./TaskHistory";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    flexDirection: "column"
   },
   cards: {
     display: "flex",
@@ -79,25 +81,33 @@ export default function Summary({ userEmail }) {
           <SummaryCard
             type="success"
             color="success"
-            header="Completed tasks"
+            defaultHeader="Completed tasks"
+            secondHeader=""
             defaultTitle="Today"
+            secondTitle="This Week"
+            thirdTitle="Total"
             showButtons={true}
-            defaultTasks={completedTasksToday}
-            weekTasks={completedTasksWeek}
-            totalTasks={completedTasksTotal}
+            defaultOption={completedTasksToday}
+            secondOption={completedTasksWeek}
+            thirdOption={completedTasksTotal}
           />
         </div>
         <div className={classes.card}>
           <SummaryCard
             type="info"
             color="info"
-            header="Unfinished tasks"
+            defaultHeader="Unfinished tasks"
+            secondHeader="Points earned"
             defaultTitle="Total"
+            secondTitle="Total points"
+            thirdTitle=""
             showButtons={false}
-            defaultTasks={unfinishedTasks}
+            defaultOption={unfinishedTasks}
+            secondOption={0}
           />
         </div>
       </div>
+      <TaskHistory tasks={completedTasks} />
     </div>
   );
 }

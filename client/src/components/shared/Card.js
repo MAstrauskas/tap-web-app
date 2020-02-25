@@ -22,16 +22,19 @@ const useStyles = makeStyles({
 export default function SummaryCard({
   type,
   color,
-  header,
+  defaultHeader,
+  secondHeader,
   defaultTitle,
+  secondTitle,
+  thirdTitle,
   showButtons,
-  defaultTasks,
-  weekTasks,
-  totalTasks
+  defaultOption,
+  secondOption,
+  thirdOption
 }) {
   const classes = useStyles();
   const [currentTitle, setCurrentTitle] = useState(defaultTitle);
-  const [currentNumber, setCurrentNumber] = useState(defaultTasks);
+  const [currentNumber, setCurrentNumber] = useState(defaultOption);
 
   const handleCurrentView = (title, view) => {
     setCurrentTitle(title);
@@ -50,27 +53,31 @@ export default function SummaryCard({
             color="textPrimary"
             gutterBottom
           >
-            {header}
+            {defaultHeader}
           </Typography>
           <Typography variant="h5" component="h2">
             {currentTitle}
           </Typography>
           <Typography variant="h2" component="p" align="right">
-            {currentNumber === 0 ? defaultTasks : currentNumber}
+            {currentNumber === 0 ? defaultOption : currentNumber}
           </Typography>
         </CardContent>
         <CardActions>
           {showButtons === true ? (
             <>
               <Button
-                onClick={() => handleCurrentView(defaultTitle, defaultTasks)}
+                onClick={() => handleCurrentView(defaultTitle, defaultOption)}
               >
                 Today
               </Button>
-              <Button onClick={() => handleCurrentView("This Week", weekTasks)}>
+              <Button
+                onClick={() => handleCurrentView(secondTitle, secondOption)}
+              >
                 Week
               </Button>
-              <Button onClick={() => handleCurrentView("Total", totalTasks)}>
+              <Button
+                onClick={() => handleCurrentView(thirdTitle, thirdOption)}
+              >
                 Total
               </Button>
             </>
