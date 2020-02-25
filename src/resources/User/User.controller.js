@@ -22,6 +22,28 @@ exports.userList = (req, res, next) => {
 };
 
 /**
+ * GET /api/user/single
+ *
+ * @export
+ * @param {any} req
+ * @param {any} res
+ **/
+
+/* istanbul ignore next */
+exports.userGet = (req, res, next) => {
+  console.log(req.body.email);
+  User.findOne({}, function(err, user) {
+    if (err) {
+      console.log("Error finding a specific user");
+
+      return next();
+    }
+
+    res.json(user);
+  });
+};
+
+/**
  * POST /api/user/add
  *
  * @export

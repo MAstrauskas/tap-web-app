@@ -11,6 +11,13 @@ const UserController = require("./User.controller");
 router.get("/", UserController.userList);
 
 /**
+ * @route GET api/user/single
+ * @desc Get a Single User
+ * @access Public
+ **/
+router.get("/single", UserController.userGet);
+
+/**
  * @route POST api/user/add
  * @desc POST An Item To The DB
  * @access Public

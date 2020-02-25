@@ -8,6 +8,7 @@ import LuxonUtils from "@date-io/luxon";
 
 import Layout from "./components/Layout/Layout";
 import Cover from "./components/Cover/Cover";
+import Welcome from "./components/User/Home/Welcome";
 import Home from "./components/User/Home/Home";
 import AddTask from "./components/User/Tasks/AddTaskForm";
 import AllTasks from "./components/User/Tasks/AllTasks";
@@ -101,7 +102,11 @@ function App() {
             </Route>
             <Route path="/">
               <Layout>
-                <Cover />
+                {isAuthenticated ? (
+                  <Welcome userEmail={user.email} />
+                ) : (
+                  <Cover />
+                )}
               </Layout>
             </Route>
           </Switch>

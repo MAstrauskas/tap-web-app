@@ -1,89 +1,72 @@
 import React from "react";
-import styled from "@emotion/styled";
-import { useAuth0 } from "../../react-auth0-spa";
-import { Link } from "react-router-dom";
-
+import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Typography from "@material-ui/core/Typography";
 import Theme from "../shared/Theme/Theme";
-//import Button from "../shared/Button";
-import Button from "@material-ui/core/Button";
 
-const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 15% auto;
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
 
-  @media screen and (max-width: 1000px) {
-    h1 {
-      font-size: ${Theme.fontSize.xlarge};
-    }
-
-    span {
-      margin: auto 20%;
-      margin-bottom: 30px;
-    }
+    padding: "2rem"
+  },
+  content: {
+    padding: "1rem",
+    textAlign: "center"
+  },
+  title: {
+    paddingBottom: "1rem"
+  },
+  redLetters: {
+    color: `${Theme.colors.first}`
   }
-
-  @media screen and (max-width: 600px) {
-    h1 {
-      font-size: ${Theme.fontSize.large};
-      margin: auto;
-    }
-
-    span {
-      font-size: ${Theme.fontSize.small};
-      margin: auto 10%;
-      margin-bottom: 30px;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    h1 {
-      font-size: ${Theme.fontSize.medium};
-      margin-top: 25%;
-      margin-bottom: 10%;
-    }
-
-    span {
-      font-size: ${Theme.fontSize.xsmall};
-    }
-  }
-
-  @media screen and (max-width: 370px) {
-    h1 {
-      font-size: ${Theme.fontSize.small};
-    }
-  }
-`;
-
-const Title = styled.h1`
-  font-size: ${Theme.fontSize.xxlarge};
-`;
-
-const SubTitle = styled.span`
-  margin: auto 30%;
-  margin-bottom: 30px;
-  text-align: center;
-  font-size: ${Theme.fontSize.medium};
-`;
+});
 
 const Cover = () => {
-  const { isAuthenticated } = useAuth0();
+  const classes = useStyles();
+
+  const mobileView = useMediaQuery("(max-width: 600px)");
+  const tabletView = useMediaQuery("(max-width: 800px)");
+  const desktopView = useMediaQuery("(min-width: 801px)");
+
+  let titleSize = "h1";
+  let subtitleSize = "h4";
+
+  if (desktopView) titleSize = "h2";
+  if (tabletView) {
+    titleSize = "h3";
+    subtitleSize = "h5";
+  }
+  if (mobileView) {
+    titleSize = "h4";
+    subtitleSize = "p";
+  }
 
   return (
-    <Content>
-      <Title data-testid="cover-title">Task Activity Planner</Title>
-      <SubTitle data-testid="cover-subtitle">
-        A new way of task management - based on your emotions
-      </SubTitle>
-      {isAuthenticated && (
-        <Link to="/home">
-          <Button variant="contained" color="primary">
-            Enter
-          </Button>
-        </Link>
-      )}
-    </Content>
+    <div className={classes.root}>
+      <div className={classes.content}>
+        <Typography
+          variant={titleSize}
+          component={titleSize}
+          data-testid="cover-title"
+          className={classes.title}
+        >
+          <span className={classes.redLetters}>T</span>ask{" "}
+          <span className={classes.redLetters}>A</span>ctivity{" "}
+          <span className={classes.redLetters}>P</span>lanner
+        </Typography>
+        <Typography
+          variant={subtitleSize}
+          component={subtitleSize}
+          data-testid="cover-subtitle"
+        >
+          A new way of task management - based on your{" "}
+          <span className={classes.redLetters}>emotions</span>
+        </Typography>
+      </div>
+    </div>
   );
 };
 
