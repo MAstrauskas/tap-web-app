@@ -232,6 +232,7 @@ const Navigation = () => {
               to="/home"
               activeClassName={classes.active}
               key="Today"
+              onClick={handleDrawerClose}
             >
               <ListItemIcon>
                 <TodayIcon />
@@ -245,6 +246,7 @@ const Navigation = () => {
               to="/tasks/all"
               activeClassName={classes.active}
               key="All Tasks"
+              onClick={handleDrawerClose}
             >
               <ListItemIcon>
                 <ListIcon />
@@ -258,6 +260,7 @@ const Navigation = () => {
               to="/tasks/add"
               activeClassName={classes.active}
               key="Add a Task"
+              onClick={handleDrawerClose}
             >
               <ListItemIcon>
                 <AddCircleIcon />
@@ -271,6 +274,7 @@ const Navigation = () => {
               to="/tasks/moodist"
               activeClassName={classes.active}
               key="Moodist"
+              onClick={handleDrawerClose}
             >
               <ListItemIcon>
                 <MoodIcon />
@@ -284,6 +288,7 @@ const Navigation = () => {
               to="/tasks/summary"
               activeClassName={classes.active}
               key="Summary"
+              onClick={handleDrawerClose}
             >
               <ListItemIcon>
                 <DonutLargeIcon />
