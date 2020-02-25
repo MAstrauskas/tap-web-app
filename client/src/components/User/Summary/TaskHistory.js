@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -11,6 +11,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DoneIcon from "@material-ui/icons/Done";
+import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles(theme => ({
   root: { paddingLeft: "2rem", paddingRight: "2rem" },
@@ -32,6 +33,26 @@ export default function TaskHistory({ tasks }) {
   if (tabletView) {
     listSize = "350px";
   }
+
+  // Show only 5 tasks per page
+  const pagesPerList = tasks.length / 5;
+  const [tasksPerPage, setTasksPerPage] = useState([]);
+
+  const handleTasksPerPage = (start, end) => {
+    setTasksPerPage([]);
+
+    const arrayOf5Tasks = [];
+
+    for (let i = start; i < end; i++) {
+      if (i < tasks.length) {
+        arrayOf5Tasks.push(tasks[i]);
+      }
+    }
+
+    setTasksPerPage(...tasksPerPage, arrayOf5Tasks);
+    console.log(tasks.length);
+    console.log(tasksPerPage);
+  };
 
   return (
     <div className={classes.root} style={{ maxWidth: listSize }}>
@@ -72,6 +93,16 @@ export default function TaskHistory({ tasks }) {
                 </ListItem>
               );
             })}
+            <Pagination
+              count={pagesPerList}
+              shape="rounded"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                paddingTop: "2rem"
+              }}
+              onChange={() => handleTasksPerPage(0, 5)}
+            />
           </List>
         </ExpansionPanelDetails>
       </ExpansionPanel>
