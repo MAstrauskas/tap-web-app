@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import {
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TablePagination,
+  Typography,
+  useMediaQuery
+} from "@material-ui/core";
+
 import DoneIcon from "@material-ui/icons/Done";
-import Pagination from "@material-ui/lab/Pagination";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles(theme => ({
   root: { paddingLeft: "2rem", paddingRight: "2rem" },
@@ -21,12 +24,24 @@ const useStyles = makeStyles(theme => ({
   },
   inline: {
     display: "inline"
+  },
+  completedTasks: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  list: {
+    width: "100%"
+  },
+  tableFooter: {
+    display: "flex",
+    justifyContent: "end"
   }
 }));
 
 export default function TaskHistory({ tasks }) {
   const classes = useStyles();
   const tabletView = useMediaQuery("(max-width: 960px)");
+  const mobileView = useMediaQuery("(max-width: 600px)");
 
   let listSize = "710px";
 
@@ -34,24 +49,16 @@ export default function TaskHistory({ tasks }) {
     listSize = "350px";
   }
 
-  // Show only 5 tasks per page
-  const pagesPerList = tasks.length / 5;
-  const [tasksPerPage, setTasksPerPage] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleTasksPerPage = (start, end) => {
-    setTasksPerPage([]);
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+  };
 
-    const arrayOf5Tasks = [];
-
-    for (let i = start; i < end; i++) {
-      if (i < tasks.length) {
-        arrayOf5Tasks.push(tasks[i]);
-      }
-    }
-
-    setTasksPerPage(...tasksPerPage, arrayOf5Tasks);
-    console.log(tasks.length);
-    console.log(tasksPerPage);
+  const handleTasksPerPageChange = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -66,11 +73,17 @@ export default function TaskHistory({ tasks }) {
             All Completed Tasks
           </Typography>
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <List dense={true}>
-            {tasks.map(task => {
+        <ExpansionPanelDetails className={classes.completedTasks}>
+          <List dense={true} className={classes.list}>
+            {(rowsPerPage > 0
+              ? tasks.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : tasks
+            ).map(task => {
               return (
-                <ListItem>
+                <ListItem key={task._id}>
                   <ListItemIcon>
                     <DoneIcon />
                   </ListItemIcon>
@@ -93,14 +106,16 @@ export default function TaskHistory({ tasks }) {
                 </ListItem>
               );
             })}
-            <Pagination
-              count={pagesPerList}
-              shape="rounded"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                paddingTop: "2rem"
-              }}
+
+            <TablePagination
+              component="div"
+              count={tasks.length}
+              rowsPerPage={rowsPerPage}
+              rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
+              labelRowsPerPage={mobileView ? "" : "Tasks per page"}
+              page={page}
+              onChangePage={handlePageChange}
+              onChangeRowsPerPage={handleTasksPerPageChange}
             />
           </List>
         </ExpansionPanelDetails>
