@@ -251,7 +251,6 @@ export default function TaskTable({
             <TableRow style={{ textAlign: "right" }}>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
-                labelRowsPerPage={mobileView ? "" : "Tasks per page"}
                 colSpan={12}
                 count={tasks.length}
                 rowsPerPage={rowsPerPage}
