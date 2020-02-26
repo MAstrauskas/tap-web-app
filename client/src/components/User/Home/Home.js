@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
+import Media from "react-media";
 
 import TaskTable from "../../shared/Table/Table";
+import MobileTable from "../../shared/Table/MobileTable";
 import UndoMessage from "../../shared/Table/UndoMessage";
 import WarningMessage from "../../shared/Table/WarningMessage";
 
@@ -180,18 +182,44 @@ export default class Home extends Component {
 
     return (
       <div>
-        <TaskTable
-          tasks={suggestedTasks}
-          title="Suggested Tasks"
-          headers={headers}
-          isTaskDescription={false}
-          isTaskDifficulty={false}
-          isEdit={true}
-          isDelete={true}
-          handleComplete={this.handleComplete}
-          handleWarningClick={this.handleWarningClick}
-          marginBottom="2rem"
-        />
+        <Media
+          queries={{
+            small: "(max-width: 800px)",
+            large: "(min-width: 801px)"
+          }}
+        >
+          {matches => (
+            <div>
+              {matches.small && (
+                <MobileTable
+                  tasks={suggestedTasks}
+                  title="Suggested Tasks"
+                  isEdit={true}
+                  isDelete={true}
+                  handleComplete={this.handleComplete}
+                  handleWarningClick={this.handleWarningClick}
+                  marginBottom="2rem"
+                />
+              )}
+
+              {matches.large && (
+                <TaskTable
+                  tasks={suggestedTasks}
+                  title="Suggested Tasks"
+                  headers={headers}
+                  isTaskDescription={false}
+                  isTaskDifficulty={false}
+                  isEdit={true}
+                  isDelete={true}
+                  handleComplete={this.handleComplete}
+                  handleWarningClick={this.handleWarningClick}
+                  marginBottom="2rem"
+                />
+              )}
+            </div>
+          )}
+        </Media>
+
         <div>
           <UndoMessage
             open={open}
@@ -207,17 +235,42 @@ export default class Home extends Component {
           />
         </div>
 
-        <TaskTable
-          tasks={todaysTasks}
-          title="Today's Tasks"
-          headers={headers}
-          isTaskDescription={false}
-          isTaskDifficulty={false}
-          isEdit={true}
-          isDelete={true}
-          handleComplete={this.handleComplete}
-          handleWarningClick={this.handleWarningClick}
-        />
+        <Media
+          queries={{
+            small: "(max-width: 800px)",
+            large: "(min-width: 801px)"
+          }}
+        >
+          {matches => (
+            <div>
+              {matches.small && (
+                <MobileTable
+                  tasks={todaysTasks}
+                  title="Today's Tasks"
+                  isEdit={true}
+                  isDelete={true}
+                  handleComplete={this.handleComplete}
+                  handleWarningClick={this.handleWarningClick}
+                />
+              )}
+
+              {matches.large && (
+                <TaskTable
+                  tasks={todaysTasks}
+                  title="Today's Tasks"
+                  headers={headers}
+                  isTaskDescription={false}
+                  isTaskDifficulty={false}
+                  isEdit={true}
+                  isDelete={true}
+                  handleComplete={this.handleComplete}
+                  handleWarningClick={this.handleWarningClick}
+                />
+              )}
+            </div>
+          )}
+        </Media>
+
         <div>
           <UndoMessage
             open={open}

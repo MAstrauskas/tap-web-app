@@ -31,7 +31,7 @@ import Checkbox from "../Checkbox";
 
 const CustomPaper = withStyles(theme => ({
   root: {
-    minWidth: "10rem"
+    width: "20rem"
   }
 }))(Paper);
 
@@ -238,7 +238,7 @@ export default function MobileTable({
             )}
           </TableBody>
 
-          <TableFooter>
+          <TableFooter style={{ width: "100%" }}>
             <TableRow style={{ textAlign: "right" }}>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
@@ -254,7 +254,7 @@ export default function MobileTable({
                 onChangePage={handleTablePageChange}
                 onChangeRowsPerPage={handleTablePerPageChange}
                 ActionsComponent={TablePaginationActions}
-                style={{ padding: 0 }}
+                style={{ padding: 0, margin: 0 }}
               />
             </TableRow>
           </TableFooter>

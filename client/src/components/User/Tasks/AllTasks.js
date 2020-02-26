@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
+import Media from "react-media";
 
 import TaskTable from "../../shared/Table/Table";
+import MobileTable from "../../shared/Table/MobileTable";
 import UndoMessage from "../../shared/Table/UndoMessage";
 import WarningMessage from "../../shared/Table/WarningMessage";
 
@@ -135,17 +137,42 @@ export default class AllTasks extends Component {
 
     return (
       <>
-        <TaskTable
-          tasks={filteredTasks}
-          title="All Tasks"
-          headers={headers}
-          isTaskDescription={true}
-          isTaskDifficulty={true}
-          isEdit={true}
-          isDelete={true}
-          handleComplete={this.handleComplete}
-          handleWarningClick={this.handleWarningClick}
-        />
+        <Media
+          queries={{
+            small: "(max-width: 800px)",
+            large: "(min-width: 801px)"
+          }}
+        >
+          {matches => (
+            <div>
+              {matches.small && (
+                <MobileTable
+                  tasks={filteredTasks}
+                  title="All Tasks"
+                  isEdit={true}
+                  isDelete={true}
+                  handleComplete={this.handleComplete}
+                  handleWarningClick={this.handleWarningClick}
+                />
+              )}
+
+              {matches.large && (
+                <TaskTable
+                  tasks={filteredTasks}
+                  title="All Tasks"
+                  headers={headers}
+                  isTaskDescription={true}
+                  isTaskDifficulty={true}
+                  isEdit={true}
+                  isDelete={true}
+                  handleComplete={this.handleComplete}
+                  handleWarningClick={this.handleWarningClick}
+                />
+              )}
+            </div>
+          )}
+        </Media>
+
         <div>
           <UndoMessage
             open={open}

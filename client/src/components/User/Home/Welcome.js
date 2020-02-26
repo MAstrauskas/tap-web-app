@@ -108,7 +108,7 @@ const Welcome = ({ userEmail }) => {
           </Typography>
         </div>
       )}
-      {currentTime >= 18 && currentTime < 4 && (
+      {currentTime >= 18 && (
         <div className={classes.content}>
           <Typography
             variant={titleSize}
