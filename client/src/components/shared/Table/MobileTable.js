@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Fade from "@material-ui/core/Fade";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -29,11 +29,21 @@ import TablePaginationActions from "./TablePaginationActions";
 import Theme from "../Theme/Theme";
 import Checkbox from "../Checkbox";
 
+const useStyles = makeStyles(theme => ({
+  expansionPanel: {}
+}));
+
 const CustomPaper = withStyles(theme => ({
   root: {
-    width: "20rem"
+    width: "21rem"
   }
 }))(Paper);
+
+const CustomTableContainer = withStyles(theme => ({
+  root: {
+    overflowX: "hidden"
+  }
+}))(TableContainer);
 
 const CustomTableCell = withStyles(theme => ({
   root: {
@@ -67,6 +77,7 @@ export default function MobileTable({
   handleWarningClick,
   marginBottom
 }) {
+  const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -85,7 +96,7 @@ export default function MobileTable({
   return (
     <CustomPaper
       style={{
-        maxWidth: "20rem",
+        maxWidth: "22rem",
         marginBottom: marginBottom
       }}
     >
@@ -103,7 +114,7 @@ export default function MobileTable({
       >
         {title}
       </Typography>
-      <TableContainer style={{ width: "100%" }}>
+      <CustomTableContainer>
         <Table aria-label={`${title} table`}>
           <TableBody>
             {(rowsPerPage > 0
@@ -238,10 +249,10 @@ export default function MobileTable({
             )}
           </TableBody>
 
-          <TableFooter style={{ width: "100%" }}>
+          <TableFooter>
             <TableRow style={{ textAlign: "right" }}>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
+                rowsPerPageOptions={5}
                 labelRowsPerPage=""
                 colSpan={12}
                 count={tasks.length}
@@ -254,12 +265,18 @@ export default function MobileTable({
                 onChangePage={handleTablePageChange}
                 onChangeRowsPerPage={handleTablePerPageChange}
                 ActionsComponent={TablePaginationActions}
-                style={{ padding: 0, margin: 0 }}
+                classes={{
+                  root: classes.tablePagination,
+                  caption: classes.tablePaginationCaption,
+                  selectIcon: classes.tablePaginationSelectIcon,
+                  select: classes.tablePaginationSelect,
+                  actions: classes.tablePaginationActions
+                }}
               />
             </TableRow>
           </TableFooter>
         </Table>
-      </TableContainer>
+      </CustomTableContainer>
     </CustomPaper>
   );
 }
