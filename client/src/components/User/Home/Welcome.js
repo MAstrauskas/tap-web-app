@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Theme from "../../shared/Theme/Theme";
 
 const useStyles = makeStyles({
@@ -37,6 +37,8 @@ const Welcome = ({ userEmail }) => {
   const classes = useStyles();
   const { isAuthenticated } = useAuth0();
   const [user, setUser] = useState({});
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   const currentDate = new Date();
   const currentTime = currentDate.getHours();
@@ -70,11 +72,30 @@ const Welcome = ({ userEmail }) => {
       .catch(e => console.log(e));
   };
 
+  const handleTasks = async email => {
+    await axios.get(`/api/tasks/${email}`).then(res => {
+      setTasks(...tasks, res.data.tasks);
+    });
+
+    setLoading(false);
+  };
+
   useEffect(() => {
-    if (isAuthenticated) handleUser(userEmail);
+    if (isAuthenticated) {
+      handleUser(userEmail);
+      handleTasks(userEmail);
+    }
   }, []);
 
   const firstName = user.firstName;
+
+  if (isLoading) {
+    return (
+      <div className={classes.root}>
+        <CircularProgress className={classes.loader} color="secondary" />
+      </div>
+    );
+  }
 
   return (
     <div className={classes.root}>
@@ -124,15 +145,27 @@ const Welcome = ({ userEmail }) => {
         </div>
       )}
       <div className={classes.content}>
-        <Link to="/home">
-          <Button
-            variant="contained"
-            size={buttonSize}
-            className={classes.button}
-          >
-            Show me today's tasks
-          </Button>
-        </Link>
+        {tasks.length === 0 ? (
+          <Link to="/tasks/add" style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              size={buttonSize}
+              className={classes.button}
+            >
+              Add your first task
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/tasks/all" style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              size={buttonSize}
+              className={classes.button}
+            >
+              Show me my tasks
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );
