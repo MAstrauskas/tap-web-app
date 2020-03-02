@@ -15,6 +15,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditIcon from "@material-ui/icons/Edit";
@@ -86,6 +87,13 @@ export default function TaskTable({
     setPage(0);
   };
 
+  let maxColumnCount = headers.length;
+
+  if (isTaskDifficulty) maxColumnCount++;
+  if (!isTaskDescription) maxColumnCount++;
+  if (isEdit) maxColumnCount++;
+  if (isDelete) maxColumnCount++;
+
   if (tabletView) tableMaxWidth = "30rem";
   if (desktopView) tableMaxWidth = "50rem";
   if (largeDesktopView) tableMaxWidth = "60rem";
@@ -126,146 +134,191 @@ export default function TaskTable({
               )}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? tasks.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : tasks
-            ).map(task => {
-              const currentDate = moment(new Date()).format("LL");
-              const dueDate = moment(task.taskDueDate).format("LL");
 
-              return (
-                <Fade in={true}>
-                  <CustomTableRow key={task._id}>
-                    <CustomTableCell component="th" scope="row">
-                      <Checkbox
-                        id={task._id}
-                        handleComplete={handleComplete}
-                        isTaskSuggested={task.isTaskSuggested}
-                      />
-                    </CustomTableCell>
-                    <CustomTableCell component="th" scope="row">
-                      {task.taskName}
-                    </CustomTableCell>
-                    {isTaskDescription === true && (
-                      <CustomTableCell align="right">
-                        {task.taskDescription.length > 0 && (
-                          <ExpansionPanel>
-                            <ExpansionPanelSummary
-                              expandIcon={
-                                task.taskDescription.length > 16 && (
-                                  <ExpandMoreIcon />
-                                )
-                              }
-                              aria-controls="panel1a-content"
-                              id="panel1a-header"
-                            >
-                              {task.taskDescription.length <= 20
-                                ? task.taskDescription.substring(0, 20)
-                                : task.taskDescription.substring(0, 20) + " - "}
-                            </ExpansionPanelSummary>
-                            {task.taskDescription.length > 20 && (
-                              <ExpansionPanelDetails
-                                align="left"
-                                style={{
-                                  maxWidth: "16rem",
-                                  minWidth: "5rem",
-                                  wordBreak: "break-all"
-                                }}
+          {tasks.length === 0 ? (
+            <Fade in={true}>
+              <TableBody>
+                <CustomTableRow>
+                  <CustomTableCell
+                    colSpan={`${maxColumnCount}`}
+                    style={{
+                      textAlign: "center",
+                      paddingTop: "4rem",
+                      paddingBottom: "4rem"
+                    }}
+                  >
+                    <Typography
+                      style={{
+                        color: `${Theme.colors.gray}`,
+                        paddingBottom: "1rem"
+                      }}
+                    >
+                      There're no tasks to show...
+                    </Typography>
+                    <Link to="/tasks/add" style={{ textDecoration: "none" }}>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        style={{
+                          backgroundColor: `${Theme.colors.first}`,
+                          color: `${Theme.colors.white}`,
+                          "&:hover": {
+                            backgroundColor: `${Theme.colors.fourth}`
+                          }
+                        }}
+                      >
+                        Add a task
+                      </Button>
+                    </Link>
+                  </CustomTableCell>
+                </CustomTableRow>
+              </TableBody>
+            </Fade>
+          ) : (
+            <TableBody>
+              {(rowsPerPage > 0
+                ? tasks.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : tasks
+              ).map(task => {
+                const currentDate = moment(new Date()).format("LL");
+                const dueDate = moment(task.taskDueDate).format("LL");
+
+                return (
+                  <Fade in={true}>
+                    <CustomTableRow key={task._id}>
+                      <CustomTableCell component="th" scope="row">
+                        <Checkbox
+                          id={task._id}
+                          handleComplete={handleComplete}
+                          isTaskSuggested={task.isTaskSuggested}
+                        />
+                      </CustomTableCell>
+                      <CustomTableCell component="th" scope="row">
+                        {task.taskName}
+                      </CustomTableCell>
+                      {isTaskDescription === true && (
+                        <CustomTableCell align="right">
+                          {task.taskDescription.length > 0 && (
+                            <ExpansionPanel>
+                              <ExpansionPanelSummary
+                                expandIcon={
+                                  task.taskDescription.length > 16 && (
+                                    <ExpandMoreIcon />
+                                  )
+                                }
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
                               >
-                                <Typography
+                                {task.taskDescription.length <= 20
+                                  ? task.taskDescription.substring(0, 20)
+                                  : task.taskDescription.substring(0, 20) +
+                                    " - "}
+                              </ExpansionPanelSummary>
+                              {task.taskDescription.length > 20 && (
+                                <ExpansionPanelDetails
+                                  align="left"
                                   style={{
-                                    fontSize: "14px"
+                                    maxWidth: "16rem",
+                                    minWidth: "5rem",
+                                    wordBreak: "break-all"
                                   }}
                                 >
-                                  {task.taskDescription.substring(20)}
-                                </Typography>
-                              </ExpansionPanelDetails>
-                            )}
-                          </ExpansionPanel>
-                        )}
-                      </CustomTableCell>
-                    )}
+                                  <Typography
+                                    style={{
+                                      fontSize: "14px"
+                                    }}
+                                  >
+                                    {task.taskDescription.substring(20)}
+                                  </Typography>
+                                </ExpansionPanelDetails>
+                              )}
+                            </ExpansionPanel>
+                          )}
+                        </CustomTableCell>
+                      )}
 
-                    <CustomTableCell
-                      align="right"
-                      style={
-                        dueDate < currentDate
-                          ? { color: `${Theme.colors.first}` }
-                          : { color: `${Theme.colors.black}` }
-                      }
-                    >
-                      {dueDate}
-                    </CustomTableCell>
-                    <CustomTableCell align="right">
-                      {task.taskPriority}
-                    </CustomTableCell>
-                    {isTaskDifficulty === true && (
-                      <CustomTableCell align="right">
-                        {task.taskDifficulty}
+                      <CustomTableCell
+                        align="right"
+                        style={
+                          dueDate < currentDate
+                            ? { color: `${Theme.colors.first}` }
+                            : { color: `${Theme.colors.black}` }
+                        }
+                      >
+                        {dueDate}
                       </CustomTableCell>
-                    )}
-
-                    {isEdit === true && (
                       <CustomTableCell align="right">
-                        <Link
-                          to={{
-                            pathname: "/tasks/edit",
-                            state: {
-                              task: task
+                        {task.taskPriority}
+                      </CustomTableCell>
+                      {isTaskDifficulty === true && (
+                        <CustomTableCell align="right">
+                          {task.taskDifficulty}
+                        </CustomTableCell>
+                      )}
+
+                      {isEdit === true && (
+                        <CustomTableCell align="right">
+                          <Link
+                            to={{
+                              pathname: "/tasks/edit",
+                              state: {
+                                task: task
+                              }
+                            }}
+                          >
+                            <IconButton>
+                              <EditIcon />
+                            </IconButton>
+                          </Link>
+                        </CustomTableCell>
+                      )}
+                      {isDelete === true && (
+                        <CustomTableCell align="right">
+                          <IconButton
+                            onClick={() =>
+                              handleWarningClick(task._id, task.taskName)
                             }
-                          }}
-                        >
-                          <IconButton>
-                            <EditIcon />
+                          >
+                            <DeleteForeverIcon />
                           </IconButton>
-                        </Link>
-                      </CustomTableCell>
-                    )}
-                    {isDelete === true && (
-                      <CustomTableCell align="right">
-                        <IconButton
-                          onClick={() =>
-                            handleWarningClick(task._id, task.taskName)
-                          }
-                        >
-                          <DeleteForeverIcon />
-                        </IconButton>
-                      </CustomTableCell>
-                    )}
-                  </CustomTableRow>
-                </Fade>
-              );
-            })}
+                        </CustomTableCell>
+                      )}
+                    </CustomTableRow>
+                  </Fade>
+                );
+              })}
 
-            {emptyRows > 0 && (
-              <CustomTableRow style={{ height: 53 * emptyRows }}>
-                <CustomTableCell colSpan={12} />
-              </CustomTableRow>
-            )}
-          </TableBody>
+              {emptyRows > 0 && (
+                <CustomTableRow style={{ height: 53 * emptyRows }}>
+                  <CustomTableCell colSpan={12} />
+                </CustomTableRow>
+              )}
+            </TableBody>
+          )}
 
-          <TableFooter>
-            <TableRow style={{ textAlign: "right" }}>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
-                colSpan={12}
-                count={tasks.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { "aria-label": "rows per page" },
-                  native: true
-                }}
-                onChangePage={handleTablePageChange}
-                onChangeRowsPerPage={handleTablePerPageChange}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
+          {tasks.length > 0 && (
+            <TableFooter>
+              <TableRow style={{ textAlign: "right" }}>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
+                  colSpan={12}
+                  count={tasks.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { "aria-label": "rows per page" },
+                    native: true
+                  }}
+                  onChangePage={handleTablePageChange}
+                  onChangeRowsPerPage={handleTablePerPageChange}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </TableContainer>
     </CustomPaper>
