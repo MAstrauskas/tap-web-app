@@ -163,16 +163,17 @@ export default function TaskTable({
                               aria-controls="panel1a-content"
                               id="panel1a-header"
                             >
-                              {task.taskDescription.length <= 16
-                                ? task.taskDescription.substring(0, 16)
-                                : task.taskDescription.substring(0, 16) + " - "}
+                              {task.taskDescription.length <= 20
+                                ? task.taskDescription.substring(0, 20)
+                                : task.taskDescription.substring(0, 20) + " - "}
                             </ExpansionPanelSummary>
-                            {task.taskDescription.length > 16 && (
+                            {task.taskDescription.length > 20 && (
                               <ExpansionPanelDetails
                                 align="left"
                                 style={{
                                   maxWidth: "16rem",
-                                  minWidth: "5rem"
+                                  minWidth: "5rem",
+                                  wordBreak: "break-all"
                                 }}
                               >
                                 <Typography
@@ -180,7 +181,7 @@ export default function TaskTable({
                                     fontSize: "14px"
                                   }}
                                 >
-                                  {task.taskDescription.substring(16)}
+                                  {task.taskDescription.substring(20)}
                                 </Typography>
                               </ExpansionPanelDetails>
                             )}
