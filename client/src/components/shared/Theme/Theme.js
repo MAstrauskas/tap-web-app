@@ -22,7 +22,10 @@ const Theme = {
     third: "#e3e3e3",
     fourth: "#f2031f",
     fifth: "#eeeeee",
-    gray: "#808080"
+    gray: "#808080",
+    low: "#008000",
+    medium: "#ffb266",
+    high: "#ff0000"
   },
   fontSize: {
     navLogo: "20px",

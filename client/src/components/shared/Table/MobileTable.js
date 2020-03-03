@@ -15,10 +15,16 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditIcon from "@material-ui/icons/Edit";
 import ScheduleIcon from "@material-ui/icons/Schedule";
+
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import SignalCellular1BarIcon from "@material-ui/icons/SignalCellular1Bar";
+import SignalCellular2BarIcon from "@material-ui/icons/SignalCellular2Bar";
+import SignalCellular4BarIcon from "@material-ui/icons/SignalCellular4Bar";
 
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -166,6 +172,8 @@ export default function MobileTable({
               ).map(task => {
                 const currentDate = moment(new Date()).format("LL");
                 const dueDate = moment(task.taskDueDate).format("LL");
+                const taskPriority = task.taskPriority;
+                const taskDifficulty = task.taskDifficulty;
 
                 return (
                   <Fade in={true}>
@@ -175,7 +183,9 @@ export default function MobileTable({
                           expandIcon={<ExpandMoreIcon />}
                           aria-controls={`${title}`}
                           id={`${title}`}
-                          style={{ padding: 0 }}
+                          style={{
+                            padding: 0
+                          }}
                         >
                           <CustomTableCell
                             component="th"
@@ -191,9 +201,69 @@ export default function MobileTable({
                           <CustomTableCell
                             component="th"
                             scope="row"
-                            style={{ padding: "12px 0" }}
+                            style={{
+                              padding: "12px 0"
+                            }}
                           >
-                            {task.taskName}
+                            <Typography style={{ width: "10rem" }}>
+                              {task.taskName}
+                            </Typography>
+                          </CustomTableCell>
+                          <CustomTableCell
+                            component="th"
+                            scope="row"
+                            style={{ marginLeft: "5%" }}
+                          >
+                            {taskPriority === "Low" && (
+                              <Tooltip title="Priority Low">
+                                <ArrowUpwardIcon
+                                  style={{ fill: `${Theme.colors.low}` }}
+                                />
+                              </Tooltip>
+                            )}
+                            {taskPriority === "Medium" && (
+                              <Tooltip title="Priority Medium">
+                                <ArrowUpwardIcon
+                                  style={{
+                                    fill: `${Theme.colors.medium}`
+                                  }}
+                                />
+                              </Tooltip>
+                            )}
+                            {taskPriority === "High" && (
+                              <Tooltip title="Priority High">
+                                <ArrowUpwardIcon
+                                  style={{ fill: `${Theme.colors.high}` }}
+                                />
+                              </Tooltip>
+                            )}
+                          </CustomTableCell>
+                          <CustomTableCell
+                            component="th"
+                            scope="row"
+                            style={{ padding: "0 0" }}
+                          >
+                            {taskDifficulty === "Easy" && (
+                              <Tooltip title="Difficulty Easy">
+                                <SignalCellular1BarIcon
+                                  style={{ fill: `${Theme.colors.low}` }}
+                                />
+                              </Tooltip>
+                            )}
+                            {taskDifficulty === "Medium" && (
+                              <Tooltip title="Difficulty Medium">
+                                <SignalCellular2BarIcon
+                                  style={{ fill: `${Theme.colors.medium}` }}
+                                />
+                              </Tooltip>
+                            )}
+                            {taskDifficulty === "Hard" && (
+                              <Tooltip title="Difficulty Hard">
+                                <SignalCellular4BarIcon
+                                  style={{ fill: `${Theme.colors.high}` }}
+                                />
+                              </Tooltip>
+                            )}
                           </CustomTableCell>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails
