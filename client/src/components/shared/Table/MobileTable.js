@@ -14,6 +14,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditIcon from "@material-ui/icons/Edit";
@@ -116,138 +117,181 @@ export default function MobileTable({
       </Typography>
       <CustomTableContainer>
         <Table aria-label={`${title} table`}>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? tasks.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : tasks
-            ).map(task => {
-              const currentDate = moment(new Date()).format("LL");
-              const dueDate = moment(task.taskDueDate).format("LL");
-
-              return (
-                <Fade in={true}>
-                  <CustomTableRow key={task._id}>
-                    <ExpansionPanel>
-                      <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`${title}`}
-                        id={`${title}`}
-                        style={{ padding: 0 }}
-                      >
-                        <CustomTableCell
-                          component="th"
-                          scope="row"
-                          style={{ padding: "12px 0" }}
-                        >
-                          <Checkbox
-                            id={task._id}
-                            handleComplete={handleComplete}
-                            isTaskSuggested={task.isTaskSuggested}
-                          />
-                        </CustomTableCell>
-                        <CustomTableCell
-                          component="th"
-                          scope="row"
-                          style={{ padding: "12px 0" }}
-                        >
-                          {task.taskName}
-                        </CustomTableCell>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails
+          {tasks.length === 0 ? (
+            <Fade in={true}>
+              <TableBody>
+                <CustomTableRow>
+                  <CustomTableCell
+                    style={{
+                      textAlign: "center",
+                      paddingTop: "4rem",
+                      paddingBottom: "4rem"
+                    }}
+                  >
+                    <Typography
+                      style={{
+                        color: `${Theme.colors.gray}`,
+                        paddingBottom: "1rem"
+                      }}
+                    >
+                      There're no tasks to show...
+                    </Typography>
+                    <Link to="/tasks/add" style={{ textDecoration: "none" }}>
+                      <Button
+                        variant="contained"
+                        size="small"
                         style={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          padding: 0,
-                          backgroundColor: `${Theme.colors.second}`,
-                          border: `1px solid ${Theme.colors.third}`,
-                          "&:nth-child(1)": {
-                            justifyContent: "flex-end"
+                          backgroundColor: `${Theme.colors.first}`,
+                          color: `${Theme.colors.white}`,
+                          "&:hover": {
+                            backgroundColor: `${Theme.colors.fourth}`
                           }
                         }}
                       >
-                        <CustomTableCellDueDate
-                          align="right"
-                          style={
-                            (dueDate < currentDate
-                              ? { color: `${Theme.colors.first}` }
-                              : { color: `${Theme.colors.black}` },
-                            {
-                              display: "flex",
-                              flexDirection: "column",
-                              justifyContent: "center"
-                            })
-                          }
+                        Add a task
+                      </Button>
+                    </Link>
+                  </CustomTableCell>
+                </CustomTableRow>
+              </TableBody>
+            </Fade>
+          ) : (
+            <TableBody>
+              {(rowsPerPage > 0
+                ? tasks.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : tasks
+              ).map(task => {
+                const currentDate = moment(new Date()).format("LL");
+                const dueDate = moment(task.taskDueDate).format("LL");
+
+                return (
+                  <Fade in={true}>
+                    <CustomTableRow key={task._id}>
+                      <ExpansionPanel>
+                        <ExpansionPanelSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls={`${title}`}
+                          id={`${title}`}
+                          style={{ padding: 0 }}
                         >
+                          <CustomTableCell
+                            component="th"
+                            scope="row"
+                            style={{ padding: "12px 0" }}
+                          >
+                            <Checkbox
+                              id={task._id}
+                              handleComplete={handleComplete}
+                              isTaskSuggested={task.isTaskSuggested}
+                            />
+                          </CustomTableCell>
+                          <CustomTableCell
+                            component="th"
+                            scope="row"
+                            style={{ padding: "12px 0" }}
+                          >
+                            {task.taskName}
+                          </CustomTableCell>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            padding: 0,
+                            backgroundColor: `${Theme.colors.second}`,
+                            border: `1px solid ${Theme.colors.third}`,
+                            "&:nth-child(1)": {
+                              justifyContent: "flex-end"
+                            }
+                          }}
+                        >
+                          <CustomTableCellDueDate
+                            align="right"
+                            style={
+                              (dueDate < currentDate
+                                ? { color: `${Theme.colors.first}` }
+                                : { color: `${Theme.colors.black}` },
+                              {
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center"
+                              })
+                            }
+                          >
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "flex-start"
+                              }}
+                            >
+                              <ScheduleIcon />
+                              <Typography
+                                variant="p"
+                                component="p"
+                                style={{
+                                  paddingLeft: "4px",
+                                  paddingTop: "3px"
+                                }}
+                              >
+                                {dueDate}
+                              </Typography>
+                            </div>
+                          </CustomTableCellDueDate>
                           <div
                             style={{
                               display: "flex",
-                              flexDirection: "row",
-                              justifyContent: "flex-start"
+                              justifyContent: "flex-end",
+                              justifySelf: "flex-end",
+                              paddingLeft: "15%"
                             }}
                           >
-                            <ScheduleIcon />
-                            <Typography
-                              variant="p"
-                              component="p"
-                              style={{ paddingLeft: "4px", paddingTop: "3px" }}
-                            >
-                              {dueDate}
-                            </Typography>
-                          </div>
-                        </CustomTableCellDueDate>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            justifySelf: "flex-end",
-                            paddingLeft: "15%"
-                          }}
-                        >
-                          {isEdit === true && (
-                            <CustomTableCell style={{ padding: 0 }}>
-                              <Link
-                                to={{
-                                  pathname: "/tasks/edit",
-                                  state: {
-                                    task: task
+                            {isEdit === true && (
+                              <CustomTableCell style={{ padding: 0 }}>
+                                <Link
+                                  to={{
+                                    pathname: "/tasks/edit",
+                                    state: {
+                                      task: task
+                                    }
+                                  }}
+                                >
+                                  <IconButton>
+                                    <EditIcon />
+                                  </IconButton>
+                                </Link>
+                              </CustomTableCell>
+                            )}
+
+                            {isDelete === true && (
+                              <CustomTableCell style={{ padding: 0 }}>
+                                <IconButton
+                                  onClick={() =>
+                                    handleWarningClick(task._id, task.taskName)
                                   }
-                                }}
-                              >
-                                <IconButton>
-                                  <EditIcon />
+                                >
+                                  <DeleteForeverIcon />
                                 </IconButton>
-                              </Link>
-                            </CustomTableCell>
-                          )}
+                              </CustomTableCell>
+                            )}
+                          </div>
+                        </ExpansionPanelDetails>
+                      </ExpansionPanel>
+                    </CustomTableRow>
+                  </Fade>
+                );
+              })}
 
-                          {isDelete === true && (
-                            <CustomTableCell style={{ padding: 0 }}>
-                              <IconButton
-                                onClick={() =>
-                                  handleWarningClick(task._id, task.taskName)
-                                }
-                              >
-                                <DeleteForeverIcon />
-                              </IconButton>
-                            </CustomTableCell>
-                          )}
-                        </div>
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                  </CustomTableRow>
-                </Fade>
-              );
-            })}
-
-            {emptyRows > 0 && (
-              <CustomTableRow style={{ height: 53 * emptyRows }}>
-                <CustomTableCell colSpan={12} />
-              </CustomTableRow>
-            )}
-          </TableBody>
+              {emptyRows > 0 && (
+                <CustomTableRow style={{ height: 53 * emptyRows }}>
+                  <CustomTableCell colSpan={12} />
+                </CustomTableRow>
+              )}
+            </TableBody>
+          )}
 
           <TableFooter>
             <TableRow style={{ textAlign: "right" }}>
