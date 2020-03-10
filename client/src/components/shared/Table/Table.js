@@ -183,8 +183,12 @@ export default function TaskTable({
                   )
                 : tasks
               ).map(task => {
-                const currentDate = moment(new Date()).format("LL");
-                const dueDate = moment(task.taskDueDate).format("LL");
+                const date = new Date();
+                const currentDate = moment(date).format("YYYY-MM-DD HH:mm:ss");
+                const dueDate = moment(task.taskDueDate).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                );
+                const formattedDueDate = moment(dueDate).format("LL");
 
                 return (
                   <Fade in={true}>
@@ -248,7 +252,7 @@ export default function TaskTable({
                             : { color: `${Theme.colors.black}` }
                         }
                       >
-                        {dueDate}
+                        {formattedDueDate}
                       </CustomTableCell>
                       <CustomTableCell align="right">
                         {task.taskPriority}
