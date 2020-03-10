@@ -82,7 +82,8 @@ export default function MobileTable({
   isDelete,
   handleComplete,
   handleWarningClick,
-  marginBottom
+  marginBottom,
+  isSuggestedTable
 }) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
@@ -140,9 +141,14 @@ export default function MobileTable({
                         paddingBottom: "1rem"
                       }}
                     >
-                      There're no tasks to show...
+                      {isSuggestedTable
+                        ? "Add your current mood and we will show you what to do!"
+                        : "There're no tasks to show..."}
                     </Typography>
-                    <Link to="/tasks/add" style={{ textDecoration: "none" }}>
+                    <Link
+                      to={isSuggestedTable ? "/tasks/moodist" : "/tasks/add"}
+                      style={{ textDecoration: "none" }}
+                    >
                       <Button
                         variant="contained"
                         size="small"
@@ -154,7 +160,7 @@ export default function MobileTable({
                           }
                         }}
                       >
-                        Add a task
+                        {isSuggestedTable ? "Add a mood" : "Add a task"}
                       </Button>
                     </Link>
                   </CustomTableCell>
@@ -170,8 +176,11 @@ export default function MobileTable({
                   )
                 : tasks
               ).map(task => {
-                const currentDate = moment(new Date()).format("LL");
-                const dueDate = moment(task.taskDueDate).format("LL");
+                const date = new Date();
+                const currentDate = moment(date).format("YYYY-MM-DD");
+                const dueDate = moment(task.taskDueDate).format("YYYY-MM-DD");
+                const formattedDueDate = moment(dueDate).format("LL");
+
                 const taskPriority = task.taskPriority;
                 const taskDifficulty = task.taskDifficulty;
 
@@ -307,7 +316,7 @@ export default function MobileTable({
                                   paddingTop: "3px"
                                 }}
                               >
-                                {dueDate}
+                                {formattedDueDate}
                               </Typography>
                             </div>
                           </CustomTableCellDueDate>

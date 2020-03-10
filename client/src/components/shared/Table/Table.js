@@ -65,7 +65,8 @@ export default function TaskTable({
   isDelete,
   handleComplete,
   handleWarningClick,
-  marginBottom
+  marginBottom,
+  isSuggestedTable
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -153,9 +154,14 @@ export default function TaskTable({
                         paddingBottom: "1rem"
                       }}
                     >
-                      There're no tasks to show...
+                      {isSuggestedTable
+                        ? "Add your current mood and we will show you what to do!"
+                        : "There're no tasks to show..."}
                     </Typography>
-                    <Link to="/tasks/add" style={{ textDecoration: "none" }}>
+                    <Link
+                      to={isSuggestedTable ? "/tasks/moodist" : "/tasks/add"}
+                      style={{ textDecoration: "none" }}
+                    >
                       <Button
                         variant="contained"
                         size="small"
@@ -167,7 +173,7 @@ export default function TaskTable({
                           }
                         }}
                       >
-                        Add a task
+                        {isSuggestedTable ? "Add a mood" : "Add a task"}
                       </Button>
                     </Link>
                   </CustomTableCell>
@@ -184,10 +190,8 @@ export default function TaskTable({
                 : tasks
               ).map(task => {
                 const date = new Date();
-                const currentDate = moment(date).format("YYYY-MM-DD HH:mm:ss");
-                const dueDate = moment(task.taskDueDate).format(
-                  "YYYY-MM-DD HH:mm:ss"
-                );
+                const currentDate = moment(date).format("YYYY-MM-DD");
+                const dueDate = moment(task.taskDueDate).format("YYYY-MM-DD");
                 const formattedDueDate = moment(dueDate).format("LL");
 
                 return (

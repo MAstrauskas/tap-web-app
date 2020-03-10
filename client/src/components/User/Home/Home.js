@@ -62,22 +62,6 @@ export default class Home extends Component {
     });
   };
 
-  handleUserRegistration = async () => {
-    this.setState({ ...this.state, isFetching: true });
-
-    const body = {
-      name: this.props.name,
-      email: this.props.userEmail
-    };
-
-    await axios
-      .post("/api/user/add", body)
-      .then(res => console.log(res))
-      .catch(e => console.log(e));
-
-    this.setState({ ...this.state, isFetching: false });
-  };
-
   handleWarningClick = (taskId, taskName) => {
     this.setState({
       openWarning: true,
@@ -131,7 +115,6 @@ export default class Home extends Component {
 
   componentDidMount() {
     this.handleTasks();
-    this.handleUserRegistration();
   }
 
   render() {
@@ -159,25 +142,6 @@ export default class Home extends Component {
         if (taskOne === "Low" && taskTwo === "Medium") return 1;
       });
 
-    const todaysTasks = tasks
-      .sort((a, b) => {
-        const dueDate = moment(a.taskDueDate).format("LL");
-        const dueDate2 = moment(b.taskDueDate).format("LL");
-
-        if (dueDate > dueDate2) return 1;
-        else return -1;
-      })
-      .filter(task => {
-        const dueDate = new Date(task.taskDueDate);
-        const todaysDate = new Date();
-
-        return (
-          dueDate.setHours(0, 0, 0, 0) === todaysDate.setHours(0, 0, 0, 0) &&
-          !task.isTaskComplete &&
-          !suggestedTasks.includes(task)
-        );
-      });
-
     const headers = ["Task", "Due Date", "Priority"];
 
     return (
@@ -199,6 +163,7 @@ export default class Home extends Component {
                   handleComplete={this.handleComplete}
                   handleWarningClick={this.handleWarningClick}
                   marginBottom="2rem"
+                  isSuggestedTable={true}
                 />
               )}
 
@@ -214,57 +179,7 @@ export default class Home extends Component {
                   handleComplete={this.handleComplete}
                   handleWarningClick={this.handleWarningClick}
                   marginBottom="2rem"
-                />
-              )}
-            </div>
-          )}
-        </Media>
-
-        <div>
-          <UndoMessage
-            open={open}
-            handleClose={this.handleClose}
-            handleUndo={this.handleUndo}
-          />
-          <WarningMessage
-            open={openWarning}
-            task={taskName}
-            taskId={taskId}
-            handleDelete={this.handleDelete}
-            handleClose={this.handleWarningClose}
-          />
-        </div>
-
-        <Media
-          queries={{
-            small: "(max-width: 800px)",
-            large: "(min-width: 801px)"
-          }}
-        >
-          {matches => (
-            <div>
-              {matches.small && (
-                <MobileTable
-                  tasks={todaysTasks}
-                  title="Today's Tasks"
-                  isEdit={true}
-                  isDelete={true}
-                  handleComplete={this.handleComplete}
-                  handleWarningClick={this.handleWarningClick}
-                />
-              )}
-
-              {matches.large && (
-                <TaskTable
-                  tasks={todaysTasks}
-                  title="Today's Tasks"
-                  headers={headers}
-                  isTaskDescription={false}
-                  isTaskDifficulty={false}
-                  isEdit={true}
-                  isDelete={true}
-                  handleComplete={this.handleComplete}
-                  handleWarningClick={this.handleWarningClick}
+                  isSuggestedTable={true}
                 />
               )}
             </div>

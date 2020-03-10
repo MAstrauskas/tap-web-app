@@ -119,8 +119,8 @@ export default class AllTasks extends Component {
     // Sort by date and not include finished tasks
     const filteredTasks = tasks
       .sort((a, b) => {
-        const dueDate = moment(a.taskDueDate).format("LL");
-        const dueDate2 = moment(b.taskDueDate).format("LL");
+        const dueDate = moment(a.taskDueDate).format("YYYY-MM-DD HH:mm:ss");
+        const dueDate2 = moment(b.taskDueDate).format("YYYY-MM-DD HH:mm:ss");
 
         if (dueDate > dueDate2) return 1;
         else return -1;
@@ -153,6 +153,7 @@ export default class AllTasks extends Component {
                   isDelete={true}
                   handleComplete={this.handleComplete}
                   handleWarningClick={this.handleWarningClick}
+                  isSuggestedTable={false}
                 />
               )}
 
@@ -167,6 +168,7 @@ export default class AllTasks extends Component {
                   isDelete={true}
                   handleComplete={this.handleComplete}
                   handleWarningClick={this.handleWarningClick}
+                  isSuggestedTable={false}
                 />
               )}
             </div>

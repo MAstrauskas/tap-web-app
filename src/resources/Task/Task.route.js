@@ -53,10 +53,16 @@ router.get("/completed/all", TaskController.tasksCompleted_get);
 router.patch("/completed", TaskController.tasksCompleted);
 
 /**
- * @route GET api/tasks/suggest
+ * @route GET api/tasks/calculate-suggest
+ * @desc Get Calculates suggested tasks
+ * @access Public
+ **/
+router.get("/calculate-suggest/:email", TaskController.taskCalculateSuggest);
+
+/**
+ * @route GET api/tasks/make-suggest
  * @desc Get Make Tasks Suggested
  * @access Public
  **/
-router.get("/suggest/:email", TaskController.taskSuggest);
-
+router.get("/make-suggest/:email", TaskController.taskMakeSuggest);
 module.exports = router;

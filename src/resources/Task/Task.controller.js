@@ -163,17 +163,31 @@ exports.tasksCompleted = (req, res, next) => {
 };
 
 /**
- * GET /api/tasks/suggest
+ * GET /api/tasks/calculate-suggest
  *
  * @export
  * @param {any} req
  * @param {any} res
  **/
-exports.taskSuggest = (req, res, next) => {
-  Task.find({ email: req.params.email }, (err, tasks) => {
-    TaskSuggester.calculateTaskSuggestion(req.params.email, tasks);
-    TaskSuggester.makeTaskSuggested(req.params.email, tasks);
+exports.taskCalculateSuggest = (req, res, next) => {
+  Task.find({ email: req.params.email }, async (err, tasks) => {
+    await TaskSuggester.calculateTaskSuggestion(req.params.email, tasks);
 
-    res.send({ tasks: tasks });
+    await res.send({ tasks: tasks });
+  }).catch(next);
+};
+
+/**
+ * GET /api/tasks/make-suggest
+ *
+ * @export
+ * @param {any} req
+ * @param {any} res
+ **/
+exports.taskMakeSuggest = (req, res, next) => {
+  Task.find({ email: req.params.email }, async (err, tasks) => {
+    await TaskSuggester.makeTaskSuggested(req.params.email, tasks);
+
+    await res.send({ tasks: tasks });
   }).catch(next);
 };

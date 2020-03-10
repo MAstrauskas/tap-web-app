@@ -42,15 +42,25 @@ export class Mood extends Component {
         }
       );
 
+      await axios
+        .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`)
+        .then(res => {
+          console.log("Task Calculated Suggested: ", res);
+        })
+        .catch(err => console.log(err));
+
+      await axios
+        .get(`/api/tasks/make-suggest/${this.props.userEmail}`)
+        .then(res => {
+          console.log("Task Made Suggested: ", res);
+        })
+        .catch(err => console.log(err));
+
       setSubmitting(false);
       this.setState(prevState => ({
         ...prevState,
         addSuccessful: true
       }));
-
-      setTimeout(async () => {
-        await this.handleTaskSuggestion();
-      }, 1000);
     } catch (e) {
       console.log(e);
       setSubmitting(false);
@@ -59,15 +69,6 @@ export class Mood extends Component {
         addSuccessful: false
       }));
     }
-  };
-
-  handleTaskSuggestion = async () => {
-    await axios
-      .get(`/api/tasks/suggest/${this.props.userEmail}`)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.log(err));
   };
 
   render() {

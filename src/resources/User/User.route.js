@@ -11,11 +11,11 @@ const UserController = require("./User.controller");
 router.get("/", UserController.userList);
 
 /**
- * @route GET api/user/single
+ * @route GET api/user/single/email
  * @desc Get a Single User
  * @access Public
  **/
-router.get("/single", UserController.userGet);
+router.get("/single/:email", UserController.userGet);
 
 /**
  * @route POST api/user/add

@@ -33,10 +33,9 @@ const useStyles = makeStyles({
   }
 });
 
-const Welcome = ({ userEmail }) => {
+const Welcome = ({ name, userEmail }) => {
   const classes = useStyles();
   const { isAuthenticated } = useAuth0();
-  const [user, setUser] = useState({});
   const [tasks, setTasks] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -63,13 +62,16 @@ const Welcome = ({ userEmail }) => {
     buttonSize = "small";
   }
 
-  const handleUser = async email => {
-    const body = { email: email };
+  const handleUserRegistration = async (name, email) => {
+    const body = {
+      name: name,
+      email: email
+    };
 
     await axios
-      .get("/api/user/single", body)
-      .then(res => setUser(res.data))
-      .catch(e => console.log(e));
+      .post("/api/user/add", body)
+      .then(res => console.log("User registered"))
+      .catch(e => console.log("User failed to register: " + e));
   };
 
   const handleTasks = async email => {
@@ -82,12 +84,10 @@ const Welcome = ({ userEmail }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      handleUser(userEmail);
+      handleUserRegistration(name, userEmail);
       handleTasks(userEmail);
     }
   }, []);
-
-  const firstName = user.firstName;
 
   if (isLoading) {
     return (
@@ -96,6 +96,8 @@ const Welcome = ({ userEmail }) => {
       </div>
     );
   }
+
+  const firstName = name.split(" ")[0];
 
   return (
     <div className={classes.root}>

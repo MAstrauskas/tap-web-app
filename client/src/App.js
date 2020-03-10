@@ -55,7 +55,7 @@ function App() {
             <Route path="/home">
               {isAuthenticated ? (
                 <Layout>
-                  <Home name={user.name} userEmail={user.email} />
+                  <Home userEmail={user.email} />
                 </Layout>
               ) : (
                 <Error errCode="401" />
@@ -103,7 +103,7 @@ function App() {
             <Route path="/">
               <Layout>
                 {isAuthenticated ? (
-                  <Welcome userEmail={user.email} />
+                  <Welcome name={user.name} userEmail={user.email} />
                 ) : (
                   <Cover />
                 )}

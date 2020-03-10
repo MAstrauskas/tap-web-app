@@ -31,14 +31,16 @@ exports.userList = (req, res, next) => {
 
 /* istanbul ignore next */
 exports.userGet = (req, res, next) => {
-  console.log(req.body.email);
-  User.findOne({}, function(err, user) {
+  console.log(req.params.email);
+  console.log("Hi");
+  User.find({ email: req.params.email }, function(err, user) {
     if (err) {
       console.log("Error finding a specific user");
 
       return next();
     }
 
+    console.log(user);
     res.json(user);
   });
 };
