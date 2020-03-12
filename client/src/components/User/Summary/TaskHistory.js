@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  ListItemSecondaryAction,
   TablePagination,
   Typography,
   useMediaQuery
@@ -15,6 +16,7 @@ import {
 
 import DoneIcon from "@material-ui/icons/Done";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import TaskDetails from "./TaskDetails";
 
 const useStyles = makeStyles(theme => ({
   root: { paddingLeft: "2rem", paddingRight: "2rem" },
@@ -87,33 +89,63 @@ export default function TaskHistory({ tasks }) {
                   <ListItemIcon>
                     <DoneIcon />
                   </ListItemIcon>
-                  <ListItemText
-                    primary={task.taskName}
-                    secondary={
-                      task.taskDescription.length ? (
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            className={classes.inline}
-                          >
-                            {task.taskDescription}
-                          </Typography>
-                        </React.Fragment>
-                      ) : null
-                    }
-                  />
+                  {tabletView ? (
+                    <TaskDetails
+                      message={task.taskName}
+                      taskName={task.taskName}
+                      taskDescription={task.taskDescription}
+                      taskDueDate={task.taskDueDate}
+                      taskPriority={task.taskPriority}
+                      taskDifficulty={task.taskDifficulty}
+                    />
+                  ) : (
+                    <ListItemText
+                      primary={task.taskName}
+                      secondary={
+                        task.taskDescription.length ? (
+                          <React.Fragment>
+                            <Typography
+                              component="span"
+                              variant="body2"
+                              className={classes.inline}
+                            >
+                              {task.taskDescription}
+                            </Typography>
+                          </React.Fragment>
+                        ) : null
+                      }
+                    />
+                  )}
+                  {!tabletView ? (
+                    <ListItemSecondaryAction>
+                      <TaskDetails
+                        message="Check details"
+                        taskName={task.taskName}
+                        taskDescription={task.taskDescription}
+                        taskDueDate={task.taskDueDate}
+                        taskPriority={task.taskPriority}
+                        taskDifficulty={task.taskDifficulty}
+                      />
+                    </ListItemSecondaryAction>
+                  ) : null}
                 </ListItem>
               );
             })}
 
             <TablePagination
               component="div"
+              rowsPerPageOptions={
+                tabletView ? 5 : [5, 10, 15, { label: "All", value: -1 }]
+              }
+              labelRowsPerPage={tabletView ? "" : "Tasks per page"}
+              colSpan={12}
               count={tasks.length}
               rowsPerPage={rowsPerPage}
-              rowsPerPageOptions={[5, 10, 15, { label: "All", value: -1 }]}
-              labelRowsPerPage={mobileView ? "" : "Tasks per page"}
               page={page}
+              SelectProps={{
+                inputProps: { "aria-label": "rows per page" },
+                native: true
+              }}
               onChangePage={handlePageChange}
               onChangeRowsPerPage={handleTasksPerPageChange}
             />

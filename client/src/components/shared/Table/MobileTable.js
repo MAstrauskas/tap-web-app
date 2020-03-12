@@ -36,10 +36,6 @@ import TablePaginationActions from "./TablePaginationActions";
 import Theme from "../Theme/Theme";
 import Checkbox from "../Checkbox";
 
-const useStyles = makeStyles(theme => ({
-  expansionPanel: {}
-}));
-
 const CustomPaper = withStyles(theme => ({
   root: {
     width: "21rem"
@@ -85,7 +81,6 @@ export default function MobileTable({
   marginBottom,
   isSuggestedTable
 }) {
-  const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -388,13 +383,6 @@ export default function MobileTable({
                 onChangePage={handleTablePageChange}
                 onChangeRowsPerPage={handleTablePerPageChange}
                 ActionsComponent={TablePaginationActions}
-                classes={{
-                  root: classes.tablePagination,
-                  caption: classes.tablePaginationCaption,
-                  selectIcon: classes.tablePaginationSelectIcon,
-                  select: classes.tablePaginationSelect,
-                  actions: classes.tablePaginationActions
-                }}
               />
             </TableRow>
           </TableFooter>
