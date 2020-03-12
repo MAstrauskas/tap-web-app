@@ -43,7 +43,6 @@ const useStyles = makeStyles(theme => ({
 export default function TaskHistory({ tasks }) {
   const classes = useStyles();
   const tabletView = useMediaQuery("(max-width: 960px)");
-  const mobileView = useMediaQuery("(max-width: 600px)");
 
   let listSize = "710px";
 

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
-import moment from "moment";
 import Media from "react-media";
 
 import TaskTable from "../../shared/Table/Table";
 import MobileTable from "../../shared/Table/MobileTable";
 import UndoMessage from "../../shared/Table/UndoMessage";
 import WarningMessage from "../../shared/Table/WarningMessage";
+import MobileAddButtons from "../../shared/MobileAddButtons";
 
 export default class Home extends Component {
   state = {
@@ -155,16 +155,20 @@ export default class Home extends Component {
           {matches => (
             <div>
               {matches.small && (
-                <MobileTable
-                  tasks={suggestedTasks}
-                  title="Suggested Tasks"
-                  isEdit={true}
-                  isDelete={true}
-                  handleComplete={this.handleComplete}
-                  handleWarningClick={this.handleWarningClick}
-                  marginBottom="2rem"
-                  isSuggestedTable={true}
-                />
+                <>
+                  <MobileTable
+                    tasks={suggestedTasks}
+                    title="Suggested Tasks"
+                    isEdit={true}
+                    isDelete={true}
+                    handleComplete={this.handleComplete}
+                    handleWarningClick={this.handleWarningClick}
+                    marginBottom="2rem"
+                    isSuggestedTable={true}
+                  />
+
+                  <MobileAddButtons />
+                </>
               )}
 
               {matches.large && (

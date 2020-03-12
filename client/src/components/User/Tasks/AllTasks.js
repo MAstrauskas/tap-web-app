@@ -7,6 +7,7 @@ import TaskTable from "../../shared/Table/Table";
 import MobileTable from "../../shared/Table/MobileTable";
 import UndoMessage from "../../shared/Table/UndoMessage";
 import WarningMessage from "../../shared/Table/WarningMessage";
+import MobileAddButtons from "../../shared/MobileAddButtons";
 
 export default class AllTasks extends Component {
   state = {
@@ -146,15 +147,19 @@ export default class AllTasks extends Component {
           {matches => (
             <div>
               {matches.small && (
-                <MobileTable
-                  tasks={filteredTasks}
-                  title="All Tasks"
-                  isEdit={true}
-                  isDelete={true}
-                  handleComplete={this.handleComplete}
-                  handleWarningClick={this.handleWarningClick}
-                  isSuggestedTable={false}
-                />
+                <>
+                  <MobileTable
+                    tasks={filteredTasks}
+                    title="All Tasks"
+                    isEdit={true}
+                    isDelete={true}
+                    handleComplete={this.handleComplete}
+                    handleWarningClick={this.handleWarningClick}
+                    isSuggestedTable={false}
+                  />
+
+                  <MobileAddButtons />
+                </>
               )}
 
               {matches.large && (

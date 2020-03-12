@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
+import { useMediaQuery } from "@material-ui/core";
 
 import SummaryCard from "../../shared/Card";
 import TaskHistory from "./TaskHistory";
+import MobileAddButtons from "../../shared/MobileAddButtons";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +26,7 @@ export default function Summary({ userEmail }) {
   const classes = useStyles();
   const [completedTasks, setCompletedTasks] = useState([]);
   const [totalTasks, setTotalTasks] = useState([]);
+  const tabletView = useMediaQuery("(max-width: 960px)");
 
   const handleCompleteTasks = async () => {
     await axios.get(`/api/tasks/${userEmail}`).then(res => {
@@ -108,6 +111,8 @@ export default function Summary({ userEmail }) {
         </div>
       </div>
       <TaskHistory tasks={completedTasks} />
+
+      {tabletView && <MobileAddButtons />}
     </div>
   );
 }
