@@ -28,6 +28,7 @@ import ListIcon from "@material-ui/icons/List";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoodIcon from "@material-ui/icons/Mood";
 import TodayIcon from "@material-ui/icons/Today";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import Theme from "../shared/Theme/Theme";
 
 const drawerWidth = 240;
@@ -294,6 +295,20 @@ const Navigation = () => {
                 <DonutLargeIcon />
               </ListItemIcon>
               <ListItemText primary="Summary" />
+            </ListItem>
+
+            <ListItem
+              button
+              component={NavLink}
+              to="/faq"
+              activeClassName={classes.active}
+              key="FAQ"
+              onClick={handleDrawerClose}
+            >
+              <ListItemIcon>
+                <HelpOutlineIcon />
+              </ListItemIcon>
+              <ListItemText primary="FAQ" />
             </ListItem>
           </List>
         </Drawer>

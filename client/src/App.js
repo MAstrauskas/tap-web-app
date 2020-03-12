@@ -10,12 +10,14 @@ import Layout from "./components/Layout/Layout";
 import Cover from "./components/Cover/Cover";
 import Welcome from "./components/User/Home/Welcome";
 import Home from "./components/User/Home/Home";
+import FAQ from "./components/User/FAQ";
 import AddTask from "./components/User/Tasks/AddTaskForm";
 import AllTasks from "./components/User/Tasks/AllTasks";
 import EditTask from "./components/User/Tasks/EditTask";
 import Mood from "./components/User/Mood/Mood";
 import Summary from "./components/User/Summary/Summary";
 import Error from "./components/Error/Error";
+
 import "./App.css";
 
 import "typeface-roboto";
@@ -56,6 +58,15 @@ function App() {
               {isAuthenticated ? (
                 <Layout>
                   <Home userEmail={user.email} />
+                </Layout>
+              ) : (
+                <Error errCode="401" />
+              )}
+            </Route>
+            <Route path="/faq">
+              {isAuthenticated ? (
+                <Layout>
+                  <FAQ userEmail={user.email} />
                 </Layout>
               ) : (
                 <Error errCode="401" />
