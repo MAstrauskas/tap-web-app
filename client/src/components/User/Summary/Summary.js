@@ -26,7 +26,7 @@ export default function Summary({ userEmail }) {
   const classes = useStyles();
   const [completedTasks, setCompletedTasks] = useState([]);
   const [totalTasks, setTotalTasks] = useState([]);
-  const tabletView = useMediaQuery("(max-width: 960px)");
+  const mobileView = useMediaQuery("(max-width: 800px)");
 
   const handleCompleteTasks = async () => {
     await axios.get(`/api/tasks/${userEmail}`).then(res => {
@@ -112,7 +112,7 @@ export default function Summary({ userEmail }) {
       </div>
       <TaskHistory tasks={completedTasks} />
 
-      {tabletView && <MobileAddButtons />}
+      {mobileView && <MobileAddButtons />}
     </div>
   );
 }
