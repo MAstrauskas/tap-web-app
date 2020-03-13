@@ -27,9 +27,6 @@ const MoodSchema = new Schema({
   finalMood: {
     type: String,
     required: false
-  },
-  suggestedTasks: {
-    type: Array
   }
 });
 

@@ -21,16 +21,7 @@ const UserSchema = new Schema({
   userProductivity: {
     type: Number,
     required: false
-  },
-  tasks: [
-    {
-      taskId: {
-        type: Schema.Types.ObjectId,
-        ref: "Task",
-        required: false
-      }
-    }
-  ]
+  }
 });
 
 module.exports = mongoose.model("User", UserSchema);
