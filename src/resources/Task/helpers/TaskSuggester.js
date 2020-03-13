@@ -1,5 +1,35 @@
 const Users = require("../../User/User.model");
 const Task = require("../Task.model");
+
+/**
+ * This function calculates the task group and
+ * total points for each task. The groups and
+ * total points are used to suggest accurate
+ * tasks to be completed based on user's inputed
+ * mood.
+ *
+ * Task groups are crucial for the whole
+ * task suggestion algorithm as they are used
+ * to distinguish between the most important
+ * and not so important tasks (the most important
+ * ones will be always suggested first for the user).
+ *
+ * Possible task groups:
+ * Group 1 - between 3 and 4 total points
+ * Group 2 - between 2 and 3 total points
+ * Group 3 - between 0 and 2 total points
+ *
+ * Total points are used in conjunction with
+ * the mood algorithm as the mood algorithm
+ * will provide a number that will be used
+ * as a maximum when adding different tasks
+ * to the suggested list based on their total point.
+ * This is used for task suggestion algorithm
+ * to make sure that the right amount of tasks
+ * are offered to the user.
+ *
+ * The max total points can be 4 and the minimum - 1.25.
+ */
 exports.calculateTaskSuggestion = async (email, tasks) => {
   let userProductivity = 0;
 
@@ -95,6 +125,26 @@ exports.calculateTaskSuggestion = async (email, tasks) => {
   });
 };
 
+/**
+ * This function adds a certain amount of points
+ * to the totalPoints field based on the
+ * pointing system of this software.
+ *
+ * It calculates how many points will need
+ * to be added based on task due date, priority
+ * and difficulty.
+ *
+ * The possible points that this function can take are:
+ * Deadline Points   - [1, 0.5, 0.25]
+ * Priority Points   - [2, 1, 0.5]
+ * Difficulty Points - [1, 0.75, 0.5]
+ *
+ * @param {*} deadlinePoints
+ * @param {*} task - a specific task
+ * @param {*} totalPoints
+ * @param {*} priorityPoints
+ * @param {*} difficultyPoints
+ */
 function calculateForDeadline(
   deadlinePoints,
   task,
@@ -115,6 +165,13 @@ function calculateForDeadline(
   return totalPoints;
 }
 
+/**
+ * This is a helper function that adds points based on priority
+ * to the total points.
+ *
+ * @param {*} priority
+ * @param {*} totalPoints
+ */
 function calculatePriority(priority, totalPoints) {
   if (priority === "Low") {
     totalPoints += 0.5;
@@ -127,6 +184,13 @@ function calculatePriority(priority, totalPoints) {
   return totalPoints;
 }
 
+/**
+ * This is a helper function that adds points based on difficulty
+ * to the total points.
+ *
+ * @param {*} difficulty
+ * @param {*} totalPoints
+ */
 function calculateDifficulty(difficulty, totalPoints) {
   if (difficulty === "Easy") {
     totalPoints += 0.5;
@@ -139,6 +203,13 @@ function calculateDifficulty(difficulty, totalPoints) {
   return totalPoints;
 }
 
+/**
+ * This is a helper function that decides
+ * which task group is assigned to each task
+ * based on their total points calculated above.
+ *
+ * @param {Number} totalPoints
+ */
 function calculateTaskGroup(totalPoints) {
   let taskGroup = 0;
 
@@ -153,9 +224,24 @@ function calculateTaskGroup(totalPoints) {
   return taskGroup;
 }
 
+/**
+ * This function makes isSuggested field of each tasks
+ * either true or false based on the task group that
+ * is calculated above.
+ *
+ * It uses userProductivity (maximum number) that comes
+ * from the mood algorithm which makes sure that the
+ * correct amount of tasks are being made suggested
+ * based on the mood that the user inputs.
+ *
+ * In this function, every unfinished task is being
+ * assigned a task starting from Group 1 to Group 3
+ * until the userProductivity (max nr) is reached.
+ * This way, it makes sure that Group 1 tasks are being
+ * suggested first and then Group 2-3 if there's enough
+ * space.
+ */
 exports.makeTaskSuggested = async (email, tasks) => {
-  let userProductivity = 0;
-  let countUserProductivity = 0;
   /**
    * 1. FIND THE USER
    */
@@ -166,6 +252,8 @@ exports.makeTaskSuggested = async (email, tasks) => {
   /**
    * 2. MAKE TASK IS SUGGESTED
    */
+  let userProductivity = 0;
+  let countUserProductivity = 0;
 
   tasks
     .filter(task => task.taskDueDate && !task.isTaskComplete)
@@ -214,8 +302,6 @@ exports.makeTaskSuggested = async (email, tasks) => {
             "Error occured while trying to update 'isTaskSuggested'. Please check if the information is correct"
           );
         }
-
-        console.log("Task 'isSuggested' has been updated.");
       });
     });
 };

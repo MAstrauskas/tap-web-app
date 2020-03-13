@@ -1,7 +1,17 @@
 const Users = require("../../User/User.model");
-const Mood = require("../Mood.model");
-const Tasks = require("../../Task/Task.model");
 
+/**
+ * This function calculates the mood and productivity
+ * based on a pointing system of this software
+ * for a particular user and adds this information
+ * to the database for that user.
+ *
+ * The possible moods that the userMood field
+ * can have are [Positive, Neutral, Negative]
+ *
+ * The possible points that the userProductivity field
+ * can have are between 13 and 5 inclusive.
+ */
 exports.calculateMoodAndProductivity = async (
   email,
   mood,
@@ -35,6 +45,20 @@ exports.calculateMoodAndProductivity = async (
   await Users.findOneAndUpdate(filter, update);
 };
 
+/**
+ * Calculates the productivity level based on the below
+ * parameters. Returns a total calculated userProductivity
+ * field.
+ *
+ * The possible points that this function can take are:
+ * Mood Points       - [10, 7, 5]
+ * Motivation Points - [ 2, 1, 0]
+ * isTired Points    - [ 1, 0]
+ *
+ * @param {*} points - mood points
+ * @param {*} motivation - motivation taken form the server.
+ * @param {*} isTired - boolean
+ */
 function productivityCalculator(points, motivation, isTired) {
   let productivityLevel = 0;
 
@@ -48,16 +72,8 @@ function productivityCalculator(points, motivation, isTired) {
     productivityLevel += 1;
   }
 
-  if (motivation === "Low") {
-    productivityLevel += 0;
-  }
-
-  if (isTired === false) {
+  if (!isTired) {
     productivityLevel += 1;
-  }
-
-  if (isTired === true) {
-    productivityLevel += 0;
   }
 
   return productivityLevel;
