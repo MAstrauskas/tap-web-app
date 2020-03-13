@@ -7,6 +7,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 import Theme from "../../shared/Theme/Theme";
 
 const useStyles = makeStyles({
@@ -168,6 +169,13 @@ const Welcome = ({ name, userEmail }) => {
             </Button>
           </Link>
         )}
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <Link to="/faq" style={{ textDecoration: "none" }}>
+          <Button variant="contained" size="small" color="primary">
+            Read how the app works
+          </Button>
+        </Link>
       </div>
     </div>
   );
