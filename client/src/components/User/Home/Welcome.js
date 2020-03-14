@@ -121,6 +121,7 @@ const Welcome = ({ name, userEmail }) => {
   }
 
   const firstName = name.split(" ")[0];
+  const unfinishedTasks = tasks.filter(task => !task.isTaskComplete);
 
   // TODO Change to each user rather than browser
   if (document.cookie.indexOf("showNotification=true") == -1) {
@@ -228,16 +229,33 @@ const Welcome = ({ name, userEmail }) => {
               padding: "2rem 4rem"
             }}
           >
-            <Typography variant="h4" component="h4" gutterBottom>
-              How are you feeling today?
-            </Typography>
-            <div style={{ textAlign: "center" }}>
-              <Link to="/tasks/moodist" style={{ textDecoration: "none" }}>
-                <Button variant="contained" size="small" color="primary">
-                  Add my mood
-                </Button>
-              </Link>
-            </div>
+            {unfinishedTasks.length > 0 ? (
+              <>
+                <Typography variant="h4" component="h4" gutterBottom>
+                  How are you feeling today?
+                </Typography>
+                <div style={{ textAlign: "center" }}>
+                  <Link to="/tasks/moodist" style={{ textDecoration: "none" }}>
+                    <Button variant="contained" size="small" color="primary">
+                      Add my mood
+                    </Button>
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <Typography variant="h4" component="h4" gutterBottom>
+                  Would you like to add your first task of today?
+                </Typography>
+                <div style={{ textAlign: "center" }}>
+                  <Link to="/tasks/add" style={{ textDecoration: "none" }}>
+                    <Button variant="contained" size="small" color="primary">
+                      Add my task
+                    </Button>
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </Fade>
       </Modal>

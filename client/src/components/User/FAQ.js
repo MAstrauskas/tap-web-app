@@ -57,6 +57,18 @@ export default function FAQ() {
         gutterBottom
         style={{ paddingTop: "1rem" }}
       >
+        Do I need to input my mood first and then add tasks or vice versa?
+      </Typography>
+      <Typography variant="body1" component="body1" gutterBottom>
+        You should add your tasks first and then add your mood details in order
+        to make the application work at its best.
+      </Typography>
+      <Typography
+        variant="h4"
+        component="h4"
+        gutterBottom
+        style={{ paddingTop: "1rem" }}
+      >
         Where can I see my completed tasks?
       </Typography>
       <Typography variant="body1" component="body1" gutterBottom>
