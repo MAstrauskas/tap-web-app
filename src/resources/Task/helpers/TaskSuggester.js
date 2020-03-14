@@ -242,6 +242,9 @@ function calculateTaskGroup(totalPoints) {
  * space.
  */
 exports.makeTaskSuggested = async (email, tasks) => {
+  let userProductivity = 0;
+  let countUserProductivity = 0;
+
   /**
    * 1. FIND THE USER
    */
@@ -252,9 +255,6 @@ exports.makeTaskSuggested = async (email, tasks) => {
   /**
    * 2. MAKE TASK IS SUGGESTED
    */
-  let userProductivity = 0;
-  let countUserProductivity = 0;
-
   tasks
     .filter(task => task.taskDueDate && !task.isTaskComplete)
     .map(task => {
