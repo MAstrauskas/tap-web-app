@@ -79,7 +79,8 @@ export default function MobileTable({
   handleComplete,
   handleWarningClick,
   marginBottom,
-  isSuggestedTable
+  isSuggestedTable,
+  allTasks
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -136,12 +137,16 @@ export default function MobileTable({
                         paddingBottom: "1rem"
                       }}
                     >
-                      {isSuggestedTable
+                      {isSuggestedTable && allTasks.length > 0
                         ? "Add your current mood and we will show you what to do!"
                         : "There're no tasks to show..."}
                     </Typography>
                     <Link
-                      to={isSuggestedTable ? "/tasks/moodist" : "/tasks/add"}
+                      to={
+                        isSuggestedTable && allTasks.length > 0
+                          ? "/tasks/moodist"
+                          : "/tasks/add"
+                      }
                       style={{ textDecoration: "none" }}
                     >
                       <Button
@@ -155,7 +160,9 @@ export default function MobileTable({
                           }
                         }}
                       >
-                        {isSuggestedTable ? "Add a mood" : "Add a task"}
+                        {isSuggestedTable && allTasks.length > 0
+                          ? "Add a mood"
+                          : "Add a task"}
                       </Button>
                     </Link>
                   </CustomTableCell>

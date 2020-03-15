@@ -255,7 +255,7 @@ exports.makeTaskSuggested = async (email, tasks) => {
   /**
    * 2. MAKE TASK IS SUGGESTED
    */
-  tasks
+  await tasks
     .filter(task => task.taskDueDate && !task.isTaskComplete)
     .map(task => {
       const taskGroup = task.taskGroup;

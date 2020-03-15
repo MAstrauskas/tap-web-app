@@ -120,6 +120,7 @@ export default class Home extends Component {
   render() {
     const { tasks, open, openWarning, taskName, taskId } = this.state;
 
+    const allUncompletedTasks = tasks.filter(task => !task.isTaskComplete);
     const suggestedTasks = tasks
       .filter(task => task.isTaskSuggested && !task.isTaskComplete)
       .sort((a, b) => {
@@ -165,6 +166,7 @@ export default class Home extends Component {
                     handleWarningClick={this.handleWarningClick}
                     marginBottom="2rem"
                     isSuggestedTable={true}
+                    allTasks={allUncompletedTasks}
                   />
 
                   <MobileAddButtons />
@@ -184,6 +186,7 @@ export default class Home extends Component {
                   handleWarningClick={this.handleWarningClick}
                   marginBottom="2rem"
                   isSuggestedTable={true}
+                  allTasks={allUncompletedTasks}
                 />
               )}
             </div>
