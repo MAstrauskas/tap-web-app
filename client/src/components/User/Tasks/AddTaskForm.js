@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { Formik } from "formik";
 import moment from "moment";
@@ -16,7 +16,7 @@ const CustomPaper = withStyles(theme => ({
   }
 }))(Paper);
 
-export class AddTask extends Component {
+class AddTask extends Component {
   state = {
     addSuccessful: false
   };
@@ -63,12 +63,6 @@ export class AddTask extends Component {
   };
 
   render() {
-    const { addSuccessful } = this.state;
-
-    if (addSuccessful) {
-      return <Redirect to={`/tasks/all`} />;
-    }
-
     // Initialize dates for validation
     let currentDate = new Date();
     let todaysDate = new Date();
@@ -132,7 +126,7 @@ export class AddTask extends Component {
                 handleBlur={handleBlur}
                 setFieldValue={setFieldValue}
                 isValid={isValid}
-                routeBack="/tasks/all"
+                routeBack={this.props.history.goBack}
               />
             );
           }}
@@ -142,4 +136,4 @@ export class AddTask extends Component {
   }
 }
 
-export default AddTask;
+export default withRouter(AddTask);

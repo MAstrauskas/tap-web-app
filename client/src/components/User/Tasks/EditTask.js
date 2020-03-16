@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { Formik } from "formik";
 import moment from "moment";
@@ -66,12 +66,6 @@ export class EditTask extends Component {
   };
 
   render() {
-    const { editSuccessful } = this.state;
-
-    if (editSuccessful) {
-      return <Redirect to={`/tasks/all`} />;
-    }
-
     // Set Date to yesterday for validation
     let currentDate = new Date();
     currentDate.setDate(currentDate.getDate() - 1);
@@ -138,7 +132,7 @@ export class EditTask extends Component {
                   handleBlur={handleBlur}
                   setFieldValue={setFieldValue}
                   isValid={isValid}
-                  routeBack="/tasks/all"
+                  routeBack={this.props.history.goBack}
                 />
               );
             }}
@@ -149,4 +143,4 @@ export class EditTask extends Component {
   }
 }
 
-export default EditTask;
+export default withRouter(EditTask);

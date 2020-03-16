@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Field } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import { styled } from "@material-ui/core/styles";
@@ -47,7 +47,7 @@ const CancelButton = styled(Button)({
   }
 });
 
-export function TaskForm({
+function TaskForm({
   title,
   values,
   touched,
@@ -183,12 +183,16 @@ export function TaskForm({
           )}
         </FormControl>
 
-        <AddButton variant="contained" type="submit" disabled={!isValid}>
+        <AddButton
+          variant="contained"
+          type="submit"
+          disabled={!isValid}
+          onClick={routeBack}
+        >
           {title === "Add a Task" ? "Add Task" : "Edit Task"}
         </AddButton>
-        <Link to={`${routeBack}`}>
-          <CancelButton>Go back</CancelButton>
-        </Link>
+
+        <CancelButton onClick={routeBack}>Go back</CancelButton>
       </div>
     </form>
   );

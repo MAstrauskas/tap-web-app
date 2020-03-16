@@ -52,7 +52,7 @@ const CancelButton = styled(Button)({
   }
 });
 
-export function MoodForm({
+function MoodForm({
   title,
   values,
   touched,
@@ -167,9 +167,8 @@ export function MoodForm({
         <AddButton variant="contained" type="submit" disabled={!isValid}>
           Add Mood
         </AddButton>
-        <Link to={`${routeBack}`}>
-          <CancelButton>Go back</CancelButton>
-        </Link>
+
+        <CancelButton onClick={routeBack}>Go back</CancelButton>
       </div>
     </form>
   );

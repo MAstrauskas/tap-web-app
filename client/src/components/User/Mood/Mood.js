@@ -3,6 +3,7 @@ import axios from "axios";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Redirect } from "react-router";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 
@@ -16,7 +17,7 @@ const CustomPaper = withStyles(theme => ({
   }
 }))(Paper);
 
-export class Mood extends Component {
+class Mood extends Component {
   state = {
     addSuccessful: false,
     isFetching: false
@@ -75,7 +76,7 @@ export class Mood extends Component {
     const { addSuccessful } = this.state;
 
     if (addSuccessful) {
-      return <Redirect to={`/tasks/all`} />;
+      return <Redirect to="/home" />;
     }
 
     const moodSchema = Yup.object().shape({
@@ -119,7 +120,7 @@ export class Mood extends Component {
                 handleBlur={handleBlur}
                 setFieldValue={setFieldValue}
                 isValid={isValid}
-                routeBack="/tasks/all"
+                routeBack={this.props.history.goBack}
               />
             );
           }}
@@ -129,4 +130,4 @@ export class Mood extends Component {
   }
 }
 
-export default Mood;
+export default withRouter(Mood);
