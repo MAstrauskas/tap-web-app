@@ -47,9 +47,9 @@ export default function FAQ() {
       </Typography>
       <Typography variant="body1" gutterBottom>
         No, you don't need to input your mood every time you log in. The system
-        will offer you to input the mood once every day (1st time you log in).
-        After that, it's up to you to decide whether you want to change your
-        mood or not.
+        will offer you to input the mood once every day when you go to the Today
+        page. After that, it's up to you to decide whether you want to change
+        your mood or not.
       </Typography>
       <Typography
         variant="h4"
