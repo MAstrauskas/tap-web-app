@@ -7,9 +7,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+
 import Theme from "../../shared/Theme/Theme";
 
 const useStyles = makeStyles(theme => ({
@@ -52,7 +50,6 @@ const Welcome = ({ name, userEmail }) => {
   const { isAuthenticated } = useAuth0();
   const [tasks, setTasks] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [openDetails, setOpenDetails] = useState(false);
 
   const currentDate = new Date();
   const currentTime = currentDate.getHours();
@@ -97,14 +94,6 @@ const Welcome = ({ name, userEmail }) => {
     setLoading(false);
   };
 
-  const handleOpenDetails = () => {
-    setOpenDetails(true);
-  };
-
-  const handleCloseDetails = () => {
-    setOpenDetails(false);
-  };
-
   useEffect(() => {
     if (isAuthenticated) {
       handleUserRegistration(name, userEmail);
@@ -121,14 +110,6 @@ const Welcome = ({ name, userEmail }) => {
   }
 
   const firstName = name.split(" ")[0];
-  const unfinishedTasks = tasks.filter(task => !task.isTaskComplete);
-
-  // TODO Change to each user rather than browser
-  if (document.cookie.indexOf("showNotification=true") == -1) {
-    document.cookie = "showNotification=true; max-age=86400";
-
-    handleOpenDetails();
-  }
 
   return (
     <div className={classes.root}>
@@ -207,58 +188,6 @@ const Welcome = ({ name, userEmail }) => {
           </Button>
         </Link>
       </div>
-
-      <Modal
-        aria-labelledby="Notification"
-        aria-describedby="Mood notification"
-        className={classes.modal}
-        open={openDetails}
-        onClose={handleCloseDetails}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Fade in={openDetails}>
-          <div
-            className={classes.paper}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              padding: "2rem 4rem"
-            }}
-          >
-            {unfinishedTasks.length > 0 ? (
-              <>
-                <Typography variant="h4" component="h4" gutterBottom>
-                  How are you feeling today?
-                </Typography>
-                <div style={{ textAlign: "center" }}>
-                  <Link to="/tasks/moodist" style={{ textDecoration: "none" }}>
-                    <Button variant="contained" size="small" color="primary">
-                      Add my mood
-                    </Button>
-                  </Link>
-                </div>
-              </>
-            ) : (
-              <>
-                <Typography variant="h4" component="h4" gutterBottom>
-                  Would you like to add your first task of today?
-                </Typography>
-                <div style={{ textAlign: "center" }}>
-                  <Link to="/tasks/add" style={{ textDecoration: "none" }}>
-                    <Button variant="contained" size="small" color="primary">
-                      Add my task
-                    </Button>
-                  </Link>
-                </div>
-              </>
-            )}
-          </div>
-        </Fade>
-      </Modal>
     </div>
   );
 };
