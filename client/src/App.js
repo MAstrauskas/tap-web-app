@@ -82,7 +82,9 @@ function App() {
               )}
             </Route>
             {isAuthenticated && (
-              <Route path="/tasks/edit" component={EditTask}></Route>
+              <Route path="/tasks/edit" component={EditTask}>
+                <EditTask userEmail={user.email} />
+              </Route>
             )}
             <Route path="/tasks/all">
               {isAuthenticated ? (

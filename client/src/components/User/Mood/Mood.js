@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Redirect } from "react-router";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -76,7 +75,7 @@ class Mood extends Component {
     const { addSuccessful } = this.state;
 
     if (addSuccessful) {
-      return <Redirect to="/home" />;
+      this.props.history.goBack();
     }
 
     const moodSchema = Yup.object().shape({

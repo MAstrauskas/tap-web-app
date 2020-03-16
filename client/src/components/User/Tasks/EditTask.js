@@ -50,6 +50,20 @@ export class EditTask extends Component {
           }
         );
 
+      await axios
+        .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`)
+        .then(res => {
+          console.log("Task Calculated Suggested: ", res);
+        })
+        .catch(err => console.log(err));
+
+      await axios
+        .get(`/api/tasks/make-suggest/${this.props.userEmail}`)
+        .then(res => {
+          console.log("Task Made Suggested: ", res);
+        })
+        .catch(err => console.log(err));
+
       setSubmitting(false);
       this.setState(prevState => ({
         ...prevState,
@@ -66,6 +80,12 @@ export class EditTask extends Component {
   };
 
   render() {
+    const { editSuccessful } = this.state;
+
+    if (editSuccessful) {
+      this.props.history.goBack();
+    }
+
     // Set Date to yesterday for validation
     let currentDate = new Date();
     currentDate.setDate(currentDate.getDate() - 1);

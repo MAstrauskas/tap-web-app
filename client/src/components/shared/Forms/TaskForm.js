@@ -1,5 +1,4 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
 import { Field } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import { styled } from "@material-ui/core/styles";
@@ -183,12 +182,7 @@ function TaskForm({
           )}
         </FormControl>
 
-        <AddButton
-          variant="contained"
-          type="submit"
-          disabled={!isValid}
-          onClick={routeBack}
-        >
+        <AddButton variant="contained" type="submit" disabled={!isValid}>
           {title === "Add a Task" ? "Add Task" : "Edit Task"}
         </AddButton>
 
