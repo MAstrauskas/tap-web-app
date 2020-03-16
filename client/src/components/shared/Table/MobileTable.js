@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Fade from "@material-ui/core/Fade";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";

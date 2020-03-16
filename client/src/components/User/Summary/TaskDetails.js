@@ -6,15 +6,9 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Theme from "../../shared/Theme/Theme";
-import { styled } from "@material-ui/core/styles";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import InputLabel from "@material-ui/core/InputLabel";
 import TextField from "@material-ui/core/TextField";
-import { KeyboardDatePicker } from "@material-ui/pickers";
+
+import Theme from "../../shared/Theme/Theme";
 
 const useStyles = makeStyles(theme => ({
   modal: {

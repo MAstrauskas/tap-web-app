@@ -141,6 +141,8 @@ export default class Home extends Component {
         if (taskOne === "Medium" && taskTwo === "Low") return -1;
         if (taskOne === "Low" && taskTwo === "High") return 1;
         if (taskOne === "Low" && taskTwo === "Medium") return 1;
+
+        return 0;
       });
 
     const headers = ["Task", "Due Date", "Priority"];

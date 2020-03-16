@@ -74,32 +74,32 @@ const Welcome = ({ name, userEmail }) => {
     buttonSize = "small";
   }
 
-  const handleUserRegistration = async (name, email) => {
-    const body = {
-      name: name,
-      email: email
+  useEffect(() => {
+    const handleUserRegistration = async (name, email) => {
+      const body = {
+        name: name,
+        email: email
+      };
+
+      await axios
+        .post("/api/user/add", body)
+        .then(res => console.log("User registered"))
+        .catch(e => console.log("User failed to register: " + e));
     };
 
-    await axios
-      .post("/api/user/add", body)
-      .then(res => console.log("User registered"))
-      .catch(e => console.log("User failed to register: " + e));
-  };
+    const handleTasks = async email => {
+      await axios.get(`/api/tasks/${email}`).then(res => {
+        setTasks(res.data.tasks);
+      });
 
-  const handleTasks = async email => {
-    await axios.get(`/api/tasks/${email}`).then(res => {
-      setTasks(...tasks, res.data.tasks);
-    });
+      setLoading(false);
+    };
 
-    setLoading(false);
-  };
-
-  useEffect(() => {
     if (isAuthenticated) {
       handleUserRegistration(name, userEmail);
       handleTasks(userEmail);
     }
-  }, []);
+  }, [isAuthenticated, name, userEmail]);
 
   if (isLoading) {
     return (

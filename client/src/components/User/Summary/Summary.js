@@ -28,24 +28,24 @@ export default function Summary({ userEmail }) {
   const [totalTasks, setTotalTasks] = useState([]);
   const mobileView = useMediaQuery("(max-width: 800px)");
 
-  const handleCompleteTasks = async () => {
-    await axios.get(`/api/tasks/${userEmail}`).then(res => {
-      setCompletedTasks([
-        ...res.data.tasks.filter(task => task.isTaskComplete)
-      ]);
-    });
-  };
-
-  const handleTotalTasks = async () => {
-    await axios.get(`/api/tasks/${userEmail}`).then(res => {
-      setTotalTasks([...res.data.tasks]);
-    });
-  };
-
   useEffect(() => {
+    const handleCompleteTasks = async () => {
+      await axios.get(`/api/tasks/${userEmail}`).then(res => {
+        setCompletedTasks([
+          ...res.data.tasks.filter(task => task.isTaskComplete)
+        ]);
+      });
+    };
+
+    const handleTotalTasks = async () => {
+      await axios.get(`/api/tasks/${userEmail}`).then(res => {
+        setTotalTasks([...res.data.tasks]);
+      });
+    };
+
     handleCompleteTasks();
     handleTotalTasks();
-  }, []);
+  }, [userEmail]);
 
   const completedTasksToday = completedTasks.filter(task => {
     const taskCompleteDate = new Date(task.taskCompleteDate);
