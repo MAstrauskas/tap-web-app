@@ -52,16 +52,12 @@ export class EditTask extends Component {
 
       await axios
         .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`)
-        .then(res => {
-          console.log("Task Calculated Suggested: ", res);
-        })
+        .then(() => {})
         .catch(err => console.log(err));
 
       await axios
         .get(`/api/tasks/make-suggest/${this.props.userEmail}`)
-        .then(res => {
-          console.log("Task Made Suggested: ", res);
-        })
+        .then(() => {})
         .catch(err => console.log(err));
 
       setSubmitting(false);
