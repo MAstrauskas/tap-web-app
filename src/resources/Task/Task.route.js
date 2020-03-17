@@ -65,4 +65,12 @@ router.get("/calculate-suggest/:email", TaskController.taskCalculateSuggest);
  * @access Public
  **/
 router.get("/make-suggest/:email", TaskController.taskMakeSuggest);
+
+/**
+ * @route POST api/tasks/clear-suggest
+ * @desc POST Clear Suggested tasks
+ * @access Public
+ **/
+router.post("/clear-suggest", TaskController.taskDeleteSuggested);
+
 module.exports = router;

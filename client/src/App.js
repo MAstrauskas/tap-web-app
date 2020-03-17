@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
+import schedule from "node-schedule";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -48,6 +50,20 @@ function App() {
       </div>
     );
   }
+
+  const clearMoods = async () => {
+    await axios.get("/api/user/clearMood");
+  };
+
+  const clearSuggestedTasks = async () => {
+    await axios.post("/api/tasks/clear-suggest");
+  };
+
+  // Clears All Moods and Suggested Tasks every midnight
+  schedule.scheduleJob("0 0 * * *", () => {
+    clearMoods();
+    clearSuggestedTasks();
+  });
 
   return (
     <Router>
