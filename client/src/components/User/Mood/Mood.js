@@ -49,7 +49,7 @@ class Mood extends Component {
 
       await axios
         .get(`/api/tasks/make-suggest/${this.props.userEmail}`)
-        .then(()) => {})
+        .then(() => {})
         .catch(err => console.log(err));
 
       setSubmitting(false);

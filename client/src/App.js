@@ -18,6 +18,7 @@ import AllTasks from "./components/User/Tasks/AllTasks";
 import EditTask from "./components/User/Tasks/EditTask";
 import Mood from "./components/User/Mood/Mood";
 import Summary from "./components/User/Summary/Summary";
+import Settings from "./components/User/Settings";
 import Error from "./components/Error/Error";
 
 import "./App.css";
@@ -74,6 +75,15 @@ function App() {
               {isAuthenticated ? (
                 <Layout>
                   <Home userEmail={user.email} />
+                </Layout>
+              ) : (
+                <Error errCode="401" />
+              )}
+            </Route>
+            <Route path="/settings">
+              {isAuthenticated ? (
+                <Layout>
+                  <Settings userEmail={user.email} />
                 </Layout>
               ) : (
                 <Error errCode="401" />
