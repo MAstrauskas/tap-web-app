@@ -103,6 +103,7 @@ class AddTask extends Component {
       isTaskComplete: Yup.boolean(),
       isTaskSuggested: Yup.boolean()
     });
+
     return (
       <CustomPaper elevation={3}>
         <Formik

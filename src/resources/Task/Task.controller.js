@@ -191,22 +191,3 @@ exports.taskMakeSuggest = (req, res, next) => {
     await res.send({ tasks: tasks });
   }).catch(next);
 };
-
-/**
- * POST /api/tasks/clear-suggest
- *
- * @export
- * @param {any} req
- * @param {any} res
- **/
-exports.taskDeleteSuggested = (req, res, next) => {
-  Task.find({}, function(err, doc) {
-    doc.forEach(task => {
-      task.isTaskSuggested = false;
-
-      task.save();
-    });
-
-    return res.json("Successfully cleared the suggested tasks.");
-  });
-};

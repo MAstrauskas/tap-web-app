@@ -27,12 +27,6 @@ const useStyles = makeStyles(theme => ({
     color: `${Theme.colors.white}`,
     flex: "1 1 100%",
     padding: `1rem`
-  },
-  eachDetail: {
-    padding: "1rem auto",
-    "& > div": {
-      color: `${Theme.colors.black} !important`
-    }
   }
 }));
 
@@ -112,61 +106,66 @@ export default function TaskDetails({
             >
               <TextField
                 margin="normal"
-                className={classes.eachDetail}
                 multiline
                 id="standard-required"
                 name="taskName"
                 label="Name"
                 data-testid="task-name"
                 value={taskName}
-                disabled
+                InputProps={{
+                  readOnly: true
+                }}
               />
 
               <TextField
                 margin="normal"
-                className={classes.eachDetail}
                 id="standard-textarea"
                 name="taskDescription"
                 label="Description"
                 data-testid="task-description"
                 multiline={taskDescription.length > 0 ? true : false}
                 value={taskDescription.length > 0 ? taskDescription : "N/A"}
-                disabled
+                InputProps={{
+                  readOnly: true
+                }}
               />
 
               <TextField
                 margin="normal"
-                className={classes.eachDetail}
                 id="date-picker-inline"
                 name="taskDueDate"
                 label="Due Date"
                 data-testid="task-due-date"
                 value={moment(taskDueDate).format("LL")}
-                disabled
+                InputProps={{
+                  readOnly: true
+                }}
               />
 
               <TextField
                 margin="normal"
-                className={classes.eachDetail}
                 labelId="priority-select-label"
                 id="priority-select"
                 name="taskPriority"
                 label="Priority"
                 data-testid="task-priority"
                 value={taskPriority}
-                disabled
+                InputProps={{
+                  readOnly: true
+                }}
               />
 
               <TextField
                 margin="normal"
-                className={classes.eachDetail}
                 labelId="difficulty-select-label"
                 id="difficulty-select"
                 name="taskDifficulty"
                 label="Difficulty"
                 data-testid="task-difficulty"
                 value={taskDifficulty}
-                disabled
+                InputProps={{
+                  readOnly: true
+                }}
               />
             </div>
           </form>

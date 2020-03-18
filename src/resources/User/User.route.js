@@ -24,11 +24,4 @@ router.get("/single/:email", UserController.userGet);
  **/
 router.post("/add", UserController.addUser_post);
 
-/**
- * @route POST api/user/clearMood
- * @desc POST Clear the mood of all the users
- * @access Public
- */
-router.get("/clearMood", UserController.clearMood_post);
-
 module.exports = router;

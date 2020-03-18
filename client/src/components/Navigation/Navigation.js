@@ -199,7 +199,15 @@ const Navigation = () => {
                 open={userMenuOpen}
                 onClose={handleUserMenuClose}
               >
-                <MenuItem onClick={handleUserMenuClose}>My Account</MenuItem>
+                <NavLink
+                  to="/settings"
+                  style={{
+                    textDecoration: "none",
+                    color: `${Theme.colors.black}`
+                  }}
+                >
+                  <MenuItem onClick={handleUserMenuClose}>Settings</MenuItem>
+                </NavLink>
                 <MenuItem onClick={() => logout()}>Logout</MenuItem>
               </Menu>
             </div>
