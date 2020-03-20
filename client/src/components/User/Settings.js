@@ -80,6 +80,13 @@ export default function Settings({ user, name, userEmail }) {
       )
   });
 
+  const message = `Password must contain: 
+   * At least 8 characters in length 
+   * Lower case letters (a-z) 
+   * Upper case letters (A-Z) 
+   * Numbers (i.e. 0-9) 
+   * Special characters (e.g. !@£$%^&~*)`;
+
   return (
     <div className={classes.root}>
       <Paper elevation={3}>
@@ -176,15 +183,8 @@ export default function Settings({ user, name, userEmail }) {
                         errors.userPassword && touched.userPassword
                       )}
                     />
-                    <FormHelperText>
-                      {String(
-                        "Password must contain: \
-                          * At least 8 characters in length \
-                          * Lower case letters (a-z) \
-                          * Upper case letters (A-Z) \
-                          * Numbers (i.e. 0-9) \
-                          * Special characters (e.g. !@£$%^&~*)"
-                      )}
+                    <FormHelperText style={{ width: "17rem" }}>
+                      {message}
                     </FormHelperText>
                   </FormControl>
 

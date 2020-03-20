@@ -1,5 +1,8 @@
 # Task Activity Planner Web Application
 
+## Live Website
+* You can access the application through this link -> [ma738-tap.herokuapp.com](https://ma738-tap.herokuapp.com)
+
 ## File Structure
 * `client/` -> Client side of the application
 * `src/` -> Back-end/Server side of the application

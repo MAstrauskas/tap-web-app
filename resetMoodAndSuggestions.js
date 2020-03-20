@@ -8,15 +8,11 @@ const axios = require("axios");
 // mood and get new suggested tasks
 // each day.
 const clearMood = async () => {
-  await axios.get(
-    "https://aqueous-sierra-33243.herokuapp.com/api/user/clearMood"
-  );
+  await axios.get("https://ma738-tap.herokuapp.com/api/user/clearMood");
 };
 
 const clearSuggestedTasks = async () => {
-  await axios.post(
-    "https://aqueous-sierra-33243.herokuapp.com/api/tasks/clear-suggest"
-  );
+  await axios.post("https://ma738-tap.herokuapp.com/api/tasks/clear-suggest");
 };
 
 clearMood();
