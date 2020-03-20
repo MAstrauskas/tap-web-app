@@ -113,7 +113,7 @@ const Welcome = ({ name, userEmail }) => {
 
   return (
     <div className={classes.root}>
-      {currentTime >= 4 && currentTime < 12 && (
+      {currentTime >= 0 && currentTime < 12 && (
         <div className={classes.content}>
           <Typography
             variant={titleSize}
