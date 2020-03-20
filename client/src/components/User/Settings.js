@@ -1,5 +1,7 @@
 import React from "react";
 import * as Yup from "yup";
+import axios from "axios";
+import { ManagementClient } from "auth0";
 import { Formik, Field } from "formik";
 import { styled } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
@@ -51,9 +53,27 @@ export default function Settings({ user, name, userEmail }) {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const body = {
-        email: values.userEmail
-      };
+      // const auth0 = new ManagementClient({
+      //   domain: "dev-b6dhqpe1.eu.auth0.com",
+      //   clientId: "uz4oxXYu8rNdtc7wY8OU38IiL2fDnEV6",
+      //   clientSecret:
+      //     "FLd52vmoWiZOKOvP_mAX0fSEMVEeaQ8qAZgYsMOOrDl_Hmm2NpeMe342YOE6KKZO",
+      //   scope: "read:users update:users"
+      // });
+      // console.log(auth0.getUsers());
+      // const options = {
+      //   method: "PATCH",
+      //   url: `https://dev-b6dhqpe1.eu.auth0.com/api/v2/users/${user.sub}`,
+      //   headers: { "content-type": "application/json" },
+      //   body: {
+      //     password: `${values.userPassword}`,
+      //     connection: "Username-Password-Authentication"
+      //   },
+      //   json: true
+      // };
+      // await axios
+      //   .patch(options.url, options.body, options.headers)
+      //   .then(res => console.log(res));
     } catch (e) {
       console.log(e);
     }
@@ -80,12 +100,12 @@ export default function Settings({ user, name, userEmail }) {
       )
   });
 
-  const message = `Password must contain: 
-   * At least 8 characters in length 
-   * Lower case letters (a-z) 
-   * Upper case letters (A-Z) 
-   * Numbers (i.e. 0-9) 
-   * Special characters (e.g. !@£$%^&~*)`;
+  const passwordMessage = `Password must contain: 
+   1. At least 8 characters in length 
+   2. Lower case letters (a-z) 
+   3. Upper case letters (A-Z) 
+   4. Numbers (i.e. 0-9) 
+   5. Special characters (e.g. !@£$%^&~*)`;
 
   return (
     <div className={classes.root}>
@@ -182,10 +202,13 @@ export default function Settings({ user, name, userEmail }) {
                       error={Boolean(
                         errors.userPassword && touched.userPassword
                       )}
+                      style={{ width: "17rem" }}
+                      helperText={
+                        errors.userPassword &&
+                        touched.userPassword &&
+                        passwordMessage
+                      }
                     />
-                    <FormHelperText style={{ width: "17rem" }}>
-                      {message}
-                    </FormHelperText>
                   </FormControl>
 
                   <UpdateButton

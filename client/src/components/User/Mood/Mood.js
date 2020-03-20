@@ -33,22 +33,30 @@ class Mood extends Component {
 
       setSubmitting(true);
 
-      await axios.post("/api/mood/add", body).then(
-        response => {
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      await axios
+        .post("/api/mood/add", body, {
+          headers: { Authorization: `Bearer ${this.props.token}` }
+        })
+        .then(
+          response => {
+            console.log(response);
+          },
+          error => {
+            console.log(error);
+          }
+        );
 
       await axios
-        .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`)
+        .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`, {
+          headers: { Authorization: `Bearer ${this.props.token}` }
+        })
         .then(() => {})
         .catch(err => console.log(err));
 
       await axios
-        .get(`/api/tasks/make-suggest/${this.props.userEmail}`)
+        .get(`/api/tasks/make-suggest/${this.props.userEmail}`, {
+          headers: { Authorization: `Bearer ${this.props.token}` }
+        })
         .then(() => {})
         .catch(err => console.log(err));
 

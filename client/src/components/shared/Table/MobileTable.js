@@ -80,7 +80,8 @@ export default function MobileTable({
   handleWarningClick,
   marginBottom,
   isSuggestedTable,
-  allTasks
+  allTasks,
+  token
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -207,6 +208,7 @@ export default function MobileTable({
                               id={task._id}
                               handleComplete={handleComplete}
                               isTaskSuggested={task.isTaskSuggested}
+                              token={token}
                             />
                           </CustomTableCell>
                           <CustomTableCell

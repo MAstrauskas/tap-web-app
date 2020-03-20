@@ -3,11 +3,34 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 
+const jwt = require("express-jwt");
+const jwtAuthz = require("express-jwt-authz");
+const jwks = require("jwks-rsa");
+
 const user = require("./resources/User/User.route");
 const task = require("./resources/Task/Task.route");
 const mood = require("./resources/Mood/Mood.route");
 
 const app = express();
+
+require("dotenv").config();
+
+// Authentication & Authorizatioin
+if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
+  throw "Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file";
+}
+
+const jwtCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+  }),
+  audience: process.env.AUTH0_AUDIENCE,
+  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+  algorithms: ["RS256"]
+});
 
 app.use(bodyParser.json());
 
@@ -23,9 +46,9 @@ mongoose
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 // Use Routes
-app.use("/api/user", user);
-app.use("/api/tasks", task);
-app.use("/api/mood", mood);
+app.use("/api/user", jwtCheck, user);
+app.use("/api/tasks", jwtCheck, task);
+app.use("/api/mood", jwtCheck, mood);
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {

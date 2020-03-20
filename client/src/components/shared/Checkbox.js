@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { useAuth0 } from "../../react-auth0-spa";
 import Checkbox from "@material-ui/core/Checkbox";
 
 export default class TaskCheckbox extends Component {
@@ -23,14 +24,18 @@ export default class TaskCheckbox extends Component {
         taskUpdateDate: taskUpdateDate
       };
 
-      await axios.patch(`/api/tasks/completed`, body).then(
-        response => {
-          console.log(response);
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      await axios
+        .patch(`/api/tasks/completed`, body, {
+          headers: { Authorization: `Bearer ${this.props.token}` }
+        })
+        .then(
+          response => {
+            console.log(response);
+          },
+          error => {
+            console.log(error);
+          }
+        );
 
       this.setState(prevState => ({
         ...prevState,

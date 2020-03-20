@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Summary({ userEmail }) {
+export default function Summary({ userEmail, token }) {
   const classes = useStyles();
   const [completedTasks, setCompletedTasks] = useState([]);
   const [totalTasks, setTotalTasks] = useState([]);
@@ -30,17 +30,25 @@ export default function Summary({ userEmail }) {
 
   useEffect(() => {
     const handleCompleteTasks = async () => {
-      await axios.get(`/api/tasks/${userEmail}`).then(res => {
-        setCompletedTasks([
-          ...res.data.tasks.filter(task => task.isTaskComplete)
-        ]);
-      });
+      await axios
+        .get(`/api/tasks/${userEmail}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(res => {
+          setCompletedTasks([
+            ...res.data.tasks.filter(task => task.isTaskComplete)
+          ]);
+        });
     };
 
     const handleTotalTasks = async () => {
-      await axios.get(`/api/tasks/${userEmail}`).then(res => {
-        setTotalTasks([...res.data.tasks]);
-      });
+      await axios
+        .get(`/api/tasks/${userEmail}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(res => {
+          setTotalTasks([...res.data.tasks]);
+        });
     };
 
     handleCompleteTasks();

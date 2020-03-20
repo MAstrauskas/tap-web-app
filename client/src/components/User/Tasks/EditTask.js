@@ -40,7 +40,9 @@ export class EditTask extends Component {
       setSubmitting(true);
 
       await axios
-        .put(`/api/tasks/edit/${this.props.location.state.task._id}`, body)
+        .put(`/api/tasks/edit/${this.props.location.state.task._id}`, body, {
+          headers: { Authorization: `Bearer ${this.props.token}` }
+        })
         .then(
           response => {
             console.log(response);
@@ -51,12 +53,16 @@ export class EditTask extends Component {
         );
 
       await axios
-        .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`)
+        .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`, {
+          headers: { Authorization: `Bearer ${this.props.token}` }
+        })
         .then(() => {})
         .catch(err => console.log(err));
 
       await axios
-        .get(`/api/tasks/make-suggest/${this.props.userEmail}`)
+        .get(`/api/tasks/make-suggest/${this.props.userEmail}`, {
+          headers: { Authorization: `Bearer ${this.props.token}` }
+        })
         .then(() => {})
         .catch(err => console.log(err));
 

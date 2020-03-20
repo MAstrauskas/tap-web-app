@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Welcome = ({ name, userEmail }) => {
+const Welcome = ({ name, userEmail, token }) => {
   const classes = useStyles();
   const { isAuthenticated } = useAuth0();
   const [tasks, setTasks] = useState([]);
@@ -82,15 +82,21 @@ const Welcome = ({ name, userEmail }) => {
       };
 
       await axios
-        .post("/api/user/add", body)
+        .post("/api/user/add", body, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
         .then(res => console.log("User registered"))
         .catch(e => console.log("User failed to register: " + e));
     };
 
     const handleTasks = async email => {
-      await axios.get(`/api/tasks/${email}`).then(res => {
-        setTasks(res.data.tasks);
-      });
+      await axios
+        .get(`/api/tasks/${email}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(res => {
+          setTasks(res.data.tasks);
+        });
 
       setLoading(false);
     };

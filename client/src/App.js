@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
+import jwtDecode from "jwt-decode";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -38,7 +39,17 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
-  const { loading, isAuthenticated, user } = useAuth0();
+  const [idToken, setToken] = useState("");
+  const { loading, isAuthenticated, user, getTokenSilently } = useAuth0();
+
+  // Get authentication token so that the user can make calls to the API
+  const getToken = async () => {
+    const authToken = isAuthenticated && (await getTokenSilently());
+
+    return authToken;
+  };
+
+  getToken().then(t => setToken(t));
 
   /* istanbul ignore next */
   if (loading) {
@@ -55,21 +66,22 @@ function App() {
         <div className="App">
           <Switch>
             <Route path="/home">
-              {isAuthenticated ? (
+              {isAuthenticated && idToken !== undefined ? (
                 <Layout>
-                  <Home userEmail={user.email} />
+                  <Home userEmail={user.email} token={idToken} />
                 </Layout>
               ) : (
                 <Error errCode="401" />
               )}
             </Route>
             <Route path="/settings">
-              {isAuthenticated ? (
+              {isAuthenticated && idToken !== undefined ? (
                 <Layout>
                   <Settings
                     user={user}
                     name={user.name}
                     userEmail={user.email}
+                    token={idToken}
                   />
                 </Layout>
               ) : (
@@ -86,41 +98,41 @@ function App() {
               )}
             </Route>
             <Route path="/tasks/add">
-              {isAuthenticated ? (
+              {isAuthenticated && idToken !== undefined ? (
                 <Layout>
-                  <AddTask userEmail={user.email} />
+                  <AddTask userEmail={user.email} token={idToken} />
                 </Layout>
               ) : (
                 <Error errCode="401" />
               )}
             </Route>
-            {isAuthenticated && (
+            {isAuthenticated && idToken !== undefined && (
               <Route path="/tasks/edit">
-                <EditTask userEmail={user.email} />
+                <EditTask userEmail={user.email} token={idToken} />
               </Route>
             )}
             <Route path="/tasks/all">
-              {isAuthenticated ? (
+              {isAuthenticated && idToken !== undefined ? (
                 <Layout>
-                  <AllTasks userEmail={user.email} />
+                  <AllTasks userEmail={user.email} token={idToken} />
                 </Layout>
               ) : (
                 <Error errCode="401" />
               )}
             </Route>
             <Route path="/tasks/moodist">
-              {isAuthenticated ? (
+              {isAuthenticated && idToken !== undefined ? (
                 <Layout>
-                  <Mood userEmail={user.email} />
+                  <Mood userEmail={user.email} token={idToken} />
                 </Layout>
               ) : (
                 <Error errCode="401" />
               )}
             </Route>
             <Route path="/tasks/summary">
-              {isAuthenticated ? (
+              {isAuthenticated && idToken !== undefined ? (
                 <Layout>
-                  <Summary userEmail={user.email} />
+                  <Summary userEmail={user.email} token={idToken} />
                 </Layout>
               ) : (
                 <Error errCode="401" />
@@ -128,8 +140,12 @@ function App() {
             </Route>
             <Route path="/">
               <Layout>
-                {isAuthenticated ? (
-                  <Welcome name={user.name} userEmail={user.email} />
+                {isAuthenticated && idToken !== undefined ? (
+                  <Welcome
+                    name={user.name}
+                    userEmail={user.email}
+                    token={idToken}
+                  />
                 ) : (
                   <Cover />
                 )}
