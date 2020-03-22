@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { useAuth0 } from "../../react-auth0-spa";
 import Checkbox from "@material-ui/core/Checkbox";
 
 export default class TaskCheckbox extends Component {
@@ -29,8 +28,8 @@ export default class TaskCheckbox extends Component {
           headers: { Authorization: `Bearer ${this.props.token}` }
         })
         .then(
-          response => {
-            console.log(response);
+          () => {
+            "Task completed.";
           },
           error => {
             console.log(error);

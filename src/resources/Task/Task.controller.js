@@ -112,7 +112,7 @@ exports.editTask_post = (req, res, next) => {
  **/
 exports.deleteTask_post = async (req, res, next) => {
   const resultMessage = await Task.findByIdAndDelete(req.params.id)
-    .then(() => console.log(req))
+    .then(() => console.log("Task deleted."))
     .catch(next);
 
   res.json({ resultMessage });

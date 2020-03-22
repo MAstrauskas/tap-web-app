@@ -53,7 +53,7 @@ export default function Summary({ userEmail, token }) {
 
     handleCompleteTasks();
     handleTotalTasks();
-  }, [userEmail]);
+  }, [userEmail, token]);
 
   const completedTasksToday = completedTasks.filter(task => {
     const taskCompleteDate = new Date(task.taskCompleteDate);

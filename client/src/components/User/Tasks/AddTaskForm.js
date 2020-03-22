@@ -43,8 +43,8 @@ class AddTask extends Component {
           headers: { Authorization: `Bearer ${this.props.token}` }
         })
         .then(
-          response => {
-            console.log(response);
+          () => {
+            console.log("Task added.");
           },
           error => {
             console.log(error);

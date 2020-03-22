@@ -44,8 +44,8 @@ export class EditTask extends Component {
           headers: { Authorization: `Bearer ${this.props.token}` }
         })
         .then(
-          response => {
-            console.log(response);
+          () => {
+            console.log("Task edited.");
           },
           error => {
             console.log(error);

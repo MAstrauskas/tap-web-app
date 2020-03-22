@@ -85,7 +85,7 @@ const Welcome = ({ name, userEmail, token }) => {
         .post("/api/user/add", body, {
           headers: { Authorization: `Bearer ${token}` }
         })
-        .then(res => console.log("User registered"))
+        .then(() => console.log("User registered."))
         .catch(e => console.log("User failed to register: " + e));
     };
 
@@ -105,7 +105,7 @@ const Welcome = ({ name, userEmail, token }) => {
       handleUserRegistration(name, userEmail);
       handleTasks(userEmail);
     }
-  }, [isAuthenticated, name, userEmail]);
+  }, [isAuthenticated, name, userEmail, token]);
 
   if (isLoading) {
     return (

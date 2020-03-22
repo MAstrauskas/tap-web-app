@@ -59,7 +59,6 @@ function MoodForm({
   handleSubmit,
   handleChange,
   handleBlur,
-  setFieldTouched,
   isValid,
   routeBack
 }) {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
-import jwtDecode from "jwt-decode";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -17,7 +16,7 @@ import AllTasks from "./components/User/Tasks/AllTasks";
 import EditTask from "./components/User/Tasks/EditTask";
 import Mood from "./components/User/Mood/Mood";
 import Summary from "./components/User/Summary/Summary";
-import Settings from "./components/User/Settings";
+import Account from "./components/User/Account";
 import Error from "./components/Error/Error";
 
 import "./App.css";
@@ -74,15 +73,10 @@ function App() {
                 <Error errCode="401" />
               )}
             </Route>
-            <Route path="/settings">
-              {isAuthenticated && idToken !== undefined ? (
+            <Route path="/account">
+              {isAuthenticated ? (
                 <Layout>
-                  <Settings
-                    user={user}
-                    name={user.name}
-                    userEmail={user.email}
-                    token={idToken}
-                  />
+                  <Account name={user.name} userEmail={user.email} />
                 </Layout>
               ) : (
                 <Error errCode="401" />

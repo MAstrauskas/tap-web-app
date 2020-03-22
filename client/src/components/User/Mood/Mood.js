@@ -38,8 +38,8 @@ class Mood extends Component {
           headers: { Authorization: `Bearer ${this.props.token}` }
         })
         .then(
-          response => {
-            console.log(response);
+          () => {
+            console.log("Mood added.");
           },
           error => {
             console.log(error);

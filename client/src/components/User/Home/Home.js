@@ -45,8 +45,8 @@ export default class Home extends Component {
         headers: { Authorization: `Bearer ${this.props.token}` }
       })
       .then(
-        response => {
-          console.log(response);
+        () => {
+          console.log("Task deleted.");
         },
         error => {
           console.log(error);
@@ -116,9 +116,9 @@ export default class Home extends Component {
           headers: { Authorization: `Bearer ${this.props.token}` }
         })
         .then(
-          response => {
+          () => {
             this.setState({ open: false });
-            console.log(response);
+            console.log("Task completed.");
           },
           error => {
             console.log(error);

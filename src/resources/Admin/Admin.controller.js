@@ -36,7 +36,6 @@ exports.clearMood_get = (req, res, next) => {
       user.save();
     });
 
-    console.log("Removed successfully");
     return res.json("Success clearing user mood.");
   });
 };
