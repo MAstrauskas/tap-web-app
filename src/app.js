@@ -4,12 +4,12 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const jwt = require("express-jwt");
-const jwtAuthz = require("express-jwt-authz");
 const jwks = require("jwks-rsa");
 
 const user = require("./resources/User/User.route");
 const task = require("./resources/Task/Task.route");
 const mood = require("./resources/Mood/Mood.route");
+const admin = require("./resources/Admin/Admin.route");
 
 const app = express();
 
@@ -49,6 +49,7 @@ app.use(express.static(path.join(__dirname, "../client/build")));
 app.use("/api/user", jwtCheck, user);
 app.use("/api/tasks", jwtCheck, task);
 app.use("/api/mood", jwtCheck, mood);
+app.use("/api/admin", admin);
 
 // Handles any requests that don't match the ones above
 app.get("*", (req, res) => {

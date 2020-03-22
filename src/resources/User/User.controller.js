@@ -74,24 +74,3 @@ exports.addUser_post = (req, res, next) => {
     }
   });
 };
-
-/**
- * POST /api/user/clearMood
- *
- * @exports
- * @param {any} req
- * @param {any} res
- */
-exports.clearMood_post = (req, res, next) => {
-  User.find({}, function(err, doc) {
-    doc.forEach(user => {
-      user.userMood = undefined;
-      user.userProductivity = undefined;
-
-      user.save();
-    });
-
-    console.log("Removed successfully");
-    return res.json("Success clearing user mood.");
-  });
-};
