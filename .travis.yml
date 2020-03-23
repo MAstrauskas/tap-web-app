@@ -6,4 +6,4 @@ node_js:
 cache: yarn
 install: yarn
 
-script: yarn && yarn client-dependencies && yarn test && yarn test-client
+script: yarn && yarn client-dependencies && yarn test-client
