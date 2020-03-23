@@ -8,7 +8,10 @@ export default function FAQ() {
   const mobileView = useMediaQuery("(max-width: 800px)");
 
   return (
-    <div style={{ minWidth: "10rem", maxWidth: "60rem" }}>
+    <div
+      data-testid="faq-info"
+      style={{ minWidth: "10rem", maxWidth: "60rem" }}
+    >
       <Typography variant="h4" component="h4" gutterBottom>
         How does this app work?
       </Typography>
@@ -90,7 +93,7 @@ export default function FAQ() {
         ask you twice before you delete any task.
       </Typography>
 
-      {mobileView && <MobileAddButtons />}
+      {mobileView && <MobileAddButtons data-testid="mobile-buttons" />}
     </div>
   );
 }

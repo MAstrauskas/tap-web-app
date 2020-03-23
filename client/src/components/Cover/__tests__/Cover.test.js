@@ -6,12 +6,6 @@ import Cover from "../Cover";
 
 jest.mock("../../../react-auth0-spa");
 
-const resizeWindow = (x, y) => {
-  window.innerWidth = x;
-  window.innerHeight = y;
-  window.dispatchEvent(new Event("resize"));
-};
-
 describe("Cover", () => {
   const user = {
     email: "test@test.com",

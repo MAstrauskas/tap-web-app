@@ -87,6 +87,7 @@ function Account({ name, userEmail, k }) {
                   <Field
                     as={TextField}
                     id="standard-required"
+                    data-testid="user-name"
                     name="userName"
                     label="MY NAME"
                     data-testid="user-name"
@@ -108,6 +109,7 @@ function Account({ name, userEmail, k }) {
                     as={TextField}
                     type="email"
                     id="standard-required"
+                    data-testid="user-email"
                     name="userEmail"
                     label="MY EMAIL"
                     data-testid="user-email"

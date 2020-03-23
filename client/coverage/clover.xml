@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1584979153935" clover="3.2.0">
-  <project timestamp="1584979153935" name="All files">
-    <metrics statements="391" coveredstatements="173" conditionals="311" coveredconditionals="75" methods="143" coveredmethods="55" elements="845" coveredelements="303" complexity="0" loc="391" ncloc="391" packages="15" files="28" classes="28"/>
+<coverage generated="1584980680360" clover="3.2.0">
+  <project timestamp="1584980680361" name="All files">
+    <metrics statements="391" coveredstatements="180" conditionals="311" coveredconditionals="80" methods="143" coveredmethods="59" elements="845" coveredelements="319" complexity="0" loc="391" ncloc="391" packages="15" files="28" classes="28"/>
     <package name="src">
       <metrics statements="9" coveredstatements="9" conditionals="33" coveredconditionals="16" methods="4" coveredmethods="4"/>
       <file name="App.js" path="/Users/mantas/Personal/University/CS-Project/task-activity-planner/ma738/code/branches/master/task-activity-planner/client/src/App.js">
@@ -86,21 +86,21 @@
       </file>
     </package>
     <package name="src.components.User">
-      <metrics statements="9" coveredstatements="2" conditionals="12" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <metrics statements="9" coveredstatements="9" conditionals="12" coveredconditionals="5" methods="4" coveredmethods="4"/>
       <file name="Account.js" path="/Users/mantas/Personal/University/CS-Project/task-activity-planner/ma738/code/branches/master/task-activity-planner/client/src/components/User/Account.js">
-        <metrics statements="7" coveredstatements="2" conditionals="10" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
+        <metrics statements="7" coveredstatements="7" conditionals="10" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
       </file>
       <file name="FAQ.js" path="/Users/mantas/Personal/University/CS-Project/task-activity-planner/ma738/code/branches/master/task-activity-planner/client/src/components/User/FAQ.js">
-        <metrics statements="2" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.User.Home">
@@ -512,8 +512,8 @@
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="Theme.js" path="/Users/mantas/Personal/University/CS-Project/task-activity-planner/ma738/code/branches/master/task-activity-planner/client/src/components/shared/Theme/Theme.js">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="4" count="10" type="stmt"/>
-        <line num="10" count="10" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="10" count="11" type="stmt"/>
       </file>
     </package>
     <package name="src.utils">
