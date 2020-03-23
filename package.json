@@ -13,7 +13,8 @@
     "test": "_mocha src/**/*.spec.js",
     "test-client": "cd client && yarn test",
     "test-coverage": "istanbul cover _mocha src/**/*.spec.js",
-    "heroku-postbuild": "cd client && yarn && yarn build"
+    "heroku-postbuild": "cd client && yarn && yarn build",
+    "client-dependencies": "cd client && yarn"
   },
   "license": "UNLICENSED",
   "dependencies": {
