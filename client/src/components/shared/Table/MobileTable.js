@@ -120,7 +120,10 @@ export default function MobileTable({
         {title}
       </Typography>
       <CustomTableContainer>
-        <Table aria-label={`${title} table`}>
+        <Table
+          aria-label={`${title} table`}
+          data-testid={`${title} mobile table`}
+        >
           {tasks.length === 0 ? (
             <Fade in={true}>
               <TableBody>

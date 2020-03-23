@@ -122,7 +122,10 @@ export default function TaskTable({
         {title}
       </Typography>
       <TableContainer>
-        <Table aria-label={`${title} table`}>
+        <Table
+          aria-label={`${title} table`}
+          data-testid={`${title} desktop table`}
+        >
           <TableHead>
             <TableRow>
               <CustomTableCell></CustomTableCell>
