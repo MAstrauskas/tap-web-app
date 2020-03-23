@@ -1,11 +1,15 @@
 # Task Activity Planner Web Application
 
+[![Build Status](https://travis-ci.com/MAstrauskas/tap-web-app.svg?token=tnxttyznrk7mkbWTqrux&branch=master)](https://travis-ci.com/MAstrauskas/tap-web-app)
+
 ## Live Website
-* You can access the application through this link -> [ma738-tap.herokuapp.com](https://ma738-tap.herokuapp.com)
+
+- You can access the application through this link -> [ma738-tap.herokuapp.com](https://ma738-tap.herokuapp.com)
 
 ## File Structure
-* `client/` -> Client side of the application
-* `src/` -> Back-end/Server side of the application
+
+- `client/` -> Client side of the application
+- `src/` -> Back-end/Server side of the application
 
 ## Prerequisites
 
