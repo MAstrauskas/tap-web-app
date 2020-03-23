@@ -155,6 +155,7 @@ const Navigation = () => {
             <IconButton
               color="inherit"
               aria-label="open drawer"
+              data-testid="side-menu-button"
               onClick={handleDrawerOpen}
               edge="start"
               className={clsx(classes.menuButton, {
@@ -172,7 +173,11 @@ const Navigation = () => {
           {!isAuthenticated && (
             /* istanbul ignore next */
             <div className={classes.rightGroup}>
-              <Button color="inherit" onClick={() => loginWithRedirect({})}>
+              <Button
+                data-testid="login-button"
+                color="inherit"
+                onClick={() => loginWithRedirect({})}
+              >
                 <ExitToAppIcon />
                 LOGIN / REGISTER
               </Button>
@@ -183,6 +188,7 @@ const Navigation = () => {
             <div className={classes.rightGroup}>
               <IconButton
                 aria-label="current user account"
+                data-testid={"user-menu"}
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleUserMenu}
@@ -192,6 +198,7 @@ const Navigation = () => {
               </IconButton>
               <Menu
                 id="menu-appbar"
+                data-testid="right-user-menu"
                 anchorEl={userMenu}
                 anchorOrigin={{ vertical: "left", horizontal: "right" }}
                 keepMounted
@@ -206,9 +213,16 @@ const Navigation = () => {
                     color: `${Theme.colors.black}`
                   }}
                 >
-                  <MenuItem onClick={handleUserMenuClose}>My Account</MenuItem>
+                  <MenuItem
+                    onClick={handleUserMenuClose}
+                    data-testid="my-account-button"
+                  >
+                    My Account
+                  </MenuItem>
                 </NavLink>
-                <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                <MenuItem data-testid="logout-button" onClick={() => logout()}>
+                  Logout
+                </MenuItem>
               </Menu>
             </div>
           )}
@@ -229,7 +243,10 @@ const Navigation = () => {
           }}
         >
           <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton
+              onClick={handleDrawerClose}
+              data-testid="close-side-menu"
+            >
               {open === false ? null : <ChevronLeftIcon />}
             </IconButton>
           </div>
@@ -237,6 +254,7 @@ const Navigation = () => {
           <List data-testid="navigation-links">
             <ListItem
               button
+              data-testid="today-link"
               component={NavLink}
               to="/home"
               activeClassName={classes.active}
