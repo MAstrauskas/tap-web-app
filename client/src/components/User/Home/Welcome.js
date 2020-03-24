@@ -109,7 +109,7 @@ const Welcome = ({ name, userEmail, token }) => {
 
   if (isLoading) {
     return (
-      <div className={classes.root}>
+      <div className={classes.root} data-testid="loading-spinner">
         <CircularProgress className={classes.loader} color="secondary" />
       </div>
     );
@@ -118,7 +118,7 @@ const Welcome = ({ name, userEmail, token }) => {
   const firstName = name.split(" ")[0];
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="welcome-page">
       {currentTime >= 0 && currentTime < 12 && (
         <div className={classes.content}>
           <Typography

@@ -17,7 +17,7 @@ describe("Account", () => {
   beforeEach(() => {
     // Mock Auth0 and return logged out state
     useAuth0.mockReturnValue({
-      isAuthenticated: false,
+      isAuthenticated: true,
       user,
       logout: jest.fn(),
       loginWithRedirect: jest.fn()
