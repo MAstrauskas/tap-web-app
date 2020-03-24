@@ -298,6 +298,7 @@ export default function TaskTable({
                       {isDelete === true && (
                         <CustomTableCell align="right">
                           <IconButton
+                            data-testid="warning-button"
                             onClick={() =>
                               handleWarningClick(task._id, task.taskName)
                             }

@@ -28,7 +28,7 @@ export default function WarningMessage({
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="warning-message">
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         key="center-center"

@@ -22,6 +22,7 @@ class Mood extends Component {
     isFetching: false
   };
 
+  /* istanbul ignore next */
   handleSubmit = async (values, { setSubmitting }) => {
     try {
       const body = {

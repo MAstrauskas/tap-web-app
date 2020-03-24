@@ -29,6 +29,7 @@ export default function Summary({ userEmail, token }) {
   const mobileView = useMediaQuery("(max-width: 800px)");
 
   useEffect(() => {
+    /* istanbul ignore next */
     const handleCompleteTasks = async () => {
       await axios
         .get(`/api/tasks/${userEmail}`, {
@@ -41,6 +42,7 @@ export default function Summary({ userEmail, token }) {
         });
     };
 
+    /* istanbul ignore next */
     const handleTotalTasks = async () => {
       await axios
         .get(`/api/tasks/${userEmail}`, {

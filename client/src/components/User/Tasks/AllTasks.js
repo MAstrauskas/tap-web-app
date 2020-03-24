@@ -75,6 +75,7 @@ export default class AllTasks extends Component {
       });
   };
 
+  /* istanbul ignore next */
   handleClose = (event, reason) => {
     if (reason === "clickaway") return;
 
@@ -118,6 +119,7 @@ export default class AllTasks extends Component {
     }
   };
 
+  /* istanbul ignore next */
   handleWarningClick = async (taskId, taskName) => {
     await this.setState({
       openWarning: true,
@@ -126,6 +128,7 @@ export default class AllTasks extends Component {
     });
   };
 
+  /* istanbul ignore next */
   handleWarningClose = (event, reason) => {
     if (reason === "clickaway") {
       return;

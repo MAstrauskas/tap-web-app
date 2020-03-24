@@ -1,5 +1,6 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useAuth0 } from "../../../../react-auth0-spa";
 import axios from "axios";
@@ -86,6 +87,14 @@ describe("Home", () => {
   });
 
   it("renders mobile suggested table correctly", async () => {
+    global.matchMedia = media => ({
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      matches: media === "(max-width: 800px)"
+    });
+
+    global.matchMedia(700);
+
     const { getByTestId } = render(
       <Router>
         <Home userEmail={user.email} token={token} />
@@ -93,5 +102,153 @@ describe("Home", () => {
     );
 
     getByTestId("Suggested Tasks mobile table");
+  });
+
+  it("renders desktop suggested table correctly", async () => {
+    global.matchMedia = media => ({
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      matches: media === "(min-width: 801px)"
+    });
+
+    global.matchMedia(900);
+
+    const { getByTestId } = render(
+      <Router>
+        <Home userEmail={user.email} token={token} />
+      </Router>
+    );
+
+    getByTestId("Suggested Tasks desktop table");
+  });
+
+  it("should delete a task", async () => {
+    const suggestedTasks = {
+      tasks: [
+        {
+          _id: "__ID__",
+          email: user.email,
+          taskName: "__TASK_NAME_1_",
+          taskDescription: "__TASK_DESCRIPTION__",
+          taskCreateDate: "2020-01-27T04:59:03.388Z",
+          taskDueDate: "2020-03-27T04:00:00.000Z",
+          taskPriority: "High",
+          taskDifficulty: "Easy",
+          isTaskComplete: false,
+          isTaskSuggested: true,
+          taskGroup: 1,
+          taskTotalPoints: 2
+        },
+        {
+          _id: "__ID_2__",
+          email: user.email,
+          taskName: "__TASK_NAME_2_",
+          taskDescription: "__TASK_DESCRIPTION__",
+          taskCreateDate: "2020-01-27T04:59:03.388Z",
+          taskDueDate: "2020-03-27T04:00:00.000Z",
+          taskPriority: "High",
+          taskDifficulty: "Easy",
+          isTaskComplete: false,
+          isTaskSuggested: true,
+          taskGroup: 1,
+          taskTotalPoints: 2
+        }
+      ]
+    };
+
+    const tasksAfterDelete = {
+      tasks: [
+        {
+          _id: "__ID_2__",
+          email: user.email,
+          taskName: "__TASK_NAME_2_",
+          taskDescription: "__TASK_DESCRIPTION__",
+          taskCreateDate: "2020-01-27T04:59:03.388Z",
+          taskDueDate: "2020-03-27T04:00:00.000Z",
+          taskPriority: "High",
+          taskDifficulty: "Easy",
+          isTaskComplete: false,
+          isTaskSuggested: true,
+          taskGroup: 1,
+          taskTotalPoints: 2
+        }
+      ]
+    };
+
+    mock.onPost("/api/user/add").reply(200, registeredUser);
+    mock.onDelete(`/api/tasks/delete/${suggestedTasks.tasks[0]._id}`);
+    mock.onGet(`/api/tasks/${user.email}`).reply(200, tasksAfterDelete);
+  });
+
+  it("should complete a task", async () => {
+    const tasksBeforeComplete = {
+      tasks: [
+        {
+          _id: "__ID__",
+          email: user.email,
+          taskName: "__TASK_NAME_1_",
+          taskDescription: "__TASK_DESCRIPTION__",
+          taskCreateDate: "2020-01-27T04:59:03.388Z",
+          taskDueDate: "2020-03-27T04:00:00.000Z",
+          taskPriority: "High",
+          taskDifficulty: "Easy",
+          isTaskComplete: false,
+          isTaskSuggested: true,
+          taskGroup: 1,
+          taskTotalPoints: 2
+        },
+        {
+          _id: "__ID_2__",
+          email: user.email,
+          taskName: "__TASK_NAME_2_",
+          taskDescription: "__TASK_DESCRIPTION__",
+          taskCreateDate: "2020-01-27T04:59:03.388Z",
+          taskDueDate: "2020-03-27T04:00:00.000Z",
+          taskPriority: "High",
+          taskDifficulty: "Easy",
+          isTaskComplete: false,
+          isTaskSuggested: true,
+          taskGroup: 1,
+          taskTotalPoints: 2
+        }
+      ]
+    };
+
+    const tasksAfterComplete = {
+      tasks: [
+        {
+          _id: "__ID__",
+          email: user.email,
+          taskName: "__TASK_NAME_1_",
+          taskDescription: "__TASK_DESCRIPTION__",
+          taskCreateDate: "2020-01-27T04:59:03.388Z",
+          taskDueDate: "2020-03-27T04:00:00.000Z",
+          taskPriority: "High",
+          taskDifficulty: "Easy",
+          isTaskComplete: true,
+          isTaskSuggested: true,
+          taskGroup: 1,
+          taskTotalPoints: 2
+        },
+        {
+          _id: "__ID_2__",
+          email: user.email,
+          taskName: "__TASK_NAME_2_",
+          taskDescription: "__TASK_DESCRIPTION__",
+          taskCreateDate: "2020-01-27T04:59:03.388Z",
+          taskDueDate: "2020-03-27T04:00:00.000Z",
+          taskPriority: "High",
+          taskDifficulty: "Easy",
+          isTaskComplete: false,
+          isTaskSuggested: true,
+          taskGroup: 1,
+          taskTotalPoints: 2
+        }
+      ]
+    };
+
+    mock.onPost("/api/user/add").reply(200, registeredUser);
+    mock.onPost("/api/user/add").reply(200, tasksBeforeComplete);
+    mock.onGet(`/api/tasks/${user.email}`).reply(200, tasksAfterComplete);
   });
 });

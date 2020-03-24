@@ -8,6 +8,9 @@ import UndoMessage from "../../shared/Table/UndoMessage";
 import WarningMessage from "../../shared/Table/WarningMessage";
 import MobileAddButtons from "../../shared/MobileAddButtons";
 
+import sortByPriority from "../../helpers/sortByPriority";
+import sortyByPriority from "../../helpers/sortByPriority";
+
 export default class Home extends Component {
   state = {
     isFetching: false,
@@ -19,6 +22,7 @@ export default class Home extends Component {
     isTaskSuggested: false
   };
 
+  /* istanbul ignore next */
   handleTasks = async () => {
     this.setState({ ...this.state, isFetching: true });
 
@@ -78,6 +82,7 @@ export default class Home extends Component {
       });
   };
 
+  /* istanbul ignore next */
   handleWarningClick = (taskId, taskName) => {
     this.setState({
       openWarning: true,
@@ -86,6 +91,7 @@ export default class Home extends Component {
     });
   };
 
+  /* istanbul ignore next */
   handleWarningClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -94,6 +100,7 @@ export default class Home extends Component {
     this.setState({ openWarning: false });
   };
 
+  /* istanbul ignore next */
   handleClose = (event, reason) => {
     if (reason === "clickaway") return;
 
@@ -145,30 +152,9 @@ export default class Home extends Component {
     const { tasks, open, openWarning, taskName, taskId } = this.state;
 
     const allUncompletedTasks = tasks.filter(task => !task.isTaskComplete);
-    const suggestedTasks = tasks
-      .filter(task => task.isTaskSuggested && !task.isTaskComplete)
-      .sort((a, b) => {
-        const taskOne = a.taskPriority;
-        const taskTwo = b.taskPriority;
-
-        // Sort by Task Priority
-        if (
-          (taskOne === "High" && taskTwo === "High") ||
-          (taskOne === "Medium" && taskTwo === "Medium") ||
-          (taskOne === "Low" && taskTwo === "Low")
-        )
-          return 0;
-
-        if (taskOne === "High" && taskTwo === "Medium") return -1;
-        if (taskOne === "High" && taskTwo === "Low") return -1;
-        if (taskOne === "Medium" && taskTwo === "High") return 1;
-        if (taskOne === "Medium" && taskTwo === "Low") return -1;
-        if (taskOne === "Low" && taskTwo === "High") return 1;
-        if (taskOne === "Low" && taskTwo === "Medium") return 1;
-
-        return 0;
-      });
-
+    const suggestedTasks = sortyByPriority(
+      tasks.filter(task => task.isTaskSuggested && !task.isTaskComplete)
+    );
     const headers = ["Task", "Due Date", "Priority"];
 
     return (

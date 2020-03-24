@@ -13,6 +13,7 @@ export default class TaskCheckbox extends Component {
     checked: false
   };
 
+  /* istanbul ignore next */
   handleEdit = async () => {
     try {
       const taskUpdateDate = Date.now();
@@ -32,7 +33,7 @@ export default class TaskCheckbox extends Component {
             "Task completed.";
           },
           error => {
-            console.log(error);
+            console.log("Error occurred while making a task completed.");
           }
         );
 

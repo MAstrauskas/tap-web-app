@@ -21,6 +21,7 @@ class AddTask extends Component {
     addSuccessful: false
   };
 
+  /* istanbul ignore next */
   handleSubmit = async (values, { setSubmitting }) => {
     try {
       const taskCreateDate = Date.now();
