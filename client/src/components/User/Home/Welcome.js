@@ -45,11 +45,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Welcome = ({ name, userEmail, token }) => {
+const Welcome = ({ loading, name, userEmail, token }) => {
   const classes = useStyles();
   const { isAuthenticated } = useAuth0();
   const [tasks, setTasks] = useState([]);
-  const [isLoading, setLoading] = useState(true);
 
   const currentDate = new Date();
   const currentTime = currentDate.getHours();
@@ -97,8 +96,6 @@ const Welcome = ({ name, userEmail, token }) => {
         .then(res => {
           setTasks(res.data.tasks);
         });
-
-      setLoading(false);
     };
 
     if (isAuthenticated) {
@@ -107,7 +104,7 @@ const Welcome = ({ name, userEmail, token }) => {
     }
   }, [isAuthenticated, name, userEmail, token]);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className={classes.root} data-testid="loading-spinner">
         <CircularProgress className={classes.loader} color="secondary" />

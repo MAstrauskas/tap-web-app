@@ -136,6 +136,7 @@ function App() {
               <Layout>
                 {isAuthenticated && idToken !== undefined ? (
                   <Welcome
+                    loading={loading}
                     name={user.name}
                     userEmail={user.email}
                     token={idToken}

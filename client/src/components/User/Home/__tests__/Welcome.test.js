@@ -6,19 +6,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import mediaQuery from "css-mediaquery";
-import { advanceTo, clear } from "jest-date-mock";
 import Welcome from "../Welcome";
-import { act } from "react-dom/test-utils";
 
 jest.mock("../../../../react-auth0-spa");
-
-function createMatchMedia(width) {
-  return query => ({
-    matches: mediaQuery.match(query, { width }),
-    addListener: () => {},
-    removeListener: () => {}
-  });
-}
 
 describe("Welcome", () => {
   const mock = new MockAdapter(axios);
@@ -41,6 +31,24 @@ describe("Welcome", () => {
     tasks: []
   };
 
+  const RealDate = Date;
+
+  function mockDate(isoDate) {
+    global.Date = class extends RealDate {
+      constructor() {
+        return new RealDate(isoDate);
+      }
+    };
+  }
+
+  function createMatchMedia(width) {
+    return query => ({
+      matches: mediaQuery.match(query, { width }),
+      addListener: () => {},
+      removeListener: () => {}
+    });
+  }
+
   beforeAll(() => {
     window.matchMedia = createMatchMedia(window.innerWidth);
   });
@@ -58,14 +66,8 @@ describe("Welcome", () => {
     mock.onGet(`/api/tasks/${user.email}`).reply(200, data);
   });
 
-  it("should render loading spinner", () => {
-    const { getByTestId } = render(
-      <Router>
-        <Welcome name={user.fullName} userEmail={user.email} token={token} />
-      </Router>
-    );
-
-    getByTestId("loading-spinner");
+  afterEach(() => {
+    global.Date = RealDate;
   });
 
   it("should render Welcome page", () => {
@@ -75,10 +77,7 @@ describe("Welcome", () => {
       </Router>
     );
 
-    // Wait for spinner to finish loading
-    setTimeout(() => {
-      getByTestId("welcome-page");
-    }, 2000);
+    getByTestId("welcome-page");
   });
 
   it("should render tablet view", () => {
@@ -96,10 +95,7 @@ describe("Welcome", () => {
       </Router>
     );
 
-    // Wait for spinner to finish loading
-    setTimeout(() => {
-      getByTestId("welcome-page");
-    }, 2000);
+    getByTestId("welcome-page");
   });
 
   it("should render mobile view", () => {
@@ -117,10 +113,7 @@ describe("Welcome", () => {
       </Router>
     );
 
-    // Wait for spinner to finish loading
-    setTimeout(() => {
-      getByTestId("welcome-page");
-    }, 2000);
+    getByTestId("welcome-page");
   });
 
   it("should still show welcome page if user registration fails", () => {
@@ -132,9 +125,42 @@ describe("Welcome", () => {
       </Router>
     );
 
-    // Wait for spinner to finish loading
-    setTimeout(() => {
-      getByTestId("welcome-page");
-    }, 2000);
+    getByTestId("welcome-page");
+  });
+
+  it("should show correct morning message", () => {
+    mockDate("2020-03-23T09:00:00.000Z");
+
+    const { getByTestId } = render(
+      <Router>
+        <Welcome name={user.fullName} userEmail={user.email} token={token} />
+      </Router>
+    );
+
+    getByTestId("greeting-morning");
+  });
+
+  it("should show correct afternoon message", () => {
+    mockDate("2020-03-23T13:00:00.000Z");
+
+    const { getByTestId } = render(
+      <Router>
+        <Welcome name={user.fullName} userEmail={user.email} token={token} />
+      </Router>
+    );
+
+    getByTestId("greeting-afternoon");
+  });
+
+  it("should show correct evening message", () => {
+    mockDate("2020-03-23T18:00:00.000Z");
+
+    const { getByTestId } = render(
+      <Router>
+        <Welcome name={user.fullName} userEmail={user.email} token={token} />
+      </Router>
+    );
+
+    getByTestId("greeting-evening");
   });
 });
