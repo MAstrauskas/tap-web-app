@@ -1,27 +1,27 @@
 import React from "react";
-import { cleanup } from "@testing-library/react";
-import { Link } from "react-router-dom";
+import { render, cleanup } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import Enzyme, { render, mount } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import { useAuth0 } from "../../../../react-auth0-spa";
-
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 import Mood from "../Mood";
-
-afterEach(cleanup);
-
-Enzyme.configure({ adapter: new Adapter() });
-
-const user = {
-  email: "test@test.com",
-  fullName: "Test Test",
-  email_verified: true,
-  sub: "google-oauth2|231231232"
-};
 
 jest.mock("../../../../react-auth0-spa");
 
-describe("Add Mood", () => {
+afterEach(cleanup);
+
+describe("Mood", () => {
+  const mock = new MockAdapter(axios);
+
+  const user = {
+    email: "test@test.com",
+    fullName: "__FULL_NAME__",
+    email_verified: true,
+    sub: "__SUB__"
+  };
+
+  const token = "__TOKEN__";
+
   beforeEach(() => {
     // Mock Auth0 and return logged out state
     useAuth0.mockReturnValue({
@@ -35,31 +35,27 @@ describe("Add Mood", () => {
   it("renders correctly", () => {
     render(
       <Router>
-        <Link>
-          <Mood userEmail={user.email} />
-        </Link>
+        <Mood userEmail={user.email} token={token} />
       </Router>
     );
   });
 
-  it.skip("should add the mood if all props are passed", async () => {
-    const values = {
-      mood: "positive",
-      moodMotivation: "Low",
-      moodTired: "No",
-      setSubmitting: jest.fn()
+  it("should add a mood", () => {
+    const moodRequest = {
+      email: user.email,
+      moodName: "Positive",
+      moodMotivation: "High",
+      isTired: false
     };
 
-    const setSubmitting = jest.fn();
+    mock.onPost("/api/mood/add").reply(200, moodRequest);
+    mock.onGet(`/api/tasks/calculate-suggest/${user.email}`).reply(200);
+    mock.onGet(`/api/tasks/make-suggest/${user.email}`).reply(200);
 
-    const wrapper = mount(
+    render(
       <Router>
-        <Mood userEmail={user.email} />
+        <Mood userEmail={user.email} token={token} />
       </Router>
     );
-
-    expect(wrapper.state().addSuccessful).toBe(false);
-
-    await wrapper.instance().handleSubmit(values, { setSubmitting });
   });
 });
