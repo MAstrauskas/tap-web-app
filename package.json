@@ -14,7 +14,8 @@
     "test-client": "cd client && yarn test",
     "test-coverage": "istanbul cover _mocha src/**/*.spec.js",
     "heroku-postbuild": "cd client && yarn && yarn build",
-    "client-dependencies": "cd client && yarn"
+    "client-dependencies": "cd client && yarn",
+    "collect-coverage": "cd client && yarn global add codecov && yarn test-coverage && codecov"
   },
   "license": "UNLICENSED",
   "dependencies": {

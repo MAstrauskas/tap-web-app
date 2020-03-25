@@ -4,12 +4,14 @@ node_js:
   - node
 
 cache: yarn
-install: yarn
+install:
+  - yarn
+  - yarn add codecov
 
 env:
   global:
     secure: N6MzEOmUixxdn+AdnhuTQdTburuWShVzmpbaF519RU0DTqsuldaPnTvMbhXDIfmPMNq2615L9jKI1pgqzHSEFTZdw0ILcYci1gUcq8Wh49KcXBTqMK1WEuQV90YHKcVWoJU7LiCgW/oNDYoMK0tqM6zgLAhDuHi6RLQS0zFhouEDBGJK6MplwN/938qBQNWv3aoG4kVliHxaYXXpYPgG2js0q/w/vqZWx7otjGF7U9YnPWU0dDIsAKhagon1eVhXYIWs8Uhw2EFbFt/mYZ62MgwolE6RHfuJJEBuPdmI3vwn3m43+fxqFdfE5AbNjqoawJHkkhDX10WwyvmEkZTmX+OYyUO54ftQSqr839ayOvb3xmgDrPlNTwYzWRNGv+HAZJWU4BqHTQfD5y3RkXHowcSUblcXZAoRamqt+HNLSWKUoMAoK3eBQlJV+cdCCxUvxy2UuU7FJ9GlcWYI8RrDXqGPVXxkbDtdZlJtdPQkYPIS7ci5yUAATtdfGu9sdS6NkIFbIzmeXo48yGvDc2btkjTRh3+AoPx1BiobyUsEMK6WS53GoEpCyOOIx8+bXq9sEjcgA7dUU9Cjwm1GcBW3jZh0AB3Yo97bCjUjYm1NQqtl/CUmBldPXrPiTDzGV2C81VHAj/zsFgyxfvoiT714QuCXyQV0MI1hhTBID0L5V4U=
 
 script:
-  - echo "Running tests with coverage..." && yarn && yarn client-dependencies && yarn test-client
-  - echo "Uploading code coverage to Codecov..." && cd client && bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+  - ./scripts/runTestsWithCoverage.sh
+  - echo "Uploading code coverage to Codecov..." yarn collect-coverage
