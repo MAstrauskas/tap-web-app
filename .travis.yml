@@ -6,3 +6,5 @@ cache: yarn
 install: yarn
 
 script: echo "Running tests with coverage..." && yarn && yarn client-dependencies && yarn test-client
+
+script: echo "Uploading code coverage to Codecov..." && bash <(curl -s https://codecov.io/bash) -t 05c0e349-013f-44db-8eb2-2e3b91bf14e7
