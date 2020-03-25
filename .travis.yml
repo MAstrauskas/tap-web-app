@@ -6,7 +6,7 @@ node_js:
 cache: yarn
 install:
   - yarn
-  - yarn add codecov
+  - yarn global add codecov
 
 env:
   global:
@@ -16,4 +16,4 @@ script:
   - echo "Running tests with coverage..." && yarn && yarn client-dependencies && yarn test-client
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -t CODECOV_TOKEN
+  - PWD=WORKSPACE bash <(curl -s https://codecov.io/bash) -t CODECOV_TOKEN
