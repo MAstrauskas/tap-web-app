@@ -1,6 +1,7 @@
 # Task Activity Planner Web Application
 
 [![Build Status](https://travis-ci.com/MAstrauskas/tap-web-app.svg?token=tnxttyznrk7mkbWTqrux&branch=master)](https://travis-ci.com/MAstrauskas/tap-web-app)
+[![codecov](https://codecov.io/gh/MAstrauskas/tap-web-app/branch/master/graph/badge.svg?token=DI9LRJO5RB)](https://codecov.io/gh/MAstrauskas/tap-web-app)
 
 ## Live Website
 
