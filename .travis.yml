@@ -14,7 +14,6 @@ env:
 
 script:
   - echo "Running tests with coverage..." && yarn && yarn client-dependencies && yarn test-client
-  - ./node_modules/.bin/codecov
 
 after_success:
-  - PWD=WORKSPACE bash <(curl -s https://codecov.io/bash) -t CODECOV_TOKEN
+  - ./node_modules/.bin/codecov
