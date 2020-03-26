@@ -63,7 +63,11 @@ export default function TaskHistory({ tasks }) {
   };
 
   return (
-    <div className={classes.root} style={{ maxWidth: listSize }}>
+    <div
+      className={classes.root}
+      style={{ maxWidth: listSize }}
+      data-testid="task-history"
+    >
       <ExpansionPanel>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
@@ -132,6 +136,7 @@ export default function TaskHistory({ tasks }) {
             })}
 
             <TablePagination
+              data-testid="task-history-pagination"
               component="div"
               rowsPerPageOptions={
                 tabletView ? 5 : [5, 10, 15, { label: "All", value: -1 }]
@@ -142,7 +147,10 @@ export default function TaskHistory({ tasks }) {
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
-                inputProps: { "aria-label": "rows per page" },
+                inputProps: {
+                  "aria-label": "rows per page",
+                  "data-testid": "rows-per-page"
+                },
                 native: true
               }}
               onChangePage={handlePageChange}

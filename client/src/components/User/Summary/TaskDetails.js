@@ -61,6 +61,7 @@ export default function TaskDetails({
   return (
     <>
       <Button
+        data-testid="task-details-button"
         onClick={handleOpenDetails}
         size="small"
         style={{
@@ -77,6 +78,7 @@ export default function TaskDetails({
       </Button>
 
       <Modal
+        data-testid="completed-task-details"
         aria-labelledby="Completed-task-details"
         aria-describedby="All the details of completed task"
         className={classes.modal}

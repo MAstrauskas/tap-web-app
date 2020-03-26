@@ -124,9 +124,8 @@ export default function Summary({ userEmail, token }) {
           />
         </div>
       </div>
-      <div data-testid="task-history">
-        <TaskHistory tasks={completedTasks} />
-      </div>
+
+      <TaskHistory tasks={completedTasks} />
 
       {mobileView && <MobileAddButtons />}
     </div>

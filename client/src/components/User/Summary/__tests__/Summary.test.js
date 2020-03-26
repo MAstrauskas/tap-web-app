@@ -29,11 +29,9 @@ describe("Summary", () => {
   };
 
   const token = "__TOKEN__";
-
   const data = {
     tasks: []
   };
-
   function createMatchMedia(width) {
     return query => ({
       matches: mediaQuery.match(query, { width }),
