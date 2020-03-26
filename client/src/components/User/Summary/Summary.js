@@ -22,6 +22,37 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+export const getCompletedTasksForToday = tasks => {
+  const completedTasks = tasks.filter(task => {
+    const taskCompleteDate = moment(task.taskCompleteDate);
+    const todaysDate = moment();
+    const daysDifference = todaysDate.diff(taskCompleteDate, "days");
+
+    return daysDifference === 0 ? task : null;
+  }).length;
+
+  return completedTasks;
+};
+
+export const getCompletedTasksForThisWeek = tasks => {
+  const completedTasks = tasks.filter(task => {
+    const taskCompleteDate = moment(task.taskCompleteDate);
+    const weekStart = moment()
+      .startOf("week")
+      .toDate();
+    const weekEnd = moment()
+      .endOf("week")
+      .toDate();
+
+    weekStart.setDate(weekStart.getDate() + 1);
+    weekEnd.setDate(weekEnd.getDate() + 1);
+
+    return taskCompleteDate >= weekStart && taskCompleteDate <= weekEnd;
+  }).length;
+
+  return completedTasks;
+};
+
 export default function Summary({ userEmail, token }) {
   const classes = useStyles();
   const [completedTasks, setCompletedTasks] = useState([]);
@@ -29,7 +60,6 @@ export default function Summary({ userEmail, token }) {
   const mobileView = useMediaQuery("(max-width: 800px)");
 
   useEffect(() => {
-    /* istanbul ignore next */
     const handleCompleteTasks = async () => {
       await axios
         .get(`/api/tasks/${userEmail}`, {
@@ -42,7 +72,6 @@ export default function Summary({ userEmail, token }) {
         });
     };
 
-    /* istanbul ignore next */
     const handleTotalTasks = async () => {
       await axios
         .get(`/api/tasks/${userEmail}`, {
@@ -57,39 +86,14 @@ export default function Summary({ userEmail, token }) {
     handleTotalTasks();
   }, [userEmail, token]);
 
-  const completedTasksToday = completedTasks.filter(task => {
-    const taskCompleteDate = new Date(task.taskCompleteDate);
-    const todaysDate = new Date();
-
-    return (
-      taskCompleteDate.setHours(0, 0, 0, 0) === todaysDate.setHours(0, 0, 0, 0)
-    );
-  }).length;
-  const completedTasksWeek = completedTasks.filter(task => {
-    const taskCompleteDate = new Date(task.taskCompleteDate).setHours(
-      0,
-      0,
-      0,
-      0
-    );
-    const weekStart = moment()
-      .startOf("week")
-      .toDate();
-    const weekEnd = moment()
-      .endOf("week")
-      .toDate();
-
-    weekStart.setDate(weekStart.getDate() + 1);
-    weekEnd.setDate(weekEnd.getDate() + 1);
-
-    return taskCompleteDate >= weekStart && taskCompleteDate <= weekEnd;
-  }).length;
+  const completedTasksToday = getCompletedTasksForToday(completedTasks);
+  const completedTasksWeek = getCompletedTasksForThisWeek(completedTasks);
   const completedTasksTotal = completedTasks.length;
   const unfinishedTasks = totalTasks.length - completedTasksTotal;
 
   return (
     <div className={classes.root}>
-      <div className={classes.cards}>
+      <div className={classes.cards} data-testid="summary-cards">
         <div className={classes.card}>
           <SummaryCard
             type="success"
@@ -120,7 +124,9 @@ export default function Summary({ userEmail, token }) {
           />
         </div>
       </div>
-      <TaskHistory tasks={completedTasks} />
+      <div data-testid="task-history">
+        <TaskHistory tasks={completedTasks} />
+      </div>
 
       {mobileView && <MobileAddButtons />}
     </div>

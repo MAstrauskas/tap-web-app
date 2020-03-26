@@ -6,7 +6,7 @@ import MoodIcon from "@material-ui/icons/Mood";
 import TableFooter from "@material-ui/core/TableFooter";
 export default function MobileAddButtons() {
   return (
-    <TableFooter>
+    <TableFooter data-testid="mobile-buttons">
       <NavLink to="/tasks/add">
         <Fab
           color="secondary"
