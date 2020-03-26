@@ -12,10 +12,10 @@
     "dev": "concurrently -r \"yarn run server\" \"yarn run client\"",
     "test": "_mocha src/**/*.spec.js",
     "test-client": "cd client && yarn test",
+    "test-client-coverage": "cd client && yarn test-coverage",
     "test-coverage": "istanbul cover _mocha src/**/*.spec.js",
     "heroku-postbuild": "cd client && yarn && yarn build",
-    "client-dependencies": "cd client && yarn",
-    "collect-coverage": "cd client && yarn global add codecov && yarn test-coverage && codecov"
+    "client-dependencies": "cd client && yarn"
   },
   "license": "UNLICENSED",
   "dependencies": {
