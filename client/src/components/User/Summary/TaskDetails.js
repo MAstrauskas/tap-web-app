@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles, styled } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-
 import Theme from "../../shared/Theme/Theme";
 
 const useStyles = makeStyles(theme => ({
@@ -38,6 +37,17 @@ const Title = withStyles(theme => ({
     padding: `1rem`
   }
 }))(Typography);
+
+const CancelButton = styled(Button)({
+  backgroundColor: `${Theme.colors.third}`,
+  color: `${Theme.colors.black}`,
+  marginTop: "1rem",
+  width: "100%",
+
+  "&:hover": {
+    backgroundColor: `${Theme.colors.fifth}`
+  }
+});
 
 export default function TaskDetails({
   message,
@@ -169,6 +179,13 @@ export default function TaskDetails({
                   readOnly: true
                 }}
               />
+
+              <CancelButton
+                data-testid="close-task-details-button"
+                onClick={handleCloseDetails}
+              >
+                Close details
+              </CancelButton>
             </div>
           </form>
         </Fade>
