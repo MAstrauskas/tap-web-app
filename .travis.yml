@@ -16,4 +16,4 @@ script:
   - echo "Running tests with coverage..." && yarn && yarn client-dependencies && yarn test-client
 
 after_success:
-  - ./node_modules/.bin/codecov -t $CODECOV_TOKEN
+  - ./node_modules/.bin/codecov -t CODECOV_TOKEN
