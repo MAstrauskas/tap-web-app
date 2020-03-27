@@ -66,16 +66,19 @@ export default function SummaryCard({
           {showButtons === true ? (
             <>
               <Button
+                data-testid="button-today"
                 onClick={() => handleCurrentView(defaultTitle, defaultOption)}
               >
                 Today
               </Button>
               <Button
+                data-testid="button-week"
                 onClick={() => handleCurrentView(secondTitle, secondOption)}
               >
                 Week
               </Button>
               <Button
+                data-testid="button-total"
                 onClick={() => handleCurrentView(thirdTitle, thirdOption)}
               >
                 Total
