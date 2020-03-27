@@ -9,6 +9,20 @@ import UndoMessage from "../../shared/Table/UndoMessage";
 import WarningMessage from "../../shared/Table/WarningMessage";
 import MobileAddButtons from "../../shared/MobileAddButtons";
 
+export const sortByDate = tasks => {
+  const filteredTasks = tasks
+    .sort((a, b) => {
+      const dueDate = moment(a.taskDueDate).format("YYYY-MM-DD HH:mm:ss");
+      const dueDate2 = moment(b.taskDueDate).format("YYYY-MM-DD HH:mm:ss");
+
+      if (dueDate > dueDate2) return 1;
+      else return -1;
+    })
+    .filter(task => !task.isTaskComplete);
+
+  return filteredTasks;
+};
+
 export default class AllTasks extends Component {
   state = {
     isFetching: false,
@@ -20,7 +34,6 @@ export default class AllTasks extends Component {
     taskName: ""
   };
 
-  /* istanbul ignore next */
   handleTasks = async () => {
     this.setState({ ...this.state, isFetching: true });
 
@@ -35,7 +48,6 @@ export default class AllTasks extends Component {
     this.setState({ ...this.state, isFetching: false });
   };
 
-  /* istanbul ignore next */
   handleDelete = async taskId => {
     await axios
       .delete(`/api/tasks/delete/${taskId}`, {
@@ -46,7 +58,7 @@ export default class AllTasks extends Component {
           console.log("Task deleted.");
         },
         error => {
-          console.log(error);
+          console.log("Error occured deleting task.");
         }
       );
 
@@ -59,7 +71,6 @@ export default class AllTasks extends Component {
       });
   };
 
-  /* istanbul ignore next */
   handleComplete = async (isOpen, taskId, isTaskSuggested) => {
     await axios
       .get(`/api/tasks/${this.props.userEmail}`, {
@@ -75,14 +86,12 @@ export default class AllTasks extends Component {
       });
   };
 
-  /* istanbul ignore next */
   handleClose = (event, reason) => {
     if (reason === "clickaway") return;
 
     this.setState({ open: false });
   };
 
-  /* istanbul ignore next */
   handleUndo = async taskId => {
     try {
       const taskUpdateDate = Date.now();
@@ -103,7 +112,7 @@ export default class AllTasks extends Component {
             console.log("Task completed.");
           },
           error => {
-            console.log(error);
+            console.log("Error occured making task complete");
           }
         );
 
@@ -119,7 +128,6 @@ export default class AllTasks extends Component {
     }
   };
 
-  /* istanbul ignore next */
   handleWarningClick = async (taskId, taskName) => {
     await this.setState({
       openWarning: true,
@@ -128,7 +136,6 @@ export default class AllTasks extends Component {
     });
   };
 
-  /* istanbul ignore next */
   handleWarningClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -145,15 +152,7 @@ export default class AllTasks extends Component {
     const { tasks, open, openWarning, taskName, taskId } = this.state;
 
     // Sort by date and not include finished tasks
-    const filteredTasks = tasks
-      .sort((a, b) => {
-        const dueDate = moment(a.taskDueDate).format("YYYY-MM-DD HH:mm:ss");
-        const dueDate2 = moment(b.taskDueDate).format("YYYY-MM-DD HH:mm:ss");
-
-        if (dueDate > dueDate2) return 1;
-        else return -1;
-      })
-      .filter(task => !task.isTaskComplete);
+    const filteredTasks = sortByDate(tasks);
 
     const headers = [
       "Task",
@@ -172,9 +171,9 @@ export default class AllTasks extends Component {
           }}
         >
           {matches => (
-            <div>
+            <div data-testid="all-tasks-table">
               {matches.small && (
-                <>
+                <div data-testid="mobile-view">
                   <MobileTable
                     tasks={filteredTasks}
                     title="All Tasks"
@@ -187,29 +186,31 @@ export default class AllTasks extends Component {
                   />
 
                   <MobileAddButtons />
-                </>
+                </div>
               )}
 
               {matches.large && (
-                <TaskTable
-                  tasks={filteredTasks}
-                  title="All Tasks"
-                  headers={headers}
-                  isTaskDescription={true}
-                  isTaskDifficulty={true}
-                  isEdit={true}
-                  isDelete={true}
-                  handleComplete={this.handleComplete}
-                  handleWarningClick={this.handleWarningClick}
-                  isSuggestedTable={false}
-                  token={this.props.token}
-                />
+                <div data-testid="desktop-view">
+                  <TaskTable
+                    tasks={filteredTasks}
+                    title="All Tasks"
+                    headers={headers}
+                    isTaskDescription={true}
+                    isTaskDifficulty={true}
+                    isEdit={true}
+                    isDelete={true}
+                    handleComplete={this.handleComplete}
+                    handleWarningClick={this.handleWarningClick}
+                    isSuggestedTable={false}
+                    token={this.props.token}
+                  />
+                </div>
               )}
             </div>
           )}
         </Media>
 
-        <div>
+        <div data-testid="action-messages">
           <UndoMessage
             open={open}
             handleClose={this.handleClose}

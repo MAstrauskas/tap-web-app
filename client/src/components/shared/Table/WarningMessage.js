@@ -44,6 +44,7 @@ export default function WarningMessage({
             </Typography>
             <div className={classes.buttons}>
               <Button
+                data-testid="warning-button-yes"
                 style={{ color: `${Theme.colors.fourth}` }}
                 size="small"
                 onClick={() => {
@@ -53,7 +54,12 @@ export default function WarningMessage({
               >
                 Yes
               </Button>
-              <Button color="inherit" size="small" onClick={handleClose}>
+              <Button
+                data-testid="warning-button-no"
+                color="inherit"
+                size="small"
+                onClick={handleClose}
+              >
                 No
               </Button>
             </div>

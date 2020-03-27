@@ -67,11 +67,13 @@ export default class TaskCheckbox extends Component {
     return (
       <div>
         <Checkbox
-          data-testid="Checkbox"
           checked={checked}
           onChange={this.handleEdit}
           value="primary"
-          inputProps={{ "aria-label": "make task complete" }}
+          inputProps={{
+            "aria-label": "make task complete",
+            "data-testid": "make-task-complete"
+          }}
         />
       </div>
     );

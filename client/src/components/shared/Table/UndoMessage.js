@@ -7,6 +7,7 @@ import CloseIcon from "@material-ui/icons/Close";
 export default function UndoMessage({ open, handleClose, handleUndo }) {
   return (
     <Snackbar
+      data-testid="undo-message"
       anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       open={open}
       autoHideDuration={10000}
@@ -14,10 +15,16 @@ export default function UndoMessage({ open, handleClose, handleUndo }) {
       message="Task completed"
       action={
         <Fragment>
-          <Button color="secondary" size="small" onClick={handleUndo}>
+          <Button
+            data-testid="undo-button"
+            color="secondary"
+            size="small"
+            onClick={handleUndo}
+          >
             UNDO
           </Button>
           <IconButton
+            data-testid="close-undo-message"
             size="small"
             aria-label="close"
             color="inherit"
