@@ -162,7 +162,12 @@ function MoodForm({
           )}
         </FormControl>
 
-        <AddButton variant="contained" type="submit" disabled={!isValid}>
+        <AddButton
+          data-testid="add-mood-button"
+          variant="contained"
+          type="submit"
+          disabled={!isValid}
+        >
           Add Mood
         </AddButton>
 

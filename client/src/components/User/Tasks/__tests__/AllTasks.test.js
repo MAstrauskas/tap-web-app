@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitForElement } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { useAuth0 } from "../../../../react-auth0-spa";
 import { BrowserRouter as Router } from "react-router-dom";

@@ -182,7 +182,12 @@ function TaskForm({
           )}
         </FormControl>
 
-        <AddButton variant="contained" type="submit" disabled={!isValid}>
+        <AddButton
+          data-testid="add-button"
+          variant="contained"
+          type="submit"
+          disabled={!isValid}
+        >
           {title === "Add a Task" ? "Add Task" : "Edit Task"}
         </AddButton>
 

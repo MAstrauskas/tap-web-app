@@ -114,7 +114,7 @@ class AddTask extends Component {
     });
 
     return (
-      <CustomPaper elevation={3}>
+      <CustomPaper elevation={3} data-testid="add-task-form">
         <Formik
           initialValues={{
             taskName: "",
