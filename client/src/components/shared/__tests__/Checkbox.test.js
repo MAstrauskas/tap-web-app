@@ -3,10 +3,7 @@ import { cleanup } from "@testing-library/react";
 import Enzyme, { render, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { useAuth0 } from "../../../react-auth0-spa";
-
 import Checkbox from "../Checkbox";
-
-afterEach(cleanup);
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -21,6 +18,8 @@ describe("Checkbox", () => {
       loginWithRedirect: jest.fn()
     });
   });
+
+  afterEach(cleanup);
 
   it("renders correctly", () => {
     const {} = render(<Checkbox />);
