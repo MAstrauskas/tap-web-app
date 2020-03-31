@@ -9,7 +9,6 @@ import WarningMessage from "../../shared/Table/WarningMessage";
 import MobileAddButtons from "../../shared/MobileAddButtons";
 
 import sortByPriority from "../../helpers/sortByPriority";
-import sortyByPriority from "../../helpers/sortByPriority";
 
 export default class Home extends Component {
   state = {
@@ -152,7 +151,7 @@ export default class Home extends Component {
     const { tasks, open, openWarning, taskName, taskId } = this.state;
 
     const allUncompletedTasks = tasks.filter(task => !task.isTaskComplete);
-    const suggestedTasks = sortyByPriority(
+    const suggestedTasks = sortByPriority(
       tasks.filter(task => task.isTaskSuggested && !task.isTaskComplete)
     );
     const headers = ["Task", "Due Date", "Priority"];

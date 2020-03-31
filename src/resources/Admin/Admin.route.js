@@ -1,7 +1,7 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import AdminController from "./Admin.controller";
 
-const AdminController = require("./Admin.controller");
+const router = express.Router();
 
 /**
  * @route POST api/admin/clear-suggest

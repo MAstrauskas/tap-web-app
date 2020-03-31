@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 
 // Job that clears all of the users
 // moods and suggested tasks at midnight

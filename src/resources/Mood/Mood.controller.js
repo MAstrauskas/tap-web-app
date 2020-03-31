@@ -1,5 +1,5 @@
-const Mood = require("./Mood.model");
-const MoodCalculator = require("./helpers/MoodCalculator");
+import Mood from "./Mood.model";
+import MoodCalculator from "./helpers/MoodCalculator";
 
 /**
  * GET /api/mood/id

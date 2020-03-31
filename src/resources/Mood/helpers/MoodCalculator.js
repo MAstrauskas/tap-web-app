@@ -1,4 +1,4 @@
-const Users = require("../../User/User.model");
+import Users from "../../User/User.model";
 
 /**
  * This function calculates the mood and productivity

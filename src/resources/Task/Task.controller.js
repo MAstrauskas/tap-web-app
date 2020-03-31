@@ -1,5 +1,5 @@
-const Task = require("./Task.model");
-const TaskSuggester = require("./helpers/TaskSuggester");
+import Task from "./Task.model";
+import TaskSuggester from "./helpers/TaskSuggester";
 
 /**
  * GET /api/tasks

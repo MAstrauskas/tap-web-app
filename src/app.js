@@ -1,15 +1,15 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const path = require("path");
+import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import path from "path";
 
-const jwt = require("express-jwt");
-const jwks = require("jwks-rsa");
+import jwt from "express-jwt";
+import jwks from "jwks-rsa";
 
-const user = require("./resources/User/User.route");
-const task = require("./resources/Task/Task.route");
-const mood = require("./resources/Mood/Mood.route");
-const admin = require("./resources/Admin/Admin.route");
+import user from "./resources/User/User.route";
+import task from "./resources/Task/Task.route";
+import mood from "./resources/Mood/Mood.route";
+import admin from "./resources/Admin/Admin.route";
 
 const app = express();
 

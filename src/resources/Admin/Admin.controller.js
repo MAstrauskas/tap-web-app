@@ -1,5 +1,5 @@
-const Task = require("../Task/Task.model");
-const User = require("../User/User.model");
+import Task from "../Task/Task.model";
+import User from "../User/User.model";
 
 /**
  * POST /api/admin/clear-suggest

@@ -90,7 +90,6 @@ function Account({ name, userEmail, k }) {
                     data-testid="user-name"
                     name="userName"
                     label="MY NAME"
-                    data-testid="user-name"
                     value={values.userName}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -112,7 +111,6 @@ function Account({ name, userEmail, k }) {
                     data-testid="user-email"
                     name="userEmail"
                     label="MY EMAIL"
-                    data-testid="user-email"
                     value={values.userEmail}
                     onChange={handleChange}
                     onBlur={handleBlur}

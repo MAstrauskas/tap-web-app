@@ -1,7 +1,7 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import MoodController from "./Mood.controller";
 
-const MoodController = require("./Mood.controller");
+const router = express.Router();
 
 /**
  * @route GET api/mood/id

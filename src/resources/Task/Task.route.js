@@ -1,7 +1,7 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import TaskController from "./Task.controller";
 
-const TaskController = require("./Task.controller");
+const router = express.Router();
 
 /**
  * @route GET api/tasks
