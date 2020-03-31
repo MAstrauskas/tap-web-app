@@ -1,5 +1,6 @@
-const Users = require("../../User/User.model");
-const Task = require("../Task.model");
+import Users from "../../User/User.model";
+import Task from "../Task.model";
+import "regenerator-runtime/runtime";
 
 /**
  * This function calculates the task group and
