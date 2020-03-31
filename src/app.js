@@ -11,6 +11,9 @@ import task from "./resources/Task/Task.route";
 import mood from "./resources/Mood/Mood.route";
 import admin from "./resources/Admin/Admin.route";
 
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 const app = express();
 
 require("dotenv").config();
@@ -19,6 +22,33 @@ require("dotenv").config();
 if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
   throw "Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file";
 }
+
+const clientAuth = jwks({
+  jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+});
+
+export const verifyAuth0Token = async token => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, getKey, { algorithms: ["RS256"] }, (err, decoded) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(decoded);
+    });
+  });
+};
+
+const getKey = (header, callback) => {
+  clientAuth.getSigningKey(header.kid, function(err, key) {
+    if (err) {
+      callback(err);
+      return;
+    }
+    const signingKey = key.getPublicKey();
+    callback(null, signingKey);
+  });
+};
 
 const jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
