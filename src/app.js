@@ -34,12 +34,12 @@ const jwtCheck = jwt({
 
 app.use(bodyParser.json());
 
-// DB Config
-const db = require("./config/options").dbTestUrl;
-
 // Connect to MongoDB
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_URL}/${process.env.DB_ENV_PROD}?retryWrites=true&w=majority`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 

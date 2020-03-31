@@ -7,8 +7,6 @@ const User = require("./User.model");
  * @param {any} req
  * @param {any} res
  **/
-
-/* istanbul ignore next */
 exports.userList = (req, res, next) => {
   User.find({}, function(err, users) {
     if (err) {
@@ -28,8 +26,6 @@ exports.userList = (req, res, next) => {
  * @param {any} req
  * @param {any} res
  **/
-
-/* istanbul ignore next */
 exports.userGet = (req, res, next) => {
   console.log(req.params.email);
 
@@ -52,8 +48,6 @@ exports.userGet = (req, res, next) => {
  * @param {any} req
  * @param {any} res
  **/
-
-/* istanbul ignore next */
 exports.addUser_post = (req, res, next) => {
   const fullName = req.body.name.split(" ");
 

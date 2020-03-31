@@ -10,10 +10,11 @@
     "server": "nodemon src/server.js",
     "client": "yarn --cwd client start",
     "dev": "concurrently -r \"yarn run server\" \"yarn run client\"",
-    "test": "_mocha src/**/*.spec.js",
+    "test-server": "jest --watchAll=true",
+    "test-coverage": "jest --collectCoverage --watchAll=false",
     "test-client": "cd client && yarn test",
     "test-client-coverage": "cd client && yarn test-coverage",
-    "test-coverage": "istanbul cover _mocha src/**/*.spec.js",
+    "test-full": "yarn test-server && yarn test-client-coverage",
     "heroku-postbuild": "cd client && yarn && yarn build",
     "client-dependencies": "cd client && yarn"
   },
@@ -55,6 +56,10 @@
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "client/src"
     ]
   }
 }
