@@ -5,9 +5,11 @@
   "author": "Mantas Astrauskas",
   "main": "server.js",
   "scripts": {
-    "build": "babel index.js --out-file index-compiled.js",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel -d ./build ./src -s",
+    "build": "yarn clean && yarn build-babel",
+    "start": "yarn build && node ./build/server.js",
     "client-install": "yarn --cwd client",
-    "start": "node src/server.js",
     "server": "nodemon --exec babel-node src/server.js",
     "client": "yarn --cwd client start",
     "dev": "concurrently -r \"yarn run server\" \"yarn run client\"",
