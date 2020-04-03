@@ -27,16 +27,13 @@ exports.userList = (req, res, next) => {
  * @param {any} res
  **/
 exports.userGet = (req, res, next) => {
-  console.log(req.params.email);
-
   User.find({ email: req.params.email }, function(err, user) {
     if (err) {
       console.log("Error finding a specific user");
 
-      return next();
+      next();
     }
 
-    console.log(user);
     res.json(user);
   });
 };

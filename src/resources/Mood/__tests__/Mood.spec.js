@@ -7,7 +7,7 @@ describe("Mood", () => {
   beforeAll(async () => {
     await mongoose.connect(
       global.__MONGO_URI__,
-      { useNewUrlParser: true, useCreateIndex: true },
+      { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
       err => {
         if (err) {
           console.error(err);
@@ -15,6 +15,10 @@ describe("Mood", () => {
         }
       }
     );
+  });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
   });
 
   it("should create a mood and add into the database", async () => {
@@ -120,12 +124,6 @@ describe("Mood", () => {
   });
 
   it("should throw an error if provided mood format is wrong", async () => {
-    const mockMoodData = {
-      mood: "__MOOD_NAME__",
-      moodMotivation: "__MOOD_MOTIVATION__",
-      isTired: false
-    };
-
     const res = await request(app).post("/api/mood/add");
 
     expect(res.statusCode).toEqual(500);
