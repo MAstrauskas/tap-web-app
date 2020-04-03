@@ -1,37 +1,35 @@
-const sinon = require("sinon");
-const sinonTest = require("sinon-test");
-const test = sinonTest(sinon);
+import mongoose from "mongoose";
+import request from "supertest";
+import UserModel from "../User.model";
+import app from "../../../app";
 
-const UserController = require("../User.controller");
-const User = require("../User.model");
-
-describe("User Controller", () => {
-  let req = {
-    body: {},
-    expectedResult: {
-      firstName: "__FIRST_NAME__",
-      lastName: "__LAST_NAME__",
-      email: "__EMAIL__"
-    }
-  };
-
-  beforeEach(() => {
-    res = {
-      json: sinon.spy(),
-      status: sinon.stub().returns({ end: sinon.spy() })
-    };
+describe("User", () => {
+  beforeAll(async () => {
+    await mongoose.connect(
+      global.__MONGO_URI__,
+      { useNewUrlParser: true, useCreateIndex: true },
+      err => {
+        if (err) {
+          console.error(err);
+          process.exit(1);
+        }
+      }
+    );
   });
 
-  it(
-    "should get a list of users from the database",
-    test(function() {
-      expectedResult = req.expectedResult;
-      this.stub(User, "find").yields(null, expectedResult);
+  it("should create the user and add into the database", async () => {
+    const userData = {
+      firstName: "__FIRST_NAME__",
+      lastName: "__LAST_NAME__",
+      email: "test@email.com"
+    };
 
-      UserController.userList(req, res);
+    const validUser = new UserModel(userData);
+    const savedUser = await validUser.save();
 
-      sinon.assert.calledWith(User.find, {});
-      sinon.assert.calledWith(res.json, sinon.match(expectedResult));
-    })
-  );
+    expect(savedUser._id).toBeDefined();
+    expect(savedUser.firstName).toBe(userData.firstName);
+    expect(savedUser.lastName).toBe(userData.lastName);
+    expect(savedUser.email).toBe(userData.email);
+  });
 });

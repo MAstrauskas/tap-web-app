@@ -1,4 +1,5 @@
 import Users from "../../User/User.model";
+import "regenerator-runtime/runtime";
 
 /**
  * This function calculates the mood and productivity

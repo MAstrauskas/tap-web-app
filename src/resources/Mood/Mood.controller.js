@@ -19,7 +19,6 @@ exports.moodDetail = (req, res, next) => {
     }
   })
     .then(mood => {
-      console.log(mood);
       return res.json(mood);
     })
     .catch(next);

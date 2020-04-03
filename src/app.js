@@ -3,8 +3,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import path from "path";
 
-import jwt from "express-jwt";
-import jwks from "jwks-rsa";
+import authorize from "./authorize";
 
 import user from "./resources/User/User.route";
 import task from "./resources/Task/Task.route";
@@ -14,8 +13,6 @@ import admin from "./resources/Admin/Admin.route";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-const app = express();
-
 require("dotenv").config();
 
 // Authentication & Authorizatioin
@@ -23,46 +20,11 @@ if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
   throw "Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file";
 }
 
-const clientAuth = jwks({
-  jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
-});
-
-export const verifyAuth0Token = async token => {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, getKey, { algorithms: ["RS256"] }, (err, decoded) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(decoded);
-    });
-  });
-};
-
-const getKey = (header, callback) => {
-  clientAuth.getSigningKey(header.kid, function(err, key) {
-    if (err) {
-      callback(err);
-      return;
-    }
-    const signingKey = key.getPublicKey();
-    callback(null, signingKey);
-  });
-};
-
-const jwtCheck = jwt({
-  secret: jwks.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
-  }),
-  audience: process.env.AUTH0_AUDIENCE,
-  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-  algorithms: ["RS256"]
-});
-
-app.use(bodyParser.json());
+// Authentication middleware that verifies if
+// the token provided is a correct one.
+// Skips this check for tests
+const authMiddleware =
+  process.env.NODE_ENV !== "test" ? authorize() : (req, res, next) => next();
 
 // Connect to MongoDB
 mongoose
@@ -73,15 +35,14 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
+const app = express();
+
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../client/build")));
-
-// Use Routes
-app.use("/api/user", jwtCheck, user);
-app.use("/api/tasks", jwtCheck, task);
-app.use("/api/mood", jwtCheck, mood);
+app.use("/api/user", authMiddleware, user);
+app.use("/api/tasks", authMiddleware, task);
+app.use("/api/mood", authMiddleware, mood);
 app.use("/api/admin", admin);
-
-// Handles any requests that don't match the ones above
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "client/build/index.html"));
 });
