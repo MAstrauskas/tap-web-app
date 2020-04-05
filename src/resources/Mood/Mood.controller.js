@@ -1,5 +1,5 @@
 import Mood from "./Mood.model";
-import MoodCalculator from "./helpers/MoodCalculator";
+import { calculateMoodAndProductivity } from "./helpers/MoodCalculator";
 
 /**
  * GET /api/mood/id
@@ -41,7 +41,7 @@ exports.addMood_post = (req, res, next) => {
         );
     }
 
-    MoodCalculator.calculateMoodAndProductivity(
+    calculateMoodAndProductivity(
       req.body.email,
       req.body.moodName,
       req.body.moodMotivation,

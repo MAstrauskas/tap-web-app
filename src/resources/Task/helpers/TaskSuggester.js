@@ -31,7 +31,7 @@ import "regenerator-runtime/runtime";
  *
  * The max total points can be 4 and the minimum - 1.25.
  */
-exports.calculateTaskSuggestion = async (email, tasks) => {
+const calculateTaskSuggestion = async (email, tasks) => {
   let userProductivity = 0;
 
   /**
@@ -242,7 +242,7 @@ function calculateTaskGroup(totalPoints) {
  * suggested first and then Group 2-3 if there's enough
  * space.
  */
-exports.makeTaskSuggested = async (email, tasks) => {
+const makeTaskSuggested = async (email, tasks) => {
   let userProductivity = 0;
   let countUserProductivity = 0;
 
@@ -305,4 +305,11 @@ exports.makeTaskSuggested = async (email, tasks) => {
         }
       });
     });
+};
+
+export {
+  calculateTaskSuggestion,
+  makeTaskSuggested,
+  calculateForDeadline,
+  calculateTaskGroup
 };

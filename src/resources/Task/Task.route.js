@@ -11,13 +11,6 @@ const router = express.Router();
 router.get("/:email", TaskController.taskList);
 
 /**
- * @route GET api/tasks/id
- * @desc GET request for one Task
- * @access Public
- **/
-router.get("/:id", TaskController.taskDetail);
-
-/**
  * @route POST api/tasks/add
  * @desc POST request for creating and adding a Task
  * @access Public
@@ -53,14 +46,14 @@ router.get("/completed/all", TaskController.tasksCompleted_get);
 router.patch("/completed", TaskController.tasksCompleted);
 
 /**
- * @route GET api/tasks/calculate-suggest
+ * @route GET api/tasks/calculate-suggest/email
  * @desc Get Calculates suggested tasks
  * @access Public
  **/
 router.get("/calculate-suggest/:email", TaskController.taskCalculateSuggest);
 
 /**
- * @route GET api/tasks/make-suggest
+ * @route GET api/tasks/make-suggest/email
  * @desc Get Make Tasks Suggested
  * @access Public
  **/

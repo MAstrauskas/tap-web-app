@@ -1,5 +1,8 @@
 import Task from "./Task.model";
-import TaskSuggester from "./helpers/TaskSuggester";
+import {
+  calculateTaskSuggestion,
+  makeTaskSuggested
+} from "./helpers/TaskSuggester";
 
 /**
  * GET /api/tasks
@@ -12,27 +15,6 @@ exports.taskList = (req, res, next) => {
   Task.find({ email: req.params.email }, (err, tasks) => {
     res.send({ tasks: tasks });
   }).catch(next);
-};
-
-/**
- * GET /api/tasks/id
- *
- * @export
- * @param {any} req
- * @param {any} res
- **/
-exports.taskDetail = (req, res, next) => {
-  Task.findOne({ _id: req.params.id }, function(err, task) {
-    if (err) {
-      res
-        .status(500)
-        .send(
-          "Error occured trying to find a task. Please check if the information is correct."
-        );
-    }
-
-    return res.json(task);
-  });
 };
 
 /**
@@ -63,9 +45,9 @@ exports.addTask_post = async (req, res, next) => {
         .send(
           "Error occured while trying to add a task. Please check if the information is correct"
         );
+    } else {
+      res.send("Task has been added - " + `"${task.taskName}"`);
     }
-
-    res.send("Task has been added - " + `"${task.taskName}"`);
   });
 };
 
@@ -97,9 +79,9 @@ exports.editTask_post = (req, res, next) => {
         .send(
           "Error occured while trying to edit a task. Please check if the information is correct"
         );
+    } else {
+      res.send("Task has been updated.");
     }
-
-    res.send("Task has been updated.");
   });
 };
 
@@ -111,11 +93,9 @@ exports.editTask_post = (req, res, next) => {
  * @param {any} res
  **/
 exports.deleteTask_post = async (req, res, next) => {
-  const resultMessage = await Task.findByIdAndDelete(req.params.id)
-    .then(() => console.log("Task deleted."))
-    .catch(next);
-
-  res.json({ resultMessage });
+  await Task.findByIdAndDelete(req.params.id)
+    .then(() => res.send("Task deleted."))
+    .catch(() => res.status(500).send("Error occured deleting a task."));
 };
 
 /**
@@ -154,11 +134,11 @@ exports.tasksCompleted = (req, res, next) => {
       res
         .status(500)
         .send(
-          "Error occured while trying to add a task to completed list Please check if the information is correct"
+          "Error occured while trying to add a task to completed list. Please check if the information is correct."
         );
+    } else {
+      res.send("Task has been updated.");
     }
-
-    res.send("Task has been updated.");
   });
 };
 
@@ -171,7 +151,7 @@ exports.tasksCompleted = (req, res, next) => {
  **/
 exports.taskCalculateSuggest = (req, res, next) => {
   Task.find({ email: req.params.email }, async (err, tasks) => {
-    await TaskSuggester.calculateTaskSuggestion(req.params.email, tasks);
+    await calculateTaskSuggestion(req.params.email, tasks);
 
     await res.send({ tasks: tasks });
   }).catch(next);
@@ -186,7 +166,7 @@ exports.taskCalculateSuggest = (req, res, next) => {
  **/
 exports.taskMakeSuggest = (req, res, next) => {
   Task.find({ email: req.params.email }, async (err, tasks) => {
-    await TaskSuggester.makeTaskSuggested(req.params.email, tasks);
+    await makeTaskSuggested(req.params.email, tasks);
 
     await res.send({ tasks: tasks });
   }).catch(next);

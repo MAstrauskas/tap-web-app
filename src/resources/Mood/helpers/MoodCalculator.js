@@ -13,7 +13,7 @@ import "regenerator-runtime/runtime";
  * The possible points that the userProductivity field
  * can have are between 13 and 5 inclusive.
  */
-exports.calculateMoodAndProductivity = async (
+const calculateMoodAndProductivity = async (
   email,
   mood,
   motivation,
@@ -79,3 +79,5 @@ function productivityCalculator(points, motivation, isTired) {
 
   return productivityLevel;
 }
+
+export { calculateMoodAndProductivity, productivityCalculator };
