@@ -16,7 +16,7 @@ export default function FAQ() {
         How does this app work?
       </Typography>
       <Typography variant="body1" gutterBottom>
-        In this application, you can manage your own tasks the way you want it.
+        In this application, you can manage your tasks the way you want it.
         Every task is added to the 'All Tasks' page which you can find in the
         side navigation. Once you add some tasks, they will be sorted by date &
         priority. To see the suggested tasks, you need to add a mood so that the
@@ -46,7 +46,7 @@ export default function FAQ() {
         gutterBottom
         style={{ paddingTop: "1rem" }}
       >
-        Do I need to input my mood every time I login?
+        Do I need to input my mood every time I log in?
       </Typography>
       <Typography variant="body1" gutterBottom>
         No, you don't need to input your mood every time you log in. The system
@@ -63,8 +63,8 @@ export default function FAQ() {
         Do I need to input my mood first and then add tasks or vice versa?
       </Typography>
       <Typography variant="body1" gutterBottom>
-        You should add your tasks first and then add your mood details in order
-        to make the application work at its best.
+        You should add your tasks first and then add your mood details to make
+        the application work at its best.
       </Typography>
       <Typography
         variant="h4"
