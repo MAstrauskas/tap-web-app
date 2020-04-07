@@ -11,7 +11,7 @@ describe("Error", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   beforeEach(() => {
@@ -20,27 +20,18 @@ describe("Error", () => {
       isAuthenticated: false,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
   });
 
-  it("Shows unauthorized if errCode is 401 and user is not logged in", () => {
-    const { getByText } = render(
-      <Router>
-        <Error errCode="401" />
-      </Router>
-    );
-
-    getByText("401 - Unauthorized");
-  });
-
-  it("Shows page not found if errCode is not 401 and user is not logged in", () => {
+  it("should show an error page if the wrong url is entered", () => {
     const { getByText } = render(
       <Router>
         <Error />
       </Router>
     );
 
-    getByText("404 - page not found");
+    getByText("Looks like you've lost!");
+    getByText("The page you have tried to access does not exist.");
   });
 });
