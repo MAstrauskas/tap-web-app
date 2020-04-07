@@ -1,88 +1,79 @@
 import React from "react";
-import Layout from "../Layout/Layout";
-import styled from "@emotion/styled";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import Theme from "../shared/Theme/Theme";
 
-const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 15% auto;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  toolbar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 0,
+    paddingTop: theme.spacing(12),
+    paddingBottom: theme.spacing(12),
+  },
+  errorMessage: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    margin: "15% auto",
+  },
+  subTitle: {
+    margin: "auto 30%",
+    marginBottom: "30px",
+    textAlign: "center",
+    fontSize: `${Theme.fontSize.small}`,
+  },
+}));
 
-  @media screen and (max-width: 1000px) {
-    h1 {
-      font-size: ${Theme.fontSize.xlarge};
-    }
+const BackButton = styled(Button)({
+  backgroundColor: `${Theme.colors.third}`,
+  color: `${Theme.colors.black}`,
+  marginTop: "1rem",
 
-    span {
-      margin: auto 20%;
-      margin-bottom: 30px;
-    }
-  }
+  "&:hover": {
+    backgroundColor: `${Theme.colors.first}`,
+  },
+});
 
-  @media screen and (max-width: 600px) {
-    h1 {
-      font-size: ${Theme.fontSize.large};
-      margin: auto;
-    }
+const Error = () => {
+  const classes = useStyles();
+  const history = useHistory();
 
-    span {
-      font-size: ${Theme.fontSize.small};
-      margin: auto 10%;
-      margin-bottom: 30px;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    h1 {
-      font-size: ${Theme.fontSize.medium};
-      margin-top: 25%;
-      margin-bottom: 10%;
-    }
-
-    span {
-      font-size: ${Theme.fontSize.xsmall};
-    }
-  }
-
-  @media screen and (max-width: 370px) {
-    h1 {
-      font-size: ${Theme.fontSize.small};
-    }
-  }
-`;
-
-const Title = styled.h1``;
-
-const SubTitle = styled.span`
-  margin: auto 30%;
-  margin-bottom: 30px;
-  text-align: center;
-  font-size: ${Theme.fontSize.small};
-`;
-
-const Error = ({ errCode }) => {
   return (
     <div>
-      <Layout>
-        <Content>
-          {errCode === "401" ? (
-            <>
-              <Title>401 - Unauthorized</Title>
-              <SubTitle>
-                Make sure that you have access to the app by login/register
-              </SubTitle>
-            </>
-          ) : (
-            <>
-              <Title>404 - page not found</Title>
-              <SubTitle>
-                Make sure that you have access to the app by login/register
-              </SubTitle>
-            </>
-          )}
-        </Content>
-      </Layout>
+      <Grid container justify="center">
+        <main className={classes.content}>
+          <div className={classes.toolbar}>
+            <div className={classes.errorMessage}>
+              <Typography variant="h4" component="h4" gutterBottom>
+                Looks like you've lost!
+              </Typography>
+              <Typography
+                variant="body1"
+                component="body1"
+                gutterBottom
+                className={classes.subTitle}
+              >
+                The page you have tried to access does not exist.
+              </Typography>
+
+              <BackButton onClick={history.goBack}>Go back</BackButton>
+            </div>
+          </div>
+        </main>
+      </Grid>
     </div>
   );
 };

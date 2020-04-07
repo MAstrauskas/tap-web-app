@@ -22,18 +22,18 @@ import Error from "./components/Error/Error";
 import "./App.css";
 import "typeface-roboto";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     height: "100%",
     justifyContent: "center",
     "& > * + *": {
-      marginLeft: theme.spacing(12)
-    }
+      marginLeft: theme.spacing(12),
+    },
   },
   loader: {
-    marginTop: "25%"
-  }
+    marginTop: "25%",
+  },
 }));
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
     return authToken;
   };
 
-  getToken().then(t => setToken(t));
+  getToken().then((t) => setToken(t));
 
   /* istanbul ignore next */
   if (loading) {
@@ -64,40 +64,32 @@ function App() {
       <MuiPickersUtilsProvider utils={LuxonUtils}>
         <div className="App">
           <Switch>
-            <Route path="/home">
-              {isAuthenticated && idToken !== undefined ? (
+            <Route exact path="/home">
+              {isAuthenticated && idToken !== undefined && (
                 <Layout>
                   <Home userEmail={user.email} token={idToken} />
                 </Layout>
-              ) : (
-                <Error errCode="401" />
               )}
             </Route>
-            <Route path="/account">
-              {isAuthenticated ? (
+            <Route exact path="/account">
+              {isAuthenticated && (
                 <Layout>
                   <Account name={user.name} userEmail={user.email} />
                 </Layout>
-              ) : (
-                <Error errCode="401" />
               )}
             </Route>
-            <Route path="/faq">
-              {isAuthenticated ? (
+            <Route exact path="/faq">
+              {isAuthenticated && (
                 <Layout>
                   <FAQ userEmail={user.email} />
                 </Layout>
-              ) : (
-                <Error errCode="401" />
               )}
             </Route>
-            <Route path="/tasks/add">
-              {isAuthenticated && idToken !== undefined ? (
+            <Route exact path="/tasks/add">
+              {isAuthenticated && idToken !== undefined && (
                 <Layout>
                   <AddTask userEmail={user.email} token={idToken} />
                 </Layout>
-              ) : (
-                <Error errCode="401" />
               )}
             </Route>
             {isAuthenticated && idToken !== undefined && (
@@ -105,34 +97,28 @@ function App() {
                 <EditTask userEmail={user.email} token={idToken} />
               </Route>
             )}
-            <Route path="/tasks/all">
-              {isAuthenticated && idToken !== undefined ? (
+            <Route exact path="/tasks/all">
+              {isAuthenticated && idToken !== undefined && (
                 <Layout>
                   <AllTasks userEmail={user.email} token={idToken} />
                 </Layout>
-              ) : (
-                <Error errCode="401" />
               )}
             </Route>
-            <Route path="/tasks/moodist">
-              {isAuthenticated && idToken !== undefined ? (
+            <Route exact path="/tasks/moodist">
+              {isAuthenticated && idToken !== undefined && (
                 <Layout>
                   <Mood userEmail={user.email} token={idToken} />
                 </Layout>
-              ) : (
-                <Error errCode="401" />
               )}
             </Route>
-            <Route path="/tasks/summary">
-              {isAuthenticated && idToken !== undefined ? (
+            <Route exact path="/tasks/summary">
+              {isAuthenticated && idToken !== undefined && (
                 <Layout>
                   <Summary userEmail={user.email} token={idToken} />
                 </Layout>
-              ) : (
-                <Error errCode="401" />
               )}
             </Route>
-            <Route path="/">
+            <Route exact path="/">
               <Layout>
                 {isAuthenticated && idToken !== undefined ? (
                   <Welcome
@@ -146,6 +132,7 @@ function App() {
                 )}
               </Layout>
             </Route>
+            <Route component={Error} />
           </Switch>
         </div>
       </MuiPickersUtilsProvider>
