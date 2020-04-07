@@ -33,18 +33,18 @@ mongoose
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 const app = express();
 
-app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../client/build")));
+app.use(bodyParser.json());
 app.use("/api/user", authMiddleware, user);
 app.use("/api/tasks", authMiddleware, task);
 app.use("/api/mood", authMiddleware, mood);
 app.use("/api/admin", admin);
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "client/build/index.html"));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
 module.exports = app;
