@@ -17,7 +17,8 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Typography
+  Typography,
+  Tooltip,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -33,62 +34,62 @@ import Theme from "../shared/Theme/Theme";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     backgroundColor: `${Theme.colors.white}`,
     borderBottom: `2px solid ${Theme.colors.first}`,
-    boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`
+    boxShadow: `0px 4px 4px rgba(0, 0, 0, 0.25)`,
   },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
     marginRight: 36,
-    color: `${Theme.colors.first}`
+    color: `${Theme.colors.first}`,
   },
   rightGroup: {
-    marginLeft: "auto"
+    marginLeft: "auto",
   },
   hide: {
-    display: "none"
+    display: "none",
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
     backgroundColor: `${Theme.colors.white}`,
-    [theme.breakpoints.down("sm")]: { display: "none" }
+    [theme.breakpoints.down("sm")]: { display: "none" },
   },
   drawerOpen: {
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
+      duration: theme.transitions.duration.enteringScreen,
     }),
     backgroundColor: `${Theme.colors.white}`,
-    [theme.breakpoints.down("sm")]: { display: "flex" }
+    [theme.breakpoints.down("sm")]: { display: "flex" },
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     backgroundColor: `${Theme.colors.white}`,
     overflowX: "hidden",
     width: theme.spacing(7) + 1,
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1
-    }
+      width: theme.spacing(9) + 1,
+    },
   },
   toolbar: {
     display: "flex",
@@ -96,22 +97,22 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
     backgroundColor: `${Theme.colors.white}`,
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   links: {
     textDecoration: "none",
-    color: `${Theme.colors.white}`
+    color: `${Theme.colors.white}`,
   },
   active: {
     backgroundColor: `${Theme.colors.first}`,
     color: `${Theme.colors.white}`,
     "& > div": {
-      "& > svg": { color: `${Theme.colors.white}` }
+      "& > svg": { color: `${Theme.colors.white}` },
     },
     "&:hover": {
-      backgroundColor: `${Theme.colors.fourth}`
-    }
-  }
+      backgroundColor: `${Theme.colors.fourth}`,
+    },
+  },
 }));
 
 const Navigation = () => {
@@ -123,7 +124,7 @@ const Navigation = () => {
 
   const userMenuOpen = Boolean(userMenu);
 
-  const handleUserMenu = event => {
+  const handleUserMenu = (event) => {
     setUserMenu(event.currentTarget);
   };
 
@@ -146,7 +147,7 @@ const Navigation = () => {
         position="fixed"
         color="transparent"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: open,
         })}
         data-testid="navigation"
       >
@@ -159,7 +160,7 @@ const Navigation = () => {
               onClick={handleDrawerOpen}
               edge="start"
               className={clsx(classes.menuButton, {
-                [classes.hide]: open
+                [classes.hide]: open,
               })}
             >
               <MenuIcon />
@@ -210,7 +211,7 @@ const Navigation = () => {
                   to="/account"
                   style={{
                     textDecoration: "none",
-                    color: `${Theme.colors.black}`
+                    color: `${Theme.colors.black}`,
                   }}
                 >
                   <MenuItem
@@ -233,13 +234,13 @@ const Navigation = () => {
           variant="permanent"
           className={clsx(classes.drawer, {
             [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
+            [classes.drawerClose]: !open,
           })}
           classes={{
             paper: clsx({
               [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open
-            })
+              [classes.drawerClose]: !open,
+            }),
           }}
         >
           <div className={classes.toolbar}>
@@ -262,7 +263,9 @@ const Navigation = () => {
               onClick={handleDrawerClose}
             >
               <ListItemIcon>
-                <TodayIcon />
+                <Tooltip title="Today" placement="right">
+                  <TodayIcon />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText primary="Today" />
             </ListItem>
@@ -276,7 +279,9 @@ const Navigation = () => {
               onClick={handleDrawerClose}
             >
               <ListItemIcon>
-                <ListIcon />
+                <Tooltip title="All Tasks" placement="right">
+                  <ListIcon />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText primary="All Tasks" />
             </ListItem>
@@ -290,7 +295,9 @@ const Navigation = () => {
               onClick={handleDrawerClose}
             >
               <ListItemIcon>
-                <AddCircleIcon />
+                <Tooltip title="Add a Task" placement="right">
+                  <AddCircleIcon />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText primary="Add a Task" />
             </ListItem>
@@ -304,7 +311,9 @@ const Navigation = () => {
               onClick={handleDrawerClose}
             >
               <ListItemIcon>
-                <MoodIcon />
+                <Tooltip title="Moodist" placement="right">
+                  <MoodIcon />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText primary="Moodist" />
             </ListItem>
@@ -318,7 +327,9 @@ const Navigation = () => {
               onClick={handleDrawerClose}
             >
               <ListItemIcon>
-                <DonutLargeIcon />
+                <Tooltip title="Summary" placement="right">
+                  <DonutLargeIcon />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText primary="Summary" />
             </ListItem>
@@ -332,7 +343,9 @@ const Navigation = () => {
               onClick={handleDrawerClose}
             >
               <ListItemIcon>
-                <HelpOutlineIcon />
+                <Tooltip title="FAQ" placement="right">
+                  <HelpOutlineIcon />
+                </Tooltip>
               </ListItemIcon>
               <ListItemText primary="FAQ" />
             </ListItem>
