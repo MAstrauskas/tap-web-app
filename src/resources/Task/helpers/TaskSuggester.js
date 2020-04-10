@@ -38,10 +38,10 @@ const calculateTaskSuggestion = async (email, tasks) => {
    * 1. FIND THE USER
    */
   await Users.find({ email })
-    .then(res => (userProductivity = res[0].userProductivity))
-    .catch(e => console.log("Cannot find the user. " + e));
+    .then((res) => (userProductivity = res[0].userProductivity))
+    .catch((e) => console.log("Cannot find the user. " + e));
 
-  tasks.map(task => {
+  tasks.map((task) => {
     /**
      * 2. CALCULATION OF TOTAL POINTS BASED ON DEADLINE, PRIORITY & DIFFICULTY OF THE TASK
      */
@@ -111,7 +111,7 @@ const calculateTaskSuggestion = async (email, tasks) => {
 
     const data = {
       taskGroup: taskGroup,
-      taskTotalPoints: totalPoints
+      taskTotalPoints: totalPoints,
     };
 
     Task.findByIdAndUpdate(task._id, data, (err, task) => {
@@ -226,7 +226,7 @@ function calculateTaskGroup(totalPoints) {
 }
 
 /**
- * This function makes isSuggested field of each tasks
+ * This function makes isSuggested field for every task
  * either true or false based on the task group that
  * is calculated above.
  *
@@ -236,7 +236,7 @@ function calculateTaskGroup(totalPoints) {
  * based on the mood that the user inputs.
  *
  * In this function, every unfinished task is being
- * assigned a task starting from Group 1 to Group 3
+ * made suggested starting from Group 1 to Group 3
  * until the userProductivity (max nr) is reached.
  * This way, it makes sure that Group 1 tasks are being
  * suggested first and then Group 2-3 if there's enough
@@ -250,15 +250,15 @@ const makeTaskSuggested = async (email, tasks) => {
    * 1. FIND THE USER
    */
   await Users.find({ email })
-    .then(res => (userProductivity = res[0].userProductivity))
-    .catch(e => console.log("Cannot find the user. " + e));
+    .then((res) => (userProductivity = res[0].userProductivity))
+    .catch((e) => console.log("Cannot find the user. " + e));
 
   /**
    * 2. MAKE TASK IS SUGGESTED
    */
   await tasks
-    .filter(task => task.taskDueDate && !task.isTaskComplete)
-    .map(task => {
+    .filter((task) => task.taskDueDate && !task.isTaskComplete)
+    .map((task) => {
       const taskGroup = task.taskGroup;
       const taskPoints = task.taskTotalPoints;
 
@@ -294,7 +294,7 @@ const makeTaskSuggested = async (email, tasks) => {
        */
 
       const data = {
-        isTaskSuggested: isTaskSuggested
+        isTaskSuggested: isTaskSuggested,
       };
 
       Task.findByIdAndUpdate(task._id, data, (err, task) => {
@@ -311,5 +311,5 @@ export {
   calculateTaskSuggestion,
   makeTaskSuggested,
   calculateForDeadline,
-  calculateTaskGroup
+  calculateTaskGroup,
 };
