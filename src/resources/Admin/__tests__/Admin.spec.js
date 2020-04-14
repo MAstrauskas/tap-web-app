@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import request from "supertest";
 import TaskModel from "../../Task/Task.model";
-import UserModel from "../../User/User.model";
 import app from "../../../app";
 
 describe("Admin", () => {
@@ -9,7 +8,7 @@ describe("Admin", () => {
     await mongoose.connect(
       global.__MONGO_URI__,
       { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
-      err => {
+      (err) => {
         if (err) {
           console.error(err);
           process.exit(1);
@@ -32,7 +31,7 @@ describe("Admin", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const validTask = new TaskModel(taskData);
@@ -54,7 +53,7 @@ describe("Admin", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const validTask = new TaskModel(taskData);

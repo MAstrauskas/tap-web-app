@@ -33,17 +33,11 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
-    "express-jwt-authz": "^2.3.1",
     "istanbul": "^0.4.5",
     "jest": "^24.9.0",
     "jwks-rsa": "^1.7.0",
-    "method-override": "^3.0.0",
-    "mocha": "^7.0.1",
-    "mongo-mock": "^4.0.0",
     "mongoose": "^5.7.5",
-    "moxios": "^0.4.0",
-    "regenerator-runtime": "^0.13.5",
-    "superagent": "^5.2.1"
+    "regenerator-runtime": "^0.13.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -53,11 +47,7 @@
     "@shelf/jest-mongodb": "^1.1.5",
     "babel-jest": "^24.9.0",
     "codecov": "^3.6.5",
-    "mock-jwks": "^0.3.0",
-    "mongodb-memory-server": "^6.2.4",
-    "nock": "^12.0.3",
     "nodemon": "^1.19.4",
-    "sinon": "^8.1.1",
     "supertest": "^4.0.2"
   },
   "jest": {
