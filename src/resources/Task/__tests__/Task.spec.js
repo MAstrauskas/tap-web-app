@@ -9,7 +9,7 @@ describe("Task", () => {
     await mongoose.connect(
       global.__MONGO_URI__,
       { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
-      err => {
+      (err) => {
         if (err) {
           console.error(err);
           process.exit(1);
@@ -32,7 +32,7 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const validTask = new TaskModel(taskData);
@@ -60,7 +60,7 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const mockTaskData = [
@@ -73,7 +73,7 @@ describe("Task", () => {
         taskPriority: "High",
         taskDifficulty: "Medium",
         isTaskComplete: false,
-        isTaskSuggested: false
+        isTaskSuggested: false,
       },
       {
         email: "test@gmail.com",
@@ -84,8 +84,8 @@ describe("Task", () => {
         taskPriority: "High",
         taskDifficulty: "Medium",
         isTaskComplete: false,
-        isTaskSuggested: false
-      }
+        isTaskSuggested: false,
+      },
     ];
 
     const validTask = new TaskModel(taskData);
@@ -178,12 +178,10 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
-    const res = await request(app)
-      .post("/api/tasks/add")
-      .send(taskData);
+    const res = await request(app).post("/api/tasks/add").send(taskData);
 
     expect(res.statusCode).toEqual(200);
     expect(res.text).toEqual('Task has been added - "__TASK_NAME_3__"');
@@ -196,12 +194,10 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
-    const res = await request(app)
-      .post("/api/tasks/add")
-      .send(taskData);
+    const res = await request(app).post("/api/tasks/add").send(taskData);
 
     expect(res.statusCode).toEqual(500);
     expect(res.text).toEqual(
@@ -219,7 +215,7 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const validTask = new TaskModel(taskData);
@@ -233,7 +229,7 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const res = await request(app)
@@ -250,7 +246,7 @@ describe("Task", () => {
       taskName: "__TASK_NAME_4__",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const res = await request(app)
@@ -263,7 +259,7 @@ describe("Task", () => {
     );
   });
 
-  it("should delete a from the database", async () => {
+  it("should delete a task from the database", async () => {
     const taskData = {
       email: "test@gmail.com",
       taskName: "__TASK_NAME_5__",
@@ -273,7 +269,7 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const validTask = new TaskModel(taskData);
@@ -287,7 +283,7 @@ describe("Task", () => {
 
   it("should throw an error if editing the task was unsuccessful", async () => {
     const taskData = {
-      taskId: "123"
+      taskId: "123",
     };
 
     const res = await request(app).delete(
@@ -308,7 +304,7 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: true,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const expectedData = {
@@ -320,7 +316,7 @@ describe("Task", () => {
       taskDifficulty: "Medium",
       taskDueDate: "2020-04-03T00:00:00.000Z",
       taskName: "__TASK_NAME_6__",
-      taskPriority: "High"
+      taskPriority: "High",
     };
 
     const validTask = new TaskModel(taskData);
@@ -345,7 +341,7 @@ describe("Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const validTask = new TaskModel(taskData);
@@ -356,12 +352,10 @@ describe("Task", () => {
       taskUpdateDate: new Date("2020-04-01T00:00:00.000Z"),
       taskCompleteDate: new Date("2020-04-03T00:00:00.000Z"),
       isTaskComplete: true,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
-    const res = await request(app)
-      .patch("/api/tasks/completed")
-      .send(mockData);
+    const res = await request(app).patch("/api/tasks/completed").send(mockData);
 
     expect(res.statusCode).toEqual(200);
     expect(res.text).toBe("Task has been updated.");
@@ -369,12 +363,10 @@ describe("Task", () => {
 
   it("should throw an error if completing the task was unsuccessful", async () => {
     const taskData = {
-      id: "123"
+      id: "123",
     };
 
-    const res = await request(app)
-      .patch("/api/tasks/completed")
-      .send(taskData);
+    const res = await request(app).patch("/api/tasks/completed").send(taskData);
 
     expect(res.statusCode).toEqual(500);
     expect(res.text).toEqual(
@@ -384,21 +376,21 @@ describe("Task", () => {
 
   it("should calculate the suggested tasks", async () => {
     const taskData = {
-      email: "test@gmail.com"
+      email: "test@gmail.com",
     };
 
     const userData = {
       firstName: "__FIRST_NAME__",
       lastName: "__LAST_NAME__",
       email: "test@gmail.com",
-      userProductivity: 5
+      userProductivity: 5,
     };
 
     const validUser = new UserModel(userData);
     await validUser.save();
 
     const expectedData = {
-      email: "test@gmail.com"
+      email: "test@gmail.com",
     };
 
     const res = await request(app).get(
@@ -414,21 +406,21 @@ describe("Task", () => {
 
   it("should make the tasks suggested", async () => {
     const taskData = {
-      email: "test@gmail.com"
+      email: "test@gmail.com",
     };
 
     const userData = {
       firstName: "__FIRST_NAME__",
       lastName: "__LAST_NAME__",
       email: "test@gmail.com",
-      userProductivity: 5
+      userProductivity: 5,
     };
 
     const validUser = new UserModel(userData);
     await validUser.save();
 
     const expectedData = {
-      email: "test@gmail.com"
+      email: "test@gmail.com",
     };
 
     const res = await request(app).get(
