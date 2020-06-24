@@ -24,6 +24,11 @@ Steps are provided how to do both down below.
 
 1. Node - [Download Node.js](https://nodejs.org/en/download/)
 2. Yarn - [Install Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable)
+3. Auth0 - [Auth0](https://auth0.com)
+   * Since the application uses Auth0 for authentication and authorization, you will need to create auth0 account to get your own AUTH0 API keys that you need to add in the `.env` file before running the application.
+4. MongoDB - [MongoDB](https://mongodb.com) 
+   * This application uses the cloud version of the MongoDB so you will need to create MongoDB account and pass the relevant information in the `.env` in order to run the app locally.
+
 
 ## File Structure
 
