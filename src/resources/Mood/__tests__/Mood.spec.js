@@ -8,7 +8,7 @@ describe("Mood", () => {
     await mongoose.connect(
       global.__MONGO_URI__,
       { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
-      err => {
+      (err) => {
         if (err) {
           console.error(err);
           process.exit(1);
@@ -26,7 +26,7 @@ describe("Mood", () => {
       email: "test@email.com",
       moodName: "__MOOD_NAME__",
       moodMotivation: "__MOOD_MOTIVATION__",
-      isTired: false
+      isTired: false,
     };
 
     const validMood = new MoodModel(moodData);
@@ -44,7 +44,7 @@ describe("Mood", () => {
       email: "test@email.com",
       moodName: "__MOOD_NAME__",
       moodMotivation: "__MOOD_MOTIVATION__",
-      isTired: false
+      isTired: false,
     };
 
     const validMood = new MoodModel(moodData);
@@ -55,7 +55,7 @@ describe("Mood", () => {
       moodName: "__MOOD_NAME__",
       moodMotivation: "__MOOD_MOTIVATION__",
       isTired: false,
-      __v: 0
+      __v: 0,
     };
 
     const res = await request(app).get(`/api/mood/${savedMood._id}`);
@@ -83,7 +83,7 @@ describe("Mood", () => {
       moodName: "__MOOD_NAME__",
       moodMotivation: "__MOOD_MOTIVATION__",
       isTired: false,
-      __v: 0
+      __v: 0,
     };
 
     const res = await request(app).get(`/api/mood/${mockMoodData._id}`);
@@ -100,12 +100,10 @@ describe("Mood", () => {
       moodName: "__MOOD_NAME__",
       moodMotivation: "__MOOD_MOTIVATION__",
       isTired: false,
-      __v: 0
+      __v: 0,
     };
 
-    const res = await request(app)
-      .post("/api/mood/add")
-      .send(mockMoodData);
+    const res = await request(app).post("/api/mood/add").send(mockMoodData);
 
     expect(res.statusCode).toEqual(200);
     expect(JSON.parse(res.text)).toHaveProperty("email", mockMoodData.email);

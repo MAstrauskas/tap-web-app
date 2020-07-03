@@ -7,9 +7,6 @@
 
 This web application is a Task Activity Planner that helps the users to manage their daily tasks based on their mood. The users can add, edit, delete tasks or activities while also adding their current mood so that the system can suggest which tasks or activities should be completed first.
 
-# Demo
-
-
 ## Prerequisites
 
 1. Node - [Download Node.js](https://nodejs.org/en/download/)

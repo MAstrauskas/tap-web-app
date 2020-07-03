@@ -8,7 +8,7 @@ describe("User", () => {
     await mongoose.connect(
       global.__MONGO_URI__,
       { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
-      err => {
+      (err) => {
         if (err) {
           console.error(err);
           process.exit(1);
@@ -25,7 +25,7 @@ describe("User", () => {
     const userData = {
       firstName: "__FIRST_NAME__",
       lastName: "__LAST_NAME__",
-      email: "test@email.com"
+      email: "test@email.com",
     };
 
     const validUser = new UserModel(userData);
@@ -41,12 +41,12 @@ describe("User", () => {
     const userData2 = {
       firstName: "__FIRST_NAME_2__",
       lastName: "__LAST_NAME_2__",
-      email: "test2@email.com"
+      email: "test2@email.com",
     };
     const userData3 = {
       firstName: "__FIRST_NAME_3__",
       lastName: "__LAST_NAME_3__",
-      email: "test3@email.com"
+      email: "test3@email.com",
     };
 
     const validUser2 = new UserModel(userData2);
@@ -60,14 +60,14 @@ describe("User", () => {
         firstName: "__FIRST_NAME_2__",
         lastName: "__LAST_NAME_2__",
         email: "test2@email.com",
-        __v: 0
+        __v: 0,
       },
       {
         firstName: "__FIRST_NAME_3__",
         lastName: "__LAST_NAME_3__",
         email: "test3@email.com",
-        __v: 0
-      }
+        __v: 0,
+      },
     ];
 
     const res = await request(app).get("/api/user");
@@ -103,14 +103,14 @@ describe("User", () => {
     const userData4 = {
       firstName: "__FIRST_NAME_4__",
       lastName: "__LAST_NAME_4__",
-      email: "test4@email.com"
+      email: "test4@email.com",
     };
 
     const mockUsersData = {
       firstName: "__FIRST_NAME_4__",
       lastName: "__LAST_NAME_4__",
       email: "test4@email.com",
-      __v: 0
+      __v: 0,
     };
 
     const validUser = new UserModel(userData4);
@@ -136,19 +136,17 @@ describe("User", () => {
   it("should add a new user", async () => {
     const userData5 = {
       name: "__FIRST_NAME_5__ __LAST_NAME_5__",
-      email: "test5@email.com"
+      email: "test5@email.com",
     };
 
     const mockUsersData = {
       firstName: "__FIRST_NAME_5__",
       lastName: "__LAST_NAME_5__",
       email: "test5@email.com",
-      __v: 0
+      __v: 0,
     };
 
-    const res = await request(app)
-      .post("/api/user/add")
-      .send(userData5);
+    const res = await request(app).post("/api/user/add").send(userData5);
 
     expect(res.statusCode).toEqual(200);
     expect(JSON.parse(res.text)).toHaveProperty(

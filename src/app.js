@@ -8,7 +8,6 @@ import authorize from "./authorize";
 import user from "./resources/User/User.route";
 import task from "./resources/Task/Task.route";
 import mood from "./resources/Mood/Mood.route";
-import admin from "./resources/Admin/Admin.route";
 
 import "core-js/stable";
 import "regenerator-runtime/runtime";
@@ -42,7 +41,6 @@ app.use(bodyParser.json());
 app.use("/api/user", authMiddleware, user);
 app.use("/api/tasks", authMiddleware, task);
 app.use("/api/mood", authMiddleware, mood);
-app.use("/api/admin", admin);
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
