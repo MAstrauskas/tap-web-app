@@ -7,18 +7,8 @@
 
 This web application is a Task Activity Planner that helps the users to manage their daily tasks based on their mood. The users can add, edit, delete tasks or activities while also adding their current mood so that the system can suggest which tasks or activities should be completed first.
 
-## How to access the web app?
+# Demo
 
-There are two ways how you can access the web application
-- You can access the live deployed web app, or
-- You can spin you own version of the web app locally
-
-Steps are provided how to do both down below.
-
-## Live Website
-
-- You can access the application through this link -> [ma738-tap.herokuapp.com](https://ma738-tap.herokuapp.com)
-- **NOTE:** To gain full access to the application, you must create an account first.
 
 ## Prerequisites
 

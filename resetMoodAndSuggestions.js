@@ -8,11 +8,11 @@ import axios from "axios";
 // mood and get new suggested tasks
 // each day.
 const clearMood = async () => {
-  await axios.get("https://ma738-tap.herokuapp.com/api/admin/clear-mood");
+  await axios.get("https://tap-web-app.herokuapp.com/api/admin/clear-mood");
 };
 
 const clearSuggestedTasks = async () => {
-  await axios.post("https://ma738-tap.herokuapp.com/api/admin/clear-suggest");
+  await axios.post("https://tap-web-app.herokuapp.com/api/admin/clear-suggest");
 };
 
 clearMood();
