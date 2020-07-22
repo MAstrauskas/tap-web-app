@@ -9,33 +9,33 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Theme from "../../shared/Theme/Theme";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: `2px solid ${Theme.colors.white}`,
     boxShadow: theme.shadows[5],
-    padding: "0 0"
+    padding: "0 0",
   },
   title: {
     backgroundColor: `${Theme.colors.first}`,
     color: `${Theme.colors.white}`,
     flex: "1 1 100%",
-    padding: `1rem`
-  }
+    padding: `1rem`,
+  },
 }));
 
-const Title = withStyles(theme => ({
+const Title = withStyles(() => ({
   root: {
     flex: "1 1 100%",
     backgroundColor: `${Theme.colors.first}`,
     color: `${Theme.colors.white}`,
-    padding: `1rem`
-  }
+    padding: `1rem`,
+  },
 }))(Typography);
 
 const CancelButton = styled(Button)({
@@ -45,8 +45,8 @@ const CancelButton = styled(Button)({
   width: "100%",
 
   "&:hover": {
-    backgroundColor: `${Theme.colors.fifth}`
-  }
+    backgroundColor: `${Theme.colors.fifth}`,
+  },
 });
 
 export default function TaskDetails({
@@ -55,7 +55,7 @@ export default function TaskDetails({
   taskDescription,
   taskDueDate,
   taskPriority,
-  taskDifficulty
+  taskDifficulty,
 }) {
   const classes = useStyles();
   const [openDetails, setOpenDetails] = useState(false);
@@ -78,8 +78,8 @@ export default function TaskDetails({
           backgroundColor: `${Theme.colors.gray}`,
           color: `${Theme.colors.white}`,
           "&:hover": {
-            backgroundColor: `${Theme.colors.fourth}`
-          }
+            backgroundColor: `${Theme.colors.fourth}`,
+          },
         }}
       >
         {message === taskName && message.length > 7
@@ -97,7 +97,7 @@ export default function TaskDetails({
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
-          timeout: 500
+          timeout: 500,
         }}
       >
         <Fade in={openDetails}>
@@ -113,7 +113,7 @@ export default function TaskDetails({
               style={{
                 display: "flex",
                 flexDirection: "column",
-                padding: "2rem 4rem"
+                padding: "2rem 4rem",
               }}
             >
               <TextField
@@ -125,7 +125,7 @@ export default function TaskDetails({
                 data-testid="task-name"
                 value={taskName}
                 InputProps={{
-                  readOnly: true
+                  readOnly: true,
                 }}
               />
 
@@ -135,10 +135,10 @@ export default function TaskDetails({
                 name="taskDescription"
                 label="Description"
                 data-testid="task-description"
-                multiline={taskDescription.length > 0 ? true : false}
+                multiline={taskDescription.length > 0}
                 value={taskDescription.length > 0 ? taskDescription : "N/A"}
                 InputProps={{
-                  readOnly: true
+                  readOnly: true,
                 }}
               />
 
@@ -150,7 +150,7 @@ export default function TaskDetails({
                 data-testid="task-due-date"
                 value={moment(taskDueDate).format("LL")}
                 InputProps={{
-                  readOnly: true
+                  readOnly: true,
                 }}
               />
 
@@ -163,7 +163,7 @@ export default function TaskDetails({
                 data-testid="task-priority"
                 value={taskPriority}
                 InputProps={{
-                  readOnly: true
+                  readOnly: true,
                 }}
               />
 
@@ -176,7 +176,7 @@ export default function TaskDetails({
                 data-testid="task-difficulty"
                 value={taskDifficulty}
                 InputProps={{
-                  readOnly: true
+                  readOnly: true,
                 }}
               />
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-
 import MobileAddButtons from "../shared/MobileAddButtons";
 
 export default function FAQ() {

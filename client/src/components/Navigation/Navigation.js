@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useAuth0 } from "../../react-auth0-spa";
-import clsx from "clsx";
 import { NavLink } from "react-router-dom";
+import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -30,6 +29,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MoodIcon from "@material-ui/icons/Mood";
 import TodayIcon from "@material-ui/icons/Today";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import { useAuth0 } from "../../react-auth0-spa";
 import Theme from "../shared/Theme/Theme";
 
 const drawerWidth = 240;

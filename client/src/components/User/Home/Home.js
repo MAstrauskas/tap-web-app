@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Media from "react-media";
-
 import TaskTable from "../../shared/Table/Table";
 import MobileTable from "../../shared/Table/MobileTable";
 import UndoMessage from "../../shared/Table/UndoMessage";
 import WarningMessage from "../../shared/Table/WarningMessage";
 import MobileAddButtons from "../../shared/MobileAddButtons";
-
 import sortByPriority from "../../helpers/sortByPriority";
 
 export default class Home extends Component {
@@ -18,7 +16,7 @@ export default class Home extends Component {
     openWarning: false,
     taskName: "",
     taskId: "",
-    isTaskSuggested: false
+    isTaskSuggested: false,
   };
 
   /* istanbul ignore next */
@@ -27,14 +25,14 @@ export default class Home extends Component {
 
     await axios
       .get(`/api/tasks/${this.props.userEmail}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` }
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
           tasks: [
-            ...this.state.tasks.filter(task => !task.isTaskComplete),
-            ...res.data.tasks
-          ]
+            ...this.state.tasks.filter((task) => !task.isTaskComplete),
+            ...res.data.tasks,
+          ],
         });
       });
 
@@ -42,25 +40,25 @@ export default class Home extends Component {
   };
 
   /* istanbul ignore next */
-  handleDelete = async taskId => {
+  handleDelete = async (taskId) => {
     await axios
       .delete(`/api/tasks/delete/${taskId}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` }
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
       .then(
         () => {
           console.log("Task deleted.");
         },
-        error => {
+        (error) => {
           console.log(error);
         }
       );
 
     await axios
       .get(`/api/tasks/${this.props.userEmail}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` }
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({ tasks: [...res.data.tasks] });
       });
   };
@@ -69,14 +67,14 @@ export default class Home extends Component {
   handleComplete = async (isOpen, taskId, isTaskSuggested) => {
     await axios
       .get(`/api/tasks/${this.props.userEmail}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` }
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
           tasks: [...res.data.tasks],
           open: isOpen,
           taskId: taskId,
-          isTaskSuggested: isTaskSuggested
+          isTaskSuggested: isTaskSuggested,
         });
       });
   };
@@ -86,7 +84,7 @@ export default class Home extends Component {
     this.setState({
       openWarning: true,
       taskId: taskId,
-      taskName: taskName
+      taskName: taskName,
     });
   };
 
@@ -114,28 +112,28 @@ export default class Home extends Component {
         id: this.state.taskId,
         isTaskComplete: false,
         isTaskSuggested: !this.state.isTaskSuggested,
-        taskUpdateDate: taskUpdateDate
+        taskUpdateDate: taskUpdateDate,
       };
 
       await axios
         .patch(`/api/tasks/completed`, body, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(
           () => {
             this.setState({ open: false });
             console.log("Task completed.");
           },
-          error => {
+          (error) => {
             console.log(error);
           }
         );
 
       await axios
         .get(`/api/tasks/${this.props.userEmail}`, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
-        .then(res => {
+        .then((res) => {
           this.setState({ tasks: [...res.data.tasks] });
         });
     } catch (e) {
@@ -150,9 +148,9 @@ export default class Home extends Component {
   render() {
     const { tasks, open, openWarning, taskName, taskId } = this.state;
 
-    const allUncompletedTasks = tasks.filter(task => !task.isTaskComplete);
+    const allUncompletedTasks = tasks.filter((task) => !task.isTaskComplete);
     const suggestedTasks = sortByPriority(
-      tasks.filter(task => task.isTaskSuggested && !task.isTaskComplete)
+      tasks.filter((task) => task.isTaskSuggested && !task.isTaskComplete)
     );
     const headers = ["Task", "Due Date", "Priority"];
 
@@ -161,10 +159,10 @@ export default class Home extends Component {
         <Media
           queries={{
             small: "(max-width: 800px)",
-            large: "(min-width: 801px)"
+            large: "(min-width: 801px)",
           }}
         >
-          {matches => (
+          {(matches) => (
             <div>
               {matches.small && (
                 <>

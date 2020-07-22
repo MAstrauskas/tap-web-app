@@ -1,9 +1,9 @@
 import React from "react";
 import { ThemeProvider } from "emotion-theming";
-import { makeStyles } from "@material-ui/core/styles";
-import Theme from "../shared/Theme/Theme";
-import Navigation from "../Navigation/Navigation";
 import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import Navigation from "../Navigation/Navigation";
+import Theme from "../shared/Theme/Theme";
 
 const useStyles = makeStyles((theme) => ({
   root: {

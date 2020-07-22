@@ -18,13 +18,13 @@ import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfie
 
 import Theme from "../../shared/Theme/Theme";
 
-const Title = withStyles(theme => ({
+const Title = withStyles((theme) => ({
   root: {
     flex: "1 1 100%",
     backgroundColor: `${Theme.colors.first}`,
     color: `${Theme.colors.white}`,
-    padding: `1rem`
-  }
+    padding: `1rem`,
+  },
 }))(Typography);
 
 const AddButton = styled(Button)({
@@ -33,11 +33,11 @@ const AddButton = styled(Button)({
   marginTop: "2.5rem",
 
   "&:hover": {
-    backgroundColor: `${Theme.colors.fourth}`
+    backgroundColor: `${Theme.colors.fourth}`,
   },
   "&:disabled": {
-    backgroundColor: `${Theme.colors.disabled}`
-  }
+    backgroundColor: `${Theme.colors.disabled}`,
+  },
 });
 
 const CancelButton = styled(Button)({
@@ -47,8 +47,8 @@ const CancelButton = styled(Button)({
   width: "100%",
 
   "&:hover": {
-    backgroundColor: `${Theme.colors.fifth}`
-  }
+    backgroundColor: `${Theme.colors.fifth}`,
+  },
 });
 
 function MoodForm({
@@ -60,7 +60,7 @@ function MoodForm({
   handleChange,
   handleBlur,
   isValid,
-  routeBack
+  routeBack,
 }) {
   return (
     <form
@@ -75,7 +75,7 @@ function MoodForm({
         style={{
           display: "flex",
           flexDirection: "column",
-          padding: "1rem"
+          padding: "1rem",
         }}
       >
         <Typography id="mood" gutterBottom>

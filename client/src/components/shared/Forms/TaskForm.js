@@ -13,13 +13,13 @@ import Typography from "@material-ui/core/Typography";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import Theme from "../../shared/Theme/Theme";
 
-const Title = withStyles(theme => ({
+const Title = withStyles((theme) => ({
   root: {
     flex: "1 1 100%",
     backgroundColor: `${Theme.colors.first}`,
     color: `${Theme.colors.white}`,
-    padding: `1rem`
-  }
+    padding: `1rem`,
+  },
 }))(Typography);
 
 const AddButton = styled(Button)({
@@ -28,11 +28,11 @@ const AddButton = styled(Button)({
   marginTop: "2.5rem",
 
   "&:hover": {
-    backgroundColor: `${Theme.colors.fourth}`
+    backgroundColor: `${Theme.colors.fourth}`,
   },
   "&:disabled": {
-    backgroundColor: `${Theme.colors.disabled}`
-  }
+    backgroundColor: `${Theme.colors.disabled}`,
+  },
 });
 
 const CancelButton = styled(Button)({
@@ -42,8 +42,8 @@ const CancelButton = styled(Button)({
   width: "100%",
 
   "&:hover": {
-    backgroundColor: `${Theme.colors.fifth}`
-  }
+    backgroundColor: `${Theme.colors.fifth}`,
+  },
 });
 
 function TaskForm({
@@ -56,7 +56,7 @@ function TaskForm({
   handleBlur,
   setFieldValue,
   isValid,
-  routeBack
+  routeBack,
 }) {
   return (
     <form
@@ -71,7 +71,7 @@ function TaskForm({
         style={{
           display: "flex",
           flexDirection: "column",
-          padding: "1rem"
+          padding: "1rem",
         }}
       >
         <Field
@@ -121,7 +121,7 @@ function TaskForm({
           format="dd/MM/yyyy"
           margin="normal"
           value={new Date(values.taskDueDate)}
-          onChange={date => setFieldValue("taskDueDate", Date.parse(date))}
+          onChange={(date) => setFieldValue("taskDueDate", Date.parse(date))}
           minDate={new Date()}
           KeyboardButtonProps={{ "aria-label": "change due date" }}
           error={Boolean(errors.taskDueDate && touched.taskDueDate)}

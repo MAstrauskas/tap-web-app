@@ -1,56 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import { useMediaQuery } from "@material-ui/core";
-
-import SummaryCard from "../../shared/Card";
 import TaskHistory from "./TaskHistory";
+import SummaryCard from "../../shared/Card";
 import MobileAddButtons from "../../shared/MobileAddButtons";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   cards: {
     display: "flex",
-    [theme.breakpoints.down("sm")]: { flexDirection: "column" }
+    [theme.breakpoints.down("sm")]: { flexDirection: "column" },
   },
   card: {
-    padding: "2rem"
-  }
+    padding: "2rem",
+  },
 }));
 
-export const getCompletedTasksForToday = tasks => {
-  const completedTasks = tasks.filter(task => {
+export const getCompletedTasksForToday = (tasks) => {
+  return tasks.filter((task) => {
     const taskCompleteDate = moment(task.taskCompleteDate);
     const todaysDate = moment();
     const daysDifference = todaysDate.diff(taskCompleteDate, "days");
 
     return daysDifference === 0 ? task : null;
   }).length;
-
-  return completedTasks;
 };
 
-export const getCompletedTasksForThisWeek = tasks => {
-  const completedTasks = tasks.filter(task => {
+export const getCompletedTasksForThisWeek = (tasks) => {
+  return tasks.filter((task) => {
     const taskCompleteDate = moment(task.taskCompleteDate);
-    const weekStart = moment()
-      .startOf("week")
-      .toDate();
-    const weekEnd = moment()
-      .endOf("week")
-      .toDate();
+    const weekStart = moment().startOf("week").toDate();
+    const weekEnd = moment().endOf("week").toDate();
 
     weekStart.setDate(weekStart.getDate() + 1);
     weekEnd.setDate(weekEnd.getDate() + 1);
 
     return taskCompleteDate >= weekStart && taskCompleteDate <= weekEnd;
   }).length;
-
-  return completedTasks;
 };
 
 export default function Summary({ userEmail, token }) {
@@ -63,11 +54,11 @@ export default function Summary({ userEmail, token }) {
     const handleCompleteTasks = async () => {
       await axios
         .get(`/api/tasks/${userEmail}`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         })
-        .then(res => {
+        .then((res) => {
           setCompletedTasks([
-            ...res.data.tasks.filter(task => task.isTaskComplete)
+            ...res.data.tasks.filter((task) => task.isTaskComplete),
           ]);
         });
     };
@@ -75,9 +66,9 @@ export default function Summary({ userEmail, token }) {
     const handleTotalTasks = async () => {
       await axios
         .get(`/api/tasks/${userEmail}`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         })
-        .then(res => {
+        .then((res) => {
           setTotalTasks([...res.data.tasks]);
         });
     };

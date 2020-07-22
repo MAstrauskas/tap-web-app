@@ -10,18 +10,18 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
 
-    padding: "2rem"
+    padding: "2rem",
   },
   content: {
     padding: "1rem",
-    textAlign: "center"
+    textAlign: "center",
   },
   title: {
-    paddingBottom: "1rem"
+    paddingBottom: "1rem",
   },
   redLetters: {
-    color: `${Theme.colors.first}`
-  }
+    color: `${Theme.colors.first}`,
+  },
 });
 
 const Cover = () => {

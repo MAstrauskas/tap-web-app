@@ -1,5 +1,5 @@
 export default function sortyByPriority(tasks) {
-  const sortedTasks = tasks.sort((a, b) => {
+  return tasks.sort((a, b) => {
     const taskOne = a.taskPriority;
     const taskTwo = b.taskPriority;
 
@@ -20,6 +20,4 @@ export default function sortyByPriority(tasks) {
 
     return 0;
   });
-
-  return sortedTasks;
 }

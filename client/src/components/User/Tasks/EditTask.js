@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import axios from "axios";
-import { Formik } from "formik";
-import moment from "moment";
 import * as Yup from "yup";
+import axios from "axios";
+import moment from "moment";
+import { withRouter } from "react-router-dom";
+import { Formik } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Layout from "../../Layout/Layout";
 import TaskForm from "../../shared/Forms/TaskForm";
 
-const CustomPaper = withStyles((theme) => ({
+const CustomPaper = withStyles(() => ({
   root: {
     minWidth: "20rem",
     marginBottom: 2,
@@ -48,7 +48,7 @@ export class EditTask extends Component {
             console.log("Task edited.");
           },
           (error) => {
-            console.log(error);
+            console.log("Error occured while editing a task.", error);
           }
         );
 

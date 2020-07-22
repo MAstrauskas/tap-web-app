@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import Media from "react-media";
-
 import TaskTable from "../../shared/Table/Table";
 import MobileTable from "../../shared/Table/MobileTable";
 import UndoMessage from "../../shared/Table/UndoMessage";
 import WarningMessage from "../../shared/Table/WarningMessage";
 import MobileAddButtons from "../../shared/MobileAddButtons";
 
-export const sortByDate = tasks => {
-  const filteredTasks = tasks
+export const sortByDate = (tasks) => {
+  return tasks
     .sort((a, b) => {
       const dueDate = moment(a.taskDueDate).format("YYYY-MM-DD HH:mm:ss");
       const dueDate2 = moment(b.taskDueDate).format("YYYY-MM-DD HH:mm:ss");
@@ -18,9 +17,7 @@ export const sortByDate = tasks => {
       if (dueDate > dueDate2) return 1;
       else return -1;
     })
-    .filter(task => !task.isTaskComplete);
-
-  return filteredTasks;
+    .filter((task) => !task.isTaskComplete);
 };
 
 export default class AllTasks extends Component {
@@ -31,7 +28,7 @@ export default class AllTasks extends Component {
     open: false,
     openWarning: false,
     taskId: "",
-    taskName: ""
+    taskName: "",
   };
 
   handleTasks = async () => {
@@ -39,34 +36,34 @@ export default class AllTasks extends Component {
 
     await axios
       .get(`/api/tasks/${this.props.userEmail}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` }
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({ tasks: [...this.state.tasks, ...res.data.tasks] });
       });
 
     this.setState({ ...this.state, isFetching: false });
   };
 
-  handleDelete = async taskId => {
+  handleDelete = async (taskId) => {
     await axios
       .delete(`/api/tasks/delete/${taskId}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` }
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
       .then(
         () => {
           console.log("Task deleted.");
         },
-        error => {
-          console.log("Error occured deleting task.");
+        (error) => {
+          console.log("Error occured deleting task.", error);
         }
       );
 
     await axios
       .get(`/api/tasks/${this.props.userEmail}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` }
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({ tasks: [...res.data.tasks] });
       });
   };
@@ -74,14 +71,14 @@ export default class AllTasks extends Component {
   handleComplete = async (isOpen, taskId, isTaskSuggested) => {
     await axios
       .get(`/api/tasks/${this.props.userEmail}`, {
-        headers: { Authorization: `Bearer ${this.props.token}` }
+        headers: { Authorization: `Bearer ${this.props.token}` },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
           tasks: [...res.data.tasks],
           open: isOpen,
           taskId: taskId,
-          isTaskSuggested: isTaskSuggested
+          isTaskSuggested: isTaskSuggested,
         });
       });
   };
@@ -92,35 +89,35 @@ export default class AllTasks extends Component {
     this.setState({ open: false });
   };
 
-  handleUndo = async taskId => {
+  handleUndo = async () => {
     try {
       const taskUpdateDate = Date.now();
       const body = {
         id: this.state.taskId,
         isTaskComplete: false,
         isTaskSuggested: !this.state.isTaskSuggested,
-        taskUpdateDate: taskUpdateDate
+        taskUpdateDate: taskUpdateDate,
       };
 
       await axios
         .patch(`/api/tasks/completed`, body, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(
           () => {
             this.setState({ open: false });
             console.log("Task completed.");
           },
-          error => {
-            console.log("Error occured making task complete");
+          (error) => {
+            console.log("Error occured making task complete", error);
           }
         );
 
       await axios
         .get(`/api/tasks/${this.props.userEmail}`, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
-        .then(res => {
+        .then((res) => {
           this.setState({ tasks: [...res.data.tasks] });
         });
     } catch (e) {
@@ -132,7 +129,7 @@ export default class AllTasks extends Component {
     await this.setState({
       openWarning: true,
       taskId: taskId,
-      taskName: taskName
+      taskName: taskName,
     });
   };
 
@@ -159,7 +156,7 @@ export default class AllTasks extends Component {
       "Description",
       "Due Date",
       "Priority",
-      "Difficulty"
+      "Difficulty",
     ];
 
     return (
@@ -167,10 +164,10 @@ export default class AllTasks extends Component {
         <Media
           queries={{
             small: "(max-width: 800px)",
-            large: "(min-width: 801px)"
+            large: "(min-width: 801px)",
           }}
         >
-          {matches => (
+          {(matches) => (
             <div data-testid="all-tasks-table">
               {matches.small && (
                 <div data-testid="mobile-view">

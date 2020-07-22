@@ -11,33 +11,32 @@ import {
   ListItemSecondaryAction,
   TablePagination,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from "@material-ui/core";
-
 import DoneIcon from "@material-ui/icons/Done";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TaskDetails from "./TaskDetails";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: { paddingLeft: "2rem", paddingRight: "2rem" },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular
+    fontWeight: theme.typography.fontWeightRegular,
   },
   inline: {
-    display: "inline"
+    display: "inline",
   },
   completedTasks: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   list: {
-    width: "100%"
+    width: "100%",
   },
   tableFooter: {
     display: "flex",
-    justifyContent: "end"
-  }
+    justifyContent: "end",
+  },
 }));
 
 export default function TaskHistory({ tasks }) {
@@ -57,7 +56,7 @@ export default function TaskHistory({ tasks }) {
     setPage(newPage);
   };
 
-  const handleTasksPerPageChange = event => {
+  const handleTasksPerPageChange = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -86,7 +85,7 @@ export default function TaskHistory({ tasks }) {
                   page * rowsPerPage + rowsPerPage
                 )
               : tasks
-            ).map(task => {
+            ).map((task) => {
               return (
                 <ListItem key={task._id}>
                   <ListItemIcon>
@@ -149,9 +148,9 @@ export default function TaskHistory({ tasks }) {
               SelectProps={{
                 inputProps: {
                   "aria-label": "rows per page",
-                  "data-testid": "rows-per-page"
+                  "data-testid": "rows-per-page",
                 },
-                native: true
+                native: true,
               }}
               onChangePage={handlePageChange}
               onChangeRowsPerPage={handleTasksPerPageChange}

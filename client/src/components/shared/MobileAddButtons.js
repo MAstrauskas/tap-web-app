@@ -4,6 +4,7 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import MoodIcon from "@material-ui/icons/Mood";
 import TableFooter from "@material-ui/core/TableFooter";
+
 export default function MobileAddButtons() {
   return (
     <TableFooter data-testid="mobile-buttons">

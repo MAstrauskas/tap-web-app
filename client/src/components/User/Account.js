@@ -10,25 +10,25 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Theme from "../shared/Theme/Theme";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   body: {
-    padding: "2rem"
+    padding: "2rem",
   },
   title: {
     backgroundColor: `${Theme.colors.first}`,
     color: `${Theme.colors.white}`,
-    padding: "1rem"
+    padding: "1rem",
   },
   readOnly: {
     padding: "1rem auto",
     "& > div": {
-      color: `${Theme.colors.black} !important`
-    }
-  }
+      color: `${Theme.colors.black} !important`,
+    },
+  },
 }));
 
 const BackButton = styled(Button)({
@@ -38,11 +38,11 @@ const BackButton = styled(Button)({
   width: "100%",
 
   "&:hover": {
-    backgroundColor: `${Theme.colors.fifth}`
-  }
+    backgroundColor: `${Theme.colors.fifth}`,
+  },
 });
 
-function Account({ name, userEmail, k }) {
+function Account({ name, userEmail }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -58,17 +58,17 @@ function Account({ name, userEmail, k }) {
         <Formik
           initialValues={{
             userEmail,
-            userName: name
+            userName: name,
           }}
         >
-          {props => {
+          {(props) => {
             const {
               values,
               handleChange,
               handleBlur,
               handleSubmit,
               errors,
-              touched
+              touched,
             } = props;
 
             return (
@@ -81,7 +81,7 @@ function Account({ name, userEmail, k }) {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    padding: "2rem"
+                    padding: "2rem",
                   }}
                 >
                   <Field
@@ -100,7 +100,7 @@ function Account({ name, userEmail, k }) {
                       String(errors.userName)
                     }
                     InputProps={{
-                      readOnly: true
+                      readOnly: true,
                     }}
                     style={{ marginBottom: "1rem" }}
                   />
@@ -121,7 +121,7 @@ function Account({ name, userEmail, k }) {
                       String(errors.userEmail)
                     }
                     InputProps={{
-                      readOnly: true
+                      readOnly: true,
                     }}
                     style={{ marginBottom: "1rem" }}
                   />

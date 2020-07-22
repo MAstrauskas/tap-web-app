@@ -6,12 +6,13 @@ export default class TaskCheckbox extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      editSuccessful: false,
+      checked: false,
+    };
+
     this.handleEdit = this.handleEdit.bind(this);
   }
-  state = {
-    editSuccessful: false,
-    checked: false
-  };
 
   /* istanbul ignore next */
   handleEdit = async () => {
@@ -21,26 +22,26 @@ export default class TaskCheckbox extends Component {
         id: this.props.id,
         isTaskComplete: true,
         isTaskSuggested: !this.props.isTaskSuggested,
-        taskUpdateDate: taskUpdateDate
+        taskUpdateDate: taskUpdateDate,
       };
 
       await axios
         .patch(`/api/tasks/completed`, body, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(
           () => {
-            "Task completed.";
+            console.log("Task completed.");
           },
-          error => {
-            console.log("Error occurred while making a task completed.");
+          (error) => {
+            console.log("Error occurred while making a task completed.", error);
           }
         );
 
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
         editSuccessful: true,
-        checked: true
+        checked: true,
       }));
 
       setTimeout(async () => {
@@ -53,10 +54,10 @@ export default class TaskCheckbox extends Component {
     } catch (e) {
       console.log(e);
 
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
         editSuccessful: false,
-        checked: false
+        checked: false,
       }));
     }
   };
@@ -72,7 +73,7 @@ export default class TaskCheckbox extends Component {
           value="primary"
           inputProps={{
             "aria-label": "make task complete",
-            "data-testid": "make-task-complete"
+            "data-testid": "make-task-complete",
           }}
         />
       </div>

@@ -21,7 +21,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO_",
@@ -35,7 +35,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_THREE_",
@@ -49,8 +49,8 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     const expectedResult = [
@@ -66,7 +66,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID__",
@@ -80,7 +80,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO_",
@@ -94,8 +94,8 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     expect(sortByPriority(tasks)).toStrictEqual(expectedResult);
@@ -115,7 +115,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO__",
@@ -129,7 +129,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_THREE__",
@@ -143,7 +143,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_FOUR__",
@@ -157,7 +157,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_FIVE__",
@@ -171,7 +171,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_SIX__",
@@ -185,7 +185,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_SEVEN__",
@@ -199,7 +199,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_EIGHT__",
@@ -213,8 +213,8 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     const expectedResult = [
@@ -230,7 +230,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_THREE__",
@@ -244,7 +244,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_EIGHT__",
@@ -258,7 +258,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID__",
@@ -272,7 +272,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_FIVE__",
@@ -286,7 +286,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_SEVEN__",
@@ -300,7 +300,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_FOUR__",
@@ -314,7 +314,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_SIX__",
@@ -328,8 +328,8 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     expect(sortByPriority(tasks)).toStrictEqual(expectedResult);
@@ -349,7 +349,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO__",
@@ -363,7 +363,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_THREE__",
@@ -377,7 +377,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_FOUR__",
@@ -391,8 +391,8 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     const extasks = [
@@ -408,7 +408,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_FOUR__",
@@ -422,7 +422,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID__",
@@ -436,7 +436,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_THREE__",
@@ -450,8 +450,8 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     expect(sortyByPriority(tasks)).toStrictEqual(extasks);
@@ -471,7 +471,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO__",
@@ -485,7 +485,7 @@ describe("setByPriority", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       ,
     ];

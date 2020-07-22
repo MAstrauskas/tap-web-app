@@ -1,24 +1,24 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import axios from "axios";
-import { Formik } from "formik";
-import moment from "moment";
 import * as Yup from "yup";
+import axios from "axios";
+import moment from "moment";
+import { withRouter } from "react-router-dom";
+import { Formik } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import TaskForm from "../../shared/Forms/TaskForm";
 
-const CustomPaper = withStyles(theme => ({
+const CustomPaper = withStyles(() => ({
   root: {
     minWidth: "20rem",
     marginBottom: 2,
-    borderRadius: "1%"
-  }
+    borderRadius: "1%",
+  },
 }))(Paper);
 
 class AddTask extends Component {
   state = {
-    addSuccessful: false
+    addSuccessful: false,
   };
 
   /* istanbul ignore next */
@@ -34,49 +34,49 @@ class AddTask extends Component {
         taskPriority: values.taskPriority,
         taskDifficulty: values.taskDifficulty,
         isTaskComplete: values.isTaskComplete,
-        isTaskSuggested: values.isTaskSuggested
+        isTaskSuggested: values.isTaskSuggested,
       };
 
       setSubmitting(true);
 
       await axios
         .post("/api/tasks/add", body, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(
           () => {
             console.log("Task added.");
           },
-          error => {
+          (error) => {
             console.log(error);
           }
         );
 
       await axios
         .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(() => {})
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
 
       await axios
         .get(`/api/tasks/make-suggest/${this.props.userEmail}`, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(() => {})
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
 
       setSubmitting(false);
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        addSuccessful: true
+        addSuccessful: true,
       }));
     } catch (e) {
       console.log(e);
       setSubmitting(false);
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        addSuccessful: false
+        addSuccessful: false,
       }));
     }
   };
@@ -110,7 +110,7 @@ class AddTask extends Component {
       taskPriority: Yup.string().required("Task Priority is required."),
       taskDifficulty: Yup.string().required("Task Difficulty is required."),
       isTaskComplete: Yup.boolean(),
-      isTaskSuggested: Yup.boolean()
+      isTaskSuggested: Yup.boolean(),
     });
 
     return (
@@ -124,12 +124,12 @@ class AddTask extends Component {
             taskPriority: "",
             taskDifficulty: "",
             isTaskComplete: false,
-            isTaskSuggested: false
+            isTaskSuggested: false,
           }}
           validationSchema={taskSchema}
           onSubmit={this.handleSubmit}
         >
-          {props => {
+          {(props) => {
             const {
               values,
               setFieldValue,
@@ -138,7 +138,7 @@ class AddTask extends Component {
               handleSubmit,
               isValid,
               errors,
-              touched
+              touched,
             } = props;
 
             return (

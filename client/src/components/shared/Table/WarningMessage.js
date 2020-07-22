@@ -6,16 +6,16 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { Typography } from "@material-ui/core";
 import Theme from "../Theme/Theme";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     "& > * + *": {
-      marginTop: theme.spacing(2)
-    }
+      marginTop: theme.spacing(2),
+    },
   },
   buttons: {
-    marginLeft: "auto"
-  }
+    marginLeft: "auto",
+  },
 }));
 
 export default function WarningMessage({
@@ -23,7 +23,7 @@ export default function WarningMessage({
   task,
   taskId,
   handleDelete,
-  handleClose
+  handleClose,
 }) {
   const classes = useStyles();
 

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-
 import { withStyles } from "@material-ui/core/styles";
 import Fade from "@material-ui/core/Fade";
 import Table from "@material-ui/core/Table";
@@ -16,43 +15,39 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
-
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditIcon from "@material-ui/icons/Edit";
-
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-
 import TablePaginationActions from "./TablePaginationActions";
-
 import Theme from "../Theme/Theme";
 import Checkbox from "../Checkbox";
 
-const CustomPaper = withStyles(theme => ({
+const CustomPaper = withStyles(() => ({
   root: {
-    minWidth: "10rem"
-  }
+    minWidth: "10rem",
+  },
 }))(Paper);
 
-const CustomTableCell = withStyles(theme => ({
+const CustomTableCell = withStyles(() => ({
   head: {
     backgroundColor: `${Theme.colors.first}`,
-    color: `${Theme.colors.white}`
+    color: `${Theme.colors.white}`,
   },
   body: {
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 }))(TableCell);
 
-const CustomTableRow = withStyles(theme => ({
+const CustomTableRow = withStyles(() => ({
   root: {
     "&:nth-of-type(odd)": {
-      backgroundColor: `${Theme.colors.second}`
-    }
-  }
+      backgroundColor: `${Theme.colors.second}`,
+    },
+  },
 }))(TableRow);
 
 export default function TaskTable({
@@ -68,7 +63,7 @@ export default function TaskTable({
   marginBottom,
   isSuggestedTable,
   allTasks,
-  token
+  token,
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -85,7 +80,7 @@ export default function TaskTable({
     setPage(newPage);
   };
 
-  const handleTablePerPageChange = event => {
+  const handleTablePerPageChange = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -106,7 +101,7 @@ export default function TaskTable({
     <CustomPaper
       style={{
         maxWidth: `${tableMaxWidth}`,
-        marginBottom: marginBottom
+        marginBottom: marginBottom,
       }}
     >
       <Typography
@@ -114,7 +109,7 @@ export default function TaskTable({
           flex: "1 1 100%",
           backgroundColor: `${Theme.colors.first}`,
           color: `${Theme.colors.white}`,
-          paddingLeft: `1.25rem`
+          paddingLeft: `1.25rem`,
         }}
         variant="h6"
         id={`${title}`}
@@ -128,9 +123,11 @@ export default function TaskTable({
         >
           <TableHead>
             <TableRow>
-              <CustomTableCell></CustomTableCell>
-              {headers.map(header => (
-                <CustomTableCell align="left">{header}</CustomTableCell>
+              <CustomTableCell />
+              {headers.map((header, index) => (
+                <CustomTableCell key={index} align="left">
+                  {header}
+                </CustomTableCell>
               ))}
               {isEdit === true && (
                 <CustomTableCell align="right">Edit</CustomTableCell>
@@ -150,13 +147,13 @@ export default function TaskTable({
                     style={{
                       textAlign: "center",
                       paddingTop: "4rem",
-                      paddingBottom: "4rem"
+                      paddingBottom: "4rem",
                     }}
                   >
                     <Typography
                       style={{
                         color: `${Theme.colors.gray}`,
-                        paddingBottom: "1rem"
+                        paddingBottom: "1rem",
                       }}
                     >
                       {isSuggestedTable && allTasks.length > 0
@@ -178,8 +175,8 @@ export default function TaskTable({
                           backgroundColor: `${Theme.colors.first}`,
                           color: `${Theme.colors.white}`,
                           "&:hover": {
-                            backgroundColor: `${Theme.colors.fourth}`
-                          }
+                            backgroundColor: `${Theme.colors.fourth}`,
+                          },
                         }}
                       >
                         {isSuggestedTable && allTasks.length > 0
@@ -199,7 +196,7 @@ export default function TaskTable({
                     page * rowsPerPage + rowsPerPage
                   )
                 : tasks
-              ).map(task => {
+              ).map((task) => {
                 const date = new Date();
                 const currentDate = moment(date).format("YYYY-MM-DD");
                 const dueDate = moment(task.taskDueDate).format("YYYY-MM-DD");
@@ -243,12 +240,12 @@ export default function TaskTable({
                                   style={{
                                     maxWidth: "16rem",
                                     minWidth: "5rem",
-                                    wordBreak: "break-all"
+                                    wordBreak: "break-all",
                                   }}
                                 >
                                   <Typography
                                     style={{
-                                      fontSize: "14px"
+                                      fontSize: "14px",
                                     }}
                                   >
                                     {task.taskDescription.substring(20)}
@@ -285,8 +282,8 @@ export default function TaskTable({
                             to={{
                               pathname: "/tasks/edit",
                               state: {
-                                task: task
-                              }
+                                task: task,
+                              },
                             }}
                           >
                             <IconButton>
@@ -331,7 +328,7 @@ export default function TaskTable({
                   page={page}
                   SelectProps={{
                     inputProps: { "aria-label": "rows per page" },
-                    native: true
+                    native: true,
                   }}
                   onChangePage={handleTablePageChange}
                   onChangeRowsPerPage={handleTablePerPageChange}

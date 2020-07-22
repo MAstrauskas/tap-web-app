@@ -12,25 +12,24 @@ const useStyles = makeStyles({
   root: {
     minWidth: 225,
     color: `${Theme.colors.white}`,
-    height: 225
+    height: 225,
   },
   title: {
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 });
 
 export default function SummaryCard({
   type,
   color,
   defaultHeader,
-  secondHeader,
   defaultTitle,
   secondTitle,
   thirdTitle,
   showButtons,
   defaultOption,
   secondOption,
-  thirdOption
+  thirdOption,
 }) {
   const classes = useStyles();
   const [currentTitle, setCurrentTitle] = useState(defaultTitle);
@@ -86,9 +85,9 @@ export default function SummaryCard({
             </>
           ) : (
             <>
-              <Button disabled></Button>
-              <Button disabled></Button>
-              <Button disabled></Button>
+              <Button disabled />
+              <Button disabled />
+              <Button disabled />
             </>
           )}
         </CardActions>
