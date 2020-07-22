@@ -11,7 +11,7 @@ describe("Cover", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe("Cover", () => {
       isAuthenticated: false,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
   });
 
@@ -45,10 +45,10 @@ describe("Cover", () => {
   });
 
   it("should render desktop view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(min-width: 801px)"
+      matches: media === "(min-width: 801px)",
     });
 
     global.matchMedia(900);
@@ -64,10 +64,10 @@ describe("Cover", () => {
   });
 
   it("should render tablet view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 800px)"
+      matches: media === "(max-width: 800px)",
     });
 
     global.matchMedia(700);
@@ -83,10 +83,10 @@ describe("Cover", () => {
   });
 
   it("should render mobile view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 600px)"
+      matches: media === "(max-width: 600px)",
     });
 
     global.matchMedia(400);

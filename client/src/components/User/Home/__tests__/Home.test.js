@@ -17,7 +17,7 @@ describe("Home", () => {
     name: "__FULL_NAME__",
     email_verified: true,
     sub: "__SUB__",
-    isAuthenticated: true
+    isAuthenticated: true,
   };
 
   const token = "__TOKEN__";
@@ -37,7 +37,7 @@ describe("Home", () => {
         isTaskSuggested: false,
         __v: 0,
         taskGroup: 3,
-        taskTotalPoints: 1.5
+        taskTotalPoints: 1.5,
       },
       {
         _id: "__ID__",
@@ -52,14 +52,14 @@ describe("Home", () => {
         isTaskSuggested: false,
         __v: 0,
         taskGroup: 3,
-        taskTotalPoints: 1.5
-      }
-    ]
+        taskTotalPoints: 1.5,
+      },
+    ],
   };
 
   const registeredUser = {
     name: user.name,
-    email: user.email
+    email: user.email,
   };
 
   beforeEach(() => {
@@ -68,16 +68,16 @@ describe("Home", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
-    window.matchMedia = jest.fn().mockImplementation(query => {
+    window.matchMedia = jest.fn().mockImplementation((query) => {
       return {
         matches: query === "(max-width: 800px)" ? true : false,
         media: "",
         onchange: null,
         addListener: jest.fn(),
-        removeListener: jest.fn()
+        removeListener: jest.fn(),
       };
     });
 
@@ -87,10 +87,10 @@ describe("Home", () => {
   });
 
   it("renders mobile suggested table correctly", async () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 800px)"
+      matches: media === "(max-width: 800px)",
     });
 
     global.matchMedia(700);
@@ -105,10 +105,10 @@ describe("Home", () => {
   });
 
   it("renders desktop suggested table correctly", async () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(min-width: 801px)"
+      matches: media === "(min-width: 801px)",
     });
 
     global.matchMedia(900);
@@ -137,7 +137,7 @@ describe("Home", () => {
           isTaskComplete: false,
           isTaskSuggested: true,
           taskGroup: 1,
-          taskTotalPoints: 2
+          taskTotalPoints: 2,
         },
         {
           _id: "__ID_2__",
@@ -151,9 +151,9 @@ describe("Home", () => {
           isTaskComplete: false,
           isTaskSuggested: true,
           taskGroup: 1,
-          taskTotalPoints: 2
-        }
-      ]
+          taskTotalPoints: 2,
+        },
+      ],
     };
 
     const tasksAfterDelete = {
@@ -170,9 +170,9 @@ describe("Home", () => {
           isTaskComplete: false,
           isTaskSuggested: true,
           taskGroup: 1,
-          taskTotalPoints: 2
-        }
-      ]
+          taskTotalPoints: 2,
+        },
+      ],
     };
 
     mock.onPost("/api/user/add").reply(200, registeredUser);
@@ -195,7 +195,7 @@ describe("Home", () => {
           isTaskComplete: false,
           isTaskSuggested: true,
           taskGroup: 1,
-          taskTotalPoints: 2
+          taskTotalPoints: 2,
         },
         {
           _id: "__ID_2__",
@@ -209,9 +209,9 @@ describe("Home", () => {
           isTaskComplete: false,
           isTaskSuggested: true,
           taskGroup: 1,
-          taskTotalPoints: 2
-        }
-      ]
+          taskTotalPoints: 2,
+        },
+      ],
     };
 
     const tasksAfterComplete = {
@@ -228,7 +228,7 @@ describe("Home", () => {
           isTaskComplete: true,
           isTaskSuggested: true,
           taskGroup: 1,
-          taskTotalPoints: 2
+          taskTotalPoints: 2,
         },
         {
           _id: "__ID_2__",
@@ -242,9 +242,9 @@ describe("Home", () => {
           isTaskComplete: false,
           isTaskSuggested: true,
           taskGroup: 1,
-          taskTotalPoints: 2
-        }
-      ]
+          taskTotalPoints: 2,
+        },
+      ],
     };
 
     mock.onPost("/api/user/add").reply(200, registeredUser);

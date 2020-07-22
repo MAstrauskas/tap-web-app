@@ -17,12 +17,12 @@ describe("TaskHistory", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   const registeredUser = {
     name: user.fullName,
-    email: user.email
+    email: user.email,
   };
 
   const token = "__TOKEN__";
@@ -42,7 +42,7 @@ describe("TaskHistory", () => {
       taskGroup: 3,
       taskTotalPoints: 0,
       taskCompleteDate: "2020-01-01T18:00:00.000Z",
-      taskUpdateDate: "2020-01-01T14:00:00.000Z"
+      taskUpdateDate: "2020-01-01T14:00:00.000Z",
     },
     {
       _id: "__ID_TWO__",
@@ -58,7 +58,7 @@ describe("TaskHistory", () => {
       taskGroup: 1,
       taskTotalPoints: 1,
       taskCompleteDate: "2020-01-01T14:01:00.000Z",
-      taskUpdateDate: "2020-01-01T14:01:00.000Z"
+      taskUpdateDate: "2020-01-01T14:01:00.000Z",
     },
     {
       _id: "__ID_THREE__",
@@ -74,7 +74,7 @@ describe("TaskHistory", () => {
       taskGroup: 2,
       taskTotalPoints: 2,
       taskCompleteDate: "2020-01-10T12:00:00.000Z",
-      taskUpdateDate: "2020-01-10T12:00:00.000Z"
+      taskUpdateDate: "2020-01-10T12:00:00.000Z",
     },
     {
       _id: "__ID_FOUR__",
@@ -90,7 +90,7 @@ describe("TaskHistory", () => {
       taskGroup: 2,
       taskTotalPoints: 2,
       taskCompleteDate: "2020-01-10T12:00:00.000Z",
-      taskUpdateDate: "2020-01-10T12:00:00.000Z"
+      taskUpdateDate: "2020-01-10T12:00:00.000Z",
     },
     {
       _id: "__ID_FIVE__",
@@ -106,7 +106,7 @@ describe("TaskHistory", () => {
       taskGroup: 2,
       taskTotalPoints: 2,
       taskCompleteDate: "2020-01-10T12:00:00.000Z",
-      taskUpdateDate: "2020-01-10T12:00:00.000Z"
+      taskUpdateDate: "2020-01-10T12:00:00.000Z",
     },
     {
       _id: "__ID_SIX__",
@@ -122,15 +122,15 @@ describe("TaskHistory", () => {
       taskGroup: 2,
       taskTotalPoints: 2,
       taskCompleteDate: "2020-01-10T12:00:00.000Z",
-      taskUpdateDate: "2020-01-10T12:00:00.000Z"
-    }
+      taskUpdateDate: "2020-01-10T12:00:00.000Z",
+    },
   ];
 
   function createMatchMedia(width) {
-    return query => ({
+    return (query) => ({
       matches: mediaQuery.match(query, { width }),
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     });
   }
 
@@ -144,7 +144,7 @@ describe("TaskHistory", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     mock.onPost("/api/user/add").reply(200, registeredUser);
@@ -163,10 +163,10 @@ describe("TaskHistory", () => {
   });
 
   it("should render tablet view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 960px)"
+      matches: media === "(max-width: 960px)",
     });
 
     global.matchMedia(700);
@@ -182,10 +182,10 @@ describe("TaskHistory", () => {
   });
 
   it("should change task details list page", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 960px)"
+      matches: media === "(max-width: 960px)",
     });
 
     global.matchMedia(1200);
@@ -207,10 +207,10 @@ describe("TaskHistory", () => {
   });
 
   it("should change back task details list page", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 960px)"
+      matches: media === "(max-width: 960px)",
     });
 
     global.matchMedia(1200);

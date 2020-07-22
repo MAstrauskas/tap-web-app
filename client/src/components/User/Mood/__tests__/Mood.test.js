@@ -18,7 +18,7 @@ describe("Mood", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   const token = "__TOKEN__";
@@ -29,7 +29,7 @@ describe("Mood", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
   });
 
@@ -46,7 +46,7 @@ describe("Mood", () => {
       email: user.email,
       moodName: "Positive",
       moodMotivation: "High",
-      isTired: false
+      isTired: false,
     };
 
     const { getByTestId, getByLabelText, getByDisplayValue } = render(
@@ -70,13 +70,13 @@ describe("Mood", () => {
     expect(getByDisplayValue("positive")).toBeChecked();
 
     fireEvent.change(motivationInput, {
-      target: { value: "High" }
+      target: { value: "High" },
     });
 
     expect(getByDisplayValue("High")).toHaveValue("High");
 
     fireEvent.change(tirednessInput, {
-      target: { value: "No" }
+      target: { value: "No" },
     });
 
     expect(getByDisplayValue("No")).toHaveValue("No");

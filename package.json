@@ -21,7 +21,7 @@
     "heroku-postbuild": "cd client && yarn && yarn build",
     "client-dependencies": "cd client && yarn"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "auth0": "^2.24.0",
     "auth0-js": "^9.13.2",

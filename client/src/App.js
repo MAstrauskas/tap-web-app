@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useAuth0 } from "./react-auth0-spa";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -43,9 +43,7 @@ function App() {
 
   // Get authentication token so that the user can make calls to the API
   const getToken = async () => {
-    const authToken = isAuthenticated && (await getTokenSilently());
-
-    return authToken;
+    return isAuthenticated && (await getTokenSilently());
   };
 
   getToken().then((t) => setToken(t));

@@ -15,7 +15,7 @@ describe("Checkbox", () => {
     useAuth0.mockReturnValue({
       isAuthenticated: false,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
   });
 

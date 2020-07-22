@@ -9,17 +9,17 @@ import Paper from "@material-ui/core/Paper";
 import Layout from "../../Layout/Layout";
 import TaskForm from "../../shared/Forms/TaskForm";
 
-const CustomPaper = withStyles(theme => ({
+const CustomPaper = withStyles((theme) => ({
   root: {
     minWidth: "20rem",
     marginBottom: 2,
-    borderRadius: "1%"
-  }
+    borderRadius: "1%",
+  },
 }))(Paper);
 
 export class EditTask extends Component {
   state = {
-    editSuccessful: false
+    editSuccessful: false,
   };
 
   /* istanbul ignore next */
@@ -34,49 +34,49 @@ export class EditTask extends Component {
         taskPriority: values.taskPriority,
         taskDifficulty: values.taskDifficulty,
         isTaskComplete: values.isTaskComplete,
-        isTaskSuggested: values.isTaskSuggested
+        isTaskSuggested: values.isTaskSuggested,
       };
 
       setSubmitting(true);
 
       await axios
         .put(`/api/tasks/edit/${this.props.location.state.task._id}`, body, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(
           () => {
             console.log("Task edited.");
           },
-          error => {
+          (error) => {
             console.log(error);
           }
         );
 
       await axios
         .get(`/api/tasks/calculate-suggest/${this.props.userEmail}`, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(() => {})
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
 
       await axios
         .get(`/api/tasks/make-suggest/${this.props.userEmail}`, {
-          headers: { Authorization: `Bearer ${this.props.token}` }
+          headers: { Authorization: `Bearer ${this.props.token}` },
         })
         .then(() => {})
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
 
       setSubmitting(false);
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        editSuccessful: true
+        editSuccessful: true,
       }));
     } catch (e) {
       console.log(e);
       setSubmitting(false);
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         ...prevState,
-        editSuccessful: false
+        editSuccessful: false,
       }));
     }
   };
@@ -109,7 +109,7 @@ export class EditTask extends Component {
       taskPriority: Yup.string(),
       taskDifficulty: Yup.string(),
       isTaskComplete: Yup.boolean(),
-      isTaskSuggested: Yup.boolean()
+      isTaskSuggested: Yup.boolean(),
     });
 
     const { task } = this.props.location.state;
@@ -126,12 +126,12 @@ export class EditTask extends Component {
               taskPriority: task.taskPriority,
               taskDifficulty: task.taskDifficulty,
               isTaskComplete: false,
-              isTaskSuggested: false
+              isTaskSuggested: false,
             }}
             validationSchema={taskSchema}
             onSubmit={this.handleSubmit}
           >
-            {props => {
+            {(props) => {
               const {
                 values,
                 touched,
@@ -140,7 +140,7 @@ export class EditTask extends Component {
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isValid
+                isValid,
               } = props;
 
               return (

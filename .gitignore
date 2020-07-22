@@ -1,7 +1,12 @@
 node_modules
 coverage
+build
 client/node_modules
 client/svn-ignore.txt
 client/coverage
+client/build
+client/.env
 svn-ignore.txt
 .DS_Store
+.idea/
+.env

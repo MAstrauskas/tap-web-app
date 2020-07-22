@@ -17,12 +17,12 @@ describe("TaskDetails", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   const registeredUser = {
     name: user.fullName,
-    email: user.email
+    email: user.email,
   };
 
   const token = "__TOKEN__";
@@ -42,15 +42,15 @@ describe("TaskDetails", () => {
       taskGroup: 3,
       taskTotalPoints: 0,
       taskCompleteDate: "2020-01-01T18:00:00.000Z",
-      taskUpdateDate: "2020-01-01T14:00:00.000Z"
-    }
+      taskUpdateDate: "2020-01-01T14:00:00.000Z",
+    },
   ];
 
   function createMatchMedia(width) {
-    return query => ({
+    return (query) => ({
       matches: mediaQuery.match(query, { width }),
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     });
   }
 
@@ -64,7 +64,7 @@ describe("TaskDetails", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     mock.onPost("/api/user/add").reply(200, registeredUser);

@@ -10,39 +10,39 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Theme from "../../shared/Theme/Theme";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
 
-    padding: "2rem"
+    padding: "2rem",
   },
   content: {
     padding: "1rem",
-    textAlign: "center"
+    textAlign: "center",
   },
   title: {
-    paddingBottom: "1rem"
+    paddingBottom: "1rem",
   },
   button: {
     backgroundColor: `${Theme.colors.first}`,
     color: `${Theme.colors.white}`,
     "&:hover": {
-      backgroundColor: `${Theme.colors.fourth}`
-    }
+      backgroundColor: `${Theme.colors.fourth}`,
+    },
   },
   modal: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: `2px solid ${Theme.colors.white}`,
     boxShadow: theme.shadows[5],
-    padding: "0 0"
-  }
+    padding: "0 0",
+  },
 }));
 
 const Welcome = ({ loading, name, userEmail, token }) => {
@@ -77,23 +77,23 @@ const Welcome = ({ loading, name, userEmail, token }) => {
     const handleUserRegistration = async (name, email) => {
       const body = {
         name: name,
-        email: email
+        email: email,
       };
 
       await axios
         .post("/api/user/add", body, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         })
         .then(() => console.log("User registered."))
-        .catch(e => console.log("User failed to register: " + e));
+        .catch((e) => console.log("User failed to register: " + e));
     };
 
-    const handleTasks = async email => {
+    const handleTasks = async (email) => {
       await axios
         .get(`/api/tasks/${email}`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         })
-        .then(res => {
+        .then((res) => {
           setTasks(res.data.tasks);
         });
     };

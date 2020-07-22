@@ -18,24 +18,24 @@ describe("Add Task", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   const registeredUser = {
     name: user.fullName,
-    email: user.email
+    email: user.email,
   };
 
   const token = "__TOKEN__";
 
   const data = {
-    tasks: []
+    tasks: [],
   };
   function createMatchMedia(width) {
-    return query => ({
+    return (query) => ({
       matches: mediaQuery.match(query, { width }),
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     });
   }
 
@@ -49,7 +49,7 @@ describe("Add Task", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
   });
 
@@ -77,7 +77,7 @@ describe("Add Task", () => {
       taskPriority: "High",
       taskDifficulty: "Medium",
       isTaskComplete: false,
-      isTaskSuggested: false
+      isTaskSuggested: false,
     };
 
     const { getByDisplayValue, getByTestId, getByLabelText } = render(
@@ -92,17 +92,17 @@ describe("Add Task", () => {
 
     const taskNameInput = getByLabelText("Name", {
       exact: false,
-      selector: "input"
+      selector: "input",
     });
     const descriptionInput = getByLabelText("Description", {
       exact: false,
-      selector: "input"
+      selector: "input",
     });
     const priorityWrapper = getByTestId("task-priority");
     const difficultyWrapper = getByTestId("task-difficulty");
 
     fireEvent.change(taskNameInput, {
-      target: { value: "__TASK_ONE__" }
+      target: { value: "__TASK_ONE__" },
     });
 
     expect(getByTestId("add-task-form")).toBeVisible();
@@ -110,19 +110,19 @@ describe("Add Task", () => {
     expect(getByDisplayValue("__TASK_ONE__")).toBeVisible();
 
     fireEvent.change(descriptionInput, {
-      target: { value: "__DESCRIPTION__" }
+      target: { value: "__DESCRIPTION__" },
     });
 
     expect(getByDisplayValue("__DESCRIPTION__")).toBeVisible();
 
     fireEvent.change(priorityWrapper.childNodes[1], {
-      target: { value: "High" }
+      target: { value: "High" },
     });
 
     expect(getByDisplayValue("High")).toHaveValue("High");
 
     fireEvent.change(difficultyWrapper.childNodes[1], {
-      target: { value: "Medium" }
+      target: { value: "Medium" },
     });
 
     expect(getByDisplayValue("Medium")).toHaveValue("Medium");

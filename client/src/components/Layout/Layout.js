@@ -5,25 +5,25 @@ import Theme from "../shared/Theme/Theme";
 import Navigation from "../Navigation/Navigation";
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   toolbar: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 0,
     paddingTop: theme.spacing(12),
-    paddingBottom: theme.spacing(12)
-  }
+    paddingBottom: theme.spacing(12),
+  },
 }));
 
-const Layout = props => {
+const Layout = (props) => {
   const classes = useStyles();
 
   return (

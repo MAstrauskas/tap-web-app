@@ -17,18 +17,18 @@ describe("Welcome", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   const registeredUser = {
     name: user.fullName,
-    email: user.email
+    email: user.email,
   };
 
   const token = "__TOKEN__";
 
   const data = {
-    tasks: []
+    tasks: [],
   };
 
   const RealDate = Date;
@@ -42,10 +42,10 @@ describe("Welcome", () => {
   }
 
   function createMatchMedia(width) {
-    return query => ({
+    return (query) => ({
       matches: mediaQuery.match(query, { width }),
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     });
   }
 
@@ -59,7 +59,7 @@ describe("Welcome", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     mock.onPost("/api/user/add").reply(200, registeredUser);
@@ -81,10 +81,10 @@ describe("Welcome", () => {
   });
 
   it("should render tablet view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 800px)"
+      matches: media === "(max-width: 800px)",
     });
 
     global.matchMedia(700);
@@ -99,10 +99,10 @@ describe("Welcome", () => {
   });
 
   it("should render mobile view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 600px)"
+      matches: media === "(max-width: 600px)",
     });
 
     global.matchMedia(400);

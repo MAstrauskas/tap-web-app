@@ -12,7 +12,7 @@ describe("Navigation", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe("Navigation", () => {
       isAuthenticated: false,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
   });
 
@@ -62,7 +62,7 @@ describe("Navigation", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     const { getByTestId, getByText } = render(
@@ -81,7 +81,7 @@ describe("Navigation", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     const { getByTestId } = render(
@@ -99,7 +99,7 @@ describe("Navigation", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     const { getByTestId } = render(
@@ -119,7 +119,7 @@ describe("Navigation", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     const { queryByTestId, getByTestId } = render(
@@ -139,7 +139,7 @@ describe("Navigation", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     const { queryByTestId, getByTestId } = render(
@@ -160,7 +160,7 @@ describe("Navigation", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     const { getByTestId, getByText } = render(
@@ -185,7 +185,7 @@ describe("Navigation", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     const { getByTestId } = render(

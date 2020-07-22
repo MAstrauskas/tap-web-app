@@ -1,15 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-
 import { Auth0Provider } from "./react-auth0-spa";
-import config from "./auth_config.json";
 import history from "./utils/history";
+import "./App.css";
 
 /* istanbul ignore file */
-const onRedirectCallback = appState => {
+const onRedirectCallback = (appState) => {
   history.push(
     appState && appState.targetUrl
       ? appState.targetUrl
@@ -19,15 +16,13 @@ const onRedirectCallback = appState => {
 
 ReactDOM.render(
   <Auth0Provider
-    domain={config.auth.domain}
-    client_id={config.auth.clientId}
+    domain={process.env.REACT_APP_AUTH_DOMAIN}
+    client_id={process.env.REACT_APP_AUTH_CLIENT_ID}
     redirect_uri={window.location.origin}
-    audience={config.auth.audience}
+    audience={process.env.REACT_APP_AUTH_AUDIENCE}
     onRedirectCallback={onRedirectCallback}
   >
     <App />
   </Auth0Provider>,
   document.getElementById("root")
 );
-
-serviceWorker.unregister();

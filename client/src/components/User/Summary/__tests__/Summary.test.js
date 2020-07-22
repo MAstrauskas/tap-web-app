@@ -8,7 +8,7 @@ import MockAdapter from "axios-mock-adapter";
 import mediaQuery from "css-mediaquery";
 import Summary, {
   getCompletedTasksForToday,
-  getCompletedTasksForThisWeek
+  getCompletedTasksForThisWeek,
 } from "../Summary";
 
 jest.mock("../../../../react-auth0-spa");
@@ -20,23 +20,23 @@ describe("Summary", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   const registeredUser = {
     name: user.fullName,
-    email: user.email
+    email: user.email,
   };
 
   const token = "__TOKEN__";
   const data = {
-    tasks: []
+    tasks: [],
   };
   function createMatchMedia(width) {
-    return query => ({
+    return (query) => ({
       matches: mediaQuery.match(query, { width }),
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     });
   }
 
@@ -50,7 +50,7 @@ describe("Summary", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     mock.onPost("/api/user/add").reply(200, registeredUser);
@@ -69,10 +69,10 @@ describe("Summary", () => {
   });
 
   it("should render mobile view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 800px)"
+      matches: media === "(max-width: 800px)",
     });
 
     global.matchMedia(500);
@@ -104,7 +104,7 @@ describe("Summary", () => {
         taskGroup: 3,
         taskTotalPoints: 0,
         taskCompleteDate: "2020-01-01T18:00:00.000Z",
-        taskUpdateDate: "2020-01-01T14:00:00.000Z"
+        taskUpdateDate: "2020-01-01T14:00:00.000Z",
       },
       {
         _id: "__ID_TWO__",
@@ -120,7 +120,7 @@ describe("Summary", () => {
         taskGroup: 1,
         taskTotalPoints: 1,
         taskCompleteDate: "2020-01-01T14:01:00.000Z",
-        taskUpdateDate: "2020-01-01T14:01:00.000Z"
+        taskUpdateDate: "2020-01-01T14:01:00.000Z",
       },
       {
         _id: "__ID_THREE__",
@@ -136,8 +136,8 @@ describe("Summary", () => {
         taskGroup: 2,
         taskTotalPoints: 2,
         taskCompleteDate: "2020-01-10T12:00:00.000Z",
-        taskUpdateDate: "2020-01-10T12:00:00.000Z"
-      }
+        taskUpdateDate: "2020-01-10T12:00:00.000Z",
+      },
     ];
 
     expect(getCompletedTasksForToday(allCompletedTasks)).toBe(2);
@@ -161,7 +161,7 @@ describe("Summary", () => {
         taskGroup: 3,
         taskTotalPoints: 0,
         taskCompleteDate: "2020-01-02T18:00:00.000Z",
-        taskUpdateDate: "2020-01-01T14:00:00.000Z"
+        taskUpdateDate: "2020-01-01T14:00:00.000Z",
       },
       {
         _id: "__ID_TWO__",
@@ -177,7 +177,7 @@ describe("Summary", () => {
         taskGroup: 1,
         taskTotalPoints: 1,
         taskCompleteDate: "2020-01-04T14:01:00.000Z",
-        taskUpdateDate: "2020-01-01T14:01:00.000Z"
+        taskUpdateDate: "2020-01-01T14:01:00.000Z",
       },
       {
         _id: "__ID_THREE__",
@@ -193,8 +193,8 @@ describe("Summary", () => {
         taskGroup: 2,
         taskTotalPoints: 2,
         taskCompleteDate: "2020-01-10T12:00:00.000Z",
-        taskUpdateDate: "2020-01-10T12:00:00.000Z"
-      }
+        taskUpdateDate: "2020-01-10T12:00:00.000Z",
+      },
     ];
 
     expect(getCompletedTasksForToday(allCompletedTasks)).toBe(0);
@@ -218,7 +218,7 @@ describe("Summary", () => {
         taskGroup: 3,
         taskTotalPoints: 0,
         taskCompleteDate: "2020-01-01T18:00:00.000Z",
-        taskUpdateDate: "2020-01-01T14:00:00.000Z"
+        taskUpdateDate: "2020-01-01T14:00:00.000Z",
       },
       {
         _id: "__ID_TWO__",
@@ -234,7 +234,7 @@ describe("Summary", () => {
         taskGroup: 1,
         taskTotalPoints: 1,
         taskCompleteDate: "2020-01-02T14:01:00.000Z",
-        taskUpdateDate: "2020-01-01T14:01:00.000Z"
+        taskUpdateDate: "2020-01-01T14:01:00.000Z",
       },
       {
         _id: "__ID_THREE__",
@@ -250,7 +250,7 @@ describe("Summary", () => {
         taskGroup: 2,
         taskTotalPoints: 2,
         taskCompleteDate: "2020-01-05T10:00:00.000Z",
-        taskUpdateDate: "2020-01-05T12:00:00.000Z"
+        taskUpdateDate: "2020-01-05T12:00:00.000Z",
       },
       {
         _id: "__ID_FOUR__",
@@ -266,8 +266,8 @@ describe("Summary", () => {
         taskGroup: 2,
         taskTotalPoints: 2,
         taskCompleteDate: "2020-01-06T12:00:00.000Z",
-        taskUpdateDate: "2020-01-06T12:00:00.000Z"
-      }
+        taskUpdateDate: "2020-01-06T12:00:00.000Z",
+      },
     ];
 
     expect(getCompletedTasksForThisWeek(allCompletedTasks)).toBe(3);
@@ -291,7 +291,7 @@ describe("Summary", () => {
         taskGroup: 3,
         taskTotalPoints: 0,
         taskCompleteDate: "2019-12-29T18:00:00.000Z",
-        taskUpdateDate: "2019-12-29T14:00:00.000Z"
+        taskUpdateDate: "2019-12-29T14:00:00.000Z",
       },
       {
         _id: "__ID_TWO__",
@@ -307,7 +307,7 @@ describe("Summary", () => {
         taskGroup: 1,
         taskTotalPoints: 1,
         taskCompleteDate: "2020-01-07T14:01:00.000Z",
-        taskUpdateDate: "2020-01-07T14:01:00.000Z"
+        taskUpdateDate: "2020-01-07T14:01:00.000Z",
       },
       {
         _id: "__ID_THREE__",
@@ -323,7 +323,7 @@ describe("Summary", () => {
         taskGroup: 2,
         taskTotalPoints: 2,
         taskCompleteDate: "2020-02-05T10:00:00.000Z",
-        taskUpdateDate: "2020-02-05T12:00:00.000Z"
+        taskUpdateDate: "2020-02-05T12:00:00.000Z",
       },
       {
         _id: "__ID_FOUR__",
@@ -339,8 +339,8 @@ describe("Summary", () => {
         taskGroup: 2,
         taskTotalPoints: 2,
         taskCompleteDate: "2020-01-10T12:00:00.000Z",
-        taskUpdateDate: "2020-01-10T12:00:00.000Z"
-      }
+        taskUpdateDate: "2020-01-10T12:00:00.000Z",
+      },
     ];
 
     expect(getCompletedTasksForThisWeek(allCompletedTasks)).toBe(0);

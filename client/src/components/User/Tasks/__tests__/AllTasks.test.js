@@ -17,12 +17,12 @@ describe("All Tasks", () => {
     email: "test@gmail.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   const registeredUser = {
     name: user.fullName,
-    email: user.email
+    email: user.email,
   };
 
   const token = "__TOKEN__";
@@ -41,7 +41,7 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO_",
@@ -55,16 +55,16 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
-    ]
+        taskTotalPoints: 0,
+      },
+    ],
   };
 
   function createMatchMedia(width) {
-    return query => ({
+    return (query) => ({
       matches: mediaQuery.match(query, { width }),
       addListener: () => {},
-      removeListener: () => {}
+      removeListener: () => {},
     });
   }
 
@@ -80,7 +80,7 @@ describe("All Tasks", () => {
       isAuthenticated: true,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
 
     mock.onPost("/api/user/add").reply(200, registeredUser);
@@ -99,10 +99,10 @@ describe("All Tasks", () => {
   });
 
   it("should render mobile view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(max-width: 800px)"
+      matches: media === "(max-width: 800px)",
     });
 
     global.matchMedia(500);
@@ -117,10 +117,10 @@ describe("All Tasks", () => {
   });
 
   it("should render desktop view", () => {
-    global.matchMedia = media => ({
+    global.matchMedia = (media) => ({
       addListener: jest.fn(),
       removeListener: jest.fn(),
-      matches: media === "(min-width: 801px)"
+      matches: media === "(min-width: 801px)",
     });
 
     global.matchMedia(850);
@@ -167,9 +167,9 @@ describe("All Tasks", () => {
           isTaskComplete: false,
           isTaskSuggested: false,
           taskGroup: 3,
-          taskTotalPoints: 0
-        }
-      ]
+          taskTotalPoints: 0,
+        },
+      ],
     };
 
     const { getByTestId, queryByTestId, queryAllByTestId, findByText } = render(
@@ -196,7 +196,7 @@ describe("All Tasks", () => {
       id: "__ID__",
       isTaskComplete: true,
       isTaskSuggested: false,
-      taskUpdateDate: 1577836800000
+      taskUpdateDate: 1577836800000,
     };
 
     const { getByTestId, queryAllByTestId, findByText } = render(
@@ -223,14 +223,14 @@ describe("All Tasks", () => {
       id: "__ID_TWO_",
       isTaskComplete: true,
       isTaskSuggested: false,
-      taskUpdateDate: 1577836800000
+      taskUpdateDate: 1577836800000,
     };
 
     const undoRequestData = {
       id: "__ID_TWO_",
       isTaskComplete: false,
       isTaskSuggested: false,
-      taskUpdateDate: 1577836800000
+      taskUpdateDate: 1577836800000,
     };
 
     const { getByTestId, queryAllByTestId, findByText } = render(
@@ -261,7 +261,7 @@ describe("All Tasks", () => {
       id: "__ID_TWO_",
       isTaskComplete: true,
       isTaskSuggested: false,
-      taskUpdateDate: 1577836800000
+      taskUpdateDate: 1577836800000,
     };
 
     const { getByTestId, queryAllByTestId, findByText, debug } = render(
@@ -297,7 +297,7 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO_",
@@ -311,8 +311,8 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     expect(sortByDate(tasks)).toStrictEqual(tasks);
@@ -332,7 +332,7 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO_",
@@ -346,8 +346,8 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     const expectedResult = [
@@ -363,7 +363,7 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID__",
@@ -377,8 +377,8 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     expect(sortByDate(tasks)).toStrictEqual(expectedResult);
@@ -398,7 +398,7 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
+        taskTotalPoints: 0,
       },
       {
         _id: "__ID_TWO_",
@@ -412,8 +412,8 @@ describe("All Tasks", () => {
         isTaskComplete: true,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     const expectedResult = [
@@ -429,8 +429,8 @@ describe("All Tasks", () => {
         isTaskComplete: false,
         isTaskSuggested: false,
         taskGroup: 3,
-        taskTotalPoints: 0
-      }
+        taskTotalPoints: 0,
+      },
     ];
 
     expect(sortByDate(tasks)).toStrictEqual(expectedResult);

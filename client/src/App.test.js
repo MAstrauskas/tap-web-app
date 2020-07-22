@@ -10,7 +10,7 @@ describe("App", () => {
     email: "test@test.com",
     fullName: "__FULL_NAME__",
     email_verified: true,
-    sub: "__SUB__"
+    sub: "__SUB__",
   };
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe("App", () => {
       isAuthenticated: false,
       user,
       logout: jest.fn(),
-      loginWithRedirect: jest.fn()
+      loginWithRedirect: jest.fn(),
     });
   });
 
