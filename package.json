@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "auth0": "^2.24.0",
+    "auth0": "^2.27.1",
     "auth0-js": "^9.13.2",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
