@@ -65,6 +65,9 @@ class Mood extends Component {
         ...prevState,
         addSuccessful: true,
       }));
+
+      // Go back to the previous page after the mood has been added
+      this.props.history.goBack();
     } catch (e) {
       console.log(e);
       setSubmitting(false);
@@ -76,12 +79,6 @@ class Mood extends Component {
   };
 
   render() {
-    const { addSuccessful } = this.state;
-
-    if (addSuccessful) {
-      this.props.history.goBack();
-    }
-
     const moodSchema = Yup.object().shape({
       mood: Yup.string().required("Please choose how you feel."),
       moodMotivation: Yup.string().required(
@@ -89,6 +86,7 @@ class Mood extends Component {
       ),
       moodTired: Yup.string().required("Please choose whether you are tired."),
     });
+
     return (
       <CustomPaper elevation={3}>
         <Formik

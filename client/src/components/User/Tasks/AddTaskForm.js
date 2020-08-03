@@ -71,6 +71,9 @@ class AddTask extends Component {
         ...prevState,
         addSuccessful: true,
       }));
+
+      // Go back to the previous page after the task has been added
+      this.props.history.goBack();
     } catch (e) {
       console.log(e);
       setSubmitting(false);
@@ -82,12 +85,6 @@ class AddTask extends Component {
   };
 
   render() {
-    const { addSuccessful } = this.state;
-
-    if (addSuccessful) {
-      this.props.history.goBack();
-    }
-
     // Initialize dates for validation
     let currentDate = new Date();
     let todaysDate = new Date();
